@@ -1,0 +1,11 @@
+ <div ng-controller="SignupCheckoutCtrl"  ng-if="isConfigMaintained">
+    <div class="wrapperRewards" ng-hide="thisUser.isMember || !thisUser.isUser">
+        <!-- <div class="checkbox loyalty" ng-show="loyaltyConfig.showReward">
+			<input type="checkbox" ng-model="wantLoyaltyProgram" id="want-loyalty-program" />
+			<label id="checkout-signup-label" for="want-loyalty-program" translate="{{ 'SIGN_UP_DESCRIPTION' }}" translate-values="{ name: loyaltyProgram.name}"></label>
+		</div>  -->
+		<div class="form-group">
+			<button class="btn btn-primary" id="get-membership-button" ng-click="getLoyaltyProgramMembership()" ng-disabled="disableSave" translate="{{ 'SIGN_UP_TITLE_PROGRAM_NAME' }}" translate-values="{ programName: userProgramName}"></button>
+		</div>	
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="product-reviews"  ng-if="isConfigMaintained">
+    <section class="product-review">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <h3 id="review-for">{{'USER_REVIEW_FOR' | translate}} <a href="" id="review-product-link" ng-click = "gotoProductDetailPage()">{{product.product.name}}</a></h3>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3 ">
+                <div class="product-image">
+                    <img class="lazyOwl" id="review-product-image" ng-src="{{product.product.media[0].url}}" alt="productThumb" ng-click="gotoProductDetailPage()" />
+                </div>
+            </div>
+            <div class="col-md-3 product-rating-review">
+                <div class="form-group rating-review-row">
+                    <div class="marginBottom5"><Label id="product-average-rating">{{'AVERAGE_USER_RATING' | translate}} </Label></div>
+                    <div class="marginBottom5">
+                        <strong><span class="ratingAvg" id="average-rating-model" ng-bind="avgRatingModel"></span></strong>
+                         <span class="product-rating" id="rating-average">
+                            <i ng-repeat="rateStar in [1, 2, 3, 4, 5] track by $index" class="glyphicon" data-width="{{avgRatingView}}" ng-class="{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }"></i>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <span id="product-rating-label-1" ng-show="totalRatingReviews > 1" translate="{{ 'RATINGS' }}" translate-values="{ totalRatingReviews: totalRatingReviews}"></span>
+                        <span id="product-rating-label-2" ng-show="totalRatingReviews === 0 || totalRatingReviews === 1" translate="{{ 'SINGLE_RATING' }}" translate-values="{ totalRatingReviews: totalRatingReviews}"></span>
+                    </div>
+                    <div ng-if="thisUser.isUser" ng-hide="customerExist===true">
+                        <button class="btn btn-primary" id="review-add-button" ng-click="openWriteReviewModal()">{{'ADD_REVIEW' | translate}}</button>
+                    </div>
+                    <div ng-if="thisUser.isUser" ng-show="customerExist===true">
+                        
+                        <div class=""><Label id="my-rating-label">{{'MY_RATING' | translate}}</Label></div>
+                        <strong><span id="my-rating-value" class="ratingAvg" id="my-ratings" ng-bind="myRating"></span></strong>
+                        <span>
+                            <rating id="my-review-stars" class="product-rating myRatingStar" ng-model="myRating" max="5" readonly="true"></rating>
+                        </span>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="col-md-6">
+                <form class="">
+                    <div class="form-group">
+                        <strong><span id="total-rating-review" translate="{{ 'USER_RATED' }}" translate-values="{ totalRatingReviews: totalRatingReviews}"></span></strong>
+                    </div>
+                    <div class="row" ng-repeat="rating in ratingArray.slice().reverse() track by $index">
+                        <div class="col-sm-2"><span id="{{ 'rating-stars' + $index }}" translate="{{ 'STARS' }}" translate-values="{ starValue: 5 - $index}"></span></div>
+                        <div class="col-sm-6">
+                            <progressbar max="100" value="ratingToPercentage(rating, totalRatingReviews)" id="{{ 'rating-stars-progress-' + $index }}" type="warning" class="active progressMargin">
+                            </progressbar>
+                        </div>
+                        <div class="col-sm-1"><span ng-bind="rating" id="{{ 'rating-stars-counts-' + $index }}"></span></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="customer-reviews">
+        <div class=" row">
+            <div class=" form-group col-sm-12 userReviewHeading">
+                <h3 id="user-review-heading" translate="{{ 'USER_REVIEW_LIST' }}" translate-values="{ totalReviewsToShow: totalReviewsToShow}"></h3>
+            </div>
+        </div>
+        <div class="row product-grid" infinite-scroll="getProductReviewRating()">
+            <div class="form-group " ng-repeat="review in reviewRatingData ">
+                <div class="form-group row customer-review-row" ng-show="review.reviewComment!== ''">
+                    <div class="col-sm-3">
+                        <div ng-show="review.reviewerName!==' '" class="marginBottom5"><span class="" id="{{ 'review-reviewerName' + $index }}">{{review.reviewerName}}</span></div>
+                        <div ng-show="review.reviewerName===' '" class="marginBottom5"><span class="" id="{{ 'review-dummyReviewerName' + $index }}">{{'A_USER' | translate}}</span></div>
+                        <div class="marginBottom5">
+                            <rating class="product-rating" id="{{ 'review-reviewerRating' + $index }}" ng-model="review.rating" max="5" readonly="true"></rating>
+                        </div>
+                        <div class="form-group">
+                            <span id="{{ 'review-dateOfReview' + $index }}">{{review.metadata.createdAt | date: 'medium'}}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="marginBottom5"><strong id="{{ 'review-reviewTitle' + $index }}">{{review.reviewTitle}}</strong></div>
+                        <div class="form-group">
+                            <p id="{{ 'review-reviewComment' + $index }}">{{review.reviewComment}}</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,818 @@
+.no-margin-horizontal {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.product-rating-review a {
+  cursor: pointer;
+}
+
+.product-rating-review .rating-review-row {
+  margin-bottom: 15px !important;
+}
+
+
+
+.myRatingStar.product-rating i.glyphicon.glyphicon-star {
+  color: blue !important;
+}
+
+
+.glyphicon-star.avg {
+  position: relative;
+}
+.glyphicon-star.avg:before {
+  position: relative;
+  z-index: 9;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+}
+.glyphicon-star.avg:after {
+  content: '\e006';
+  position: absolute;
+  z-index: 8;
+  color: #fff;
+  top: 0;
+  left: 0;
+}
+.glyphicon-star.avg[data-width='100']:before {
+  width: 100%;
+}
+.glyphicon-star.avg[data-width='99']:before {
+  width: 99%;
+}
+.glyphicon-star.avg[data-width='98']:before {
+  width: 98%;
+}
+.glyphicon-star.avg[data-width='97']:before {
+  width: 97%;
+}
+.glyphicon-star.avg[data-width='96']:before {
+  width: 96%;
+}
+.glyphicon-star.avg[data-width='95']:before {
+  width: 95%;
+}
+.glyphicon-star.avg[data-width='94']:before {
+  width: 94%;
+}
+.glyphicon-star.avg[data-width='93']:before {
+  width: 93%;
+}
+.glyphicon-star.avg[data-width='92']:before {
+  width: 92%;
+}
+.glyphicon-star.avg[data-width='91']:before {
+  width: 91%;
+}
+.glyphicon-star.avg[data-width='90']:before {
+  width: 90%;
+}
+.glyphicon-star.avg[data-width='89']:before {
+  width: 89%;
+}
+.glyphicon-star.avg[data-width='88']:before {
+  width: 88%;
+}
+.glyphicon-star.avg[data-width='87']:before {
+  width: 87%;
+}
+.glyphicon-star.avg[data-width='86']:before {
+  width: 86%;
+}
+.glyphicon-star.avg[data-width='85']:before {
+  width: 85%;
+}
+.glyphicon-star.avg[data-width='84']:before {
+  width: 84%;
+}
+.glyphicon-star.avg[data-width='83']:before {
+  width: 83%;
+}
+.glyphicon-star.avg[data-width='82']:before {
+  width: 82%;
+}
+.glyphicon-star.avg[data-width='81']:before {
+  width: 81%;
+}
+.glyphicon-star.avg[data-width='80']:before {
+  width: 80%;
+}
+.glyphicon-star.avg[data-width='79']:before {
+  width: 79%;
+}
+.glyphicon-star.avg[data-width='78']:before {
+  width: 78%;
+}
+.glyphicon-star.avg[data-width='77']:before {
+  width: 77%;
+}
+.glyphicon-star.avg[data-width='76']:before {
+  width: 76%;
+}
+.glyphicon-star.avg[data-width='75']:before {
+  width: 75%;
+}
+.glyphicon-star.avg[data-width='74']:before {
+  width: 74%;
+}
+.glyphicon-star.avg[data-width='73']:before {
+  width: 73%;
+}
+.glyphicon-star.avg[data-width='72']:before {
+  width: 72%;
+}
+.glyphicon-star.avg[data-width='71']:before {
+  width: 71%;
+}
+.glyphicon-star.avg[data-width='70']:before {
+  width: 70%;
+}
+.glyphicon-star.avg[data-width='69']:before {
+  width: 69%;
+}
+.glyphicon-star.avg[data-width='68']:before {
+  width: 68%;
+}
+.glyphicon-star.avg[data-width='67']:before {
+  width: 67%;
+}
+.glyphicon-star.avg[data-width='66']:before {
+  width: 66%;
+}
+.glyphicon-star.avg[data-width='65']:before {
+  width: 65%;
+}
+.glyphicon-star.avg[data-width='64']:before {
+  width: 64%;
+}
+.glyphicon-star.avg[data-width='63']:before {
+  width: 63%;
+}
+.glyphicon-star.avg[data-width='62']:before {
+  width: 62%;
+}
+.glyphicon-star.avg[data-width='61']:before {
+  width: 61%;
+}
+.glyphicon-star.avg[data-width='60']:before {
+  width: 60%;
+}
+.glyphicon-star.avg[data-width='59']:before {
+  width: 59%;
+}
+.glyphicon-star.avg[data-width='58']:before {
+  width: 58%;
+}
+.glyphicon-star.avg[data-width='57']:before {
+  width: 57%;
+}
+.glyphicon-star.avg[data-width='56']:before {
+  width: 56%;
+}
+.glyphicon-star.avg[data-width='55']:before {
+  width: 55%;
+}
+.glyphicon-star.avg[data-width='54']:before {
+  width: 54%;
+}
+.glyphicon-star.avg[data-width='53']:before {
+  width: 53%;
+}
+.glyphicon-star.avg[data-width='52']:before {
+  width: 52%;
+}
+.glyphicon-star.avg[data-width='51']:before {
+  width: 51%;
+}
+.glyphicon-star.avg[data-width='50']:before {
+  width: 50%;
+}
+.glyphicon-star.avg[data-width='49']:before {
+  width: 49%;
+}
+.glyphicon-star.avg[data-width='48']:before {
+  width: 48%;
+}
+.glyphicon-star.avg[data-width='47']:before {
+  width: 47%;
+}
+.glyphicon-star.avg[data-width='46']:before {
+  width: 46%;
+}
+.glyphicon-star.avg[data-width='45']:before {
+  width: 45%;
+}
+.glyphicon-star.avg[data-width='44']:before {
+  width: 44%;
+}
+.glyphicon-star.avg[data-width='43']:before {
+  width: 43%;
+}
+.glyphicon-star.avg[data-width='42']:before {
+  width: 42%;
+}
+.glyphicon-star.avg[data-width='41']:before {
+  width: 41%;
+}
+.glyphicon-star.avg[data-width='40']:before {
+  width: 40%;
+}
+.glyphicon-star.avg[data-width='39']:before {
+  width: 39%;
+}
+.glyphicon-star.avg[data-width='38']:before {
+  width: 38%;
+}
+.glyphicon-star.avg[data-width='37']:before {
+  width: 37%;
+}
+.glyphicon-star.avg[data-width='36']:before {
+  width: 36%;
+}
+.glyphicon-star.avg[data-width='35']:before {
+  width: 35%;
+}
+.glyphicon-star.avg[data-width='34']:before {
+  width: 34%;
+}
+.glyphicon-star.avg[data-width='33']:before {
+  width: 33%;
+}
+.glyphicon-star.avg[data-width='32']:before {
+  width: 32%;
+}
+.glyphicon-star.avg[data-width='31']:before {
+  width: 31%;
+}
+.glyphicon-star.avg[data-width='30']:before {
+  width: 30%;
+}
+.glyphicon-star.avg[data-width='29']:before {
+  width: 29%;
+}
+.glyphicon-star.avg[data-width='28']:before {
+  width: 28%;
+}
+.glyphicon-star.avg[data-width='27']:before {
+  width: 27%;
+}
+.glyphicon-star.avg[data-width='26']:before {
+  width: 26%;
+}
+.glyphicon-star.avg[data-width='25']:before {
+  width: 25%;
+}
+.glyphicon-star.avg[data-width='24']:before {
+  width: 24%;
+}
+.glyphicon-star.avg[data-width='23']:before {
+  width: 23%;
+}
+.glyphicon-star.avg[data-width='22']:before {
+  width: 22%;
+}
+.glyphicon-star.avg[data-width='21']:before {
+  width: 21%;
+}
+.glyphicon-star.avg[data-width='20']:before {
+  width: 20%;
+}
+.glyphicon-star.avg[data-width='19']:before {
+  width: 19%;
+}
+.glyphicon-star.avg[data-width='18']:before {
+  width: 18%;
+}
+.glyphicon-star.avg[data-width='17']:before {
+  width: 17%;
+}
+.glyphicon-star.avg[data-width='16']:before {
+  width: 16%;
+}
+.glyphicon-star.avg[data-width='15']:before {
+  width: 15%;
+}
+.glyphicon-star.avg[data-width='14']:before {
+  width: 14%;
+}
+.glyphicon-star.avg[data-width='13']:before {
+  width: 13%;
+}
+.glyphicon-star.avg[data-width='12']:before {
+  width: 12%;
+}
+.glyphicon-star.avg[data-width='11']:before {
+  width: 11%;
+}
+.glyphicon-star.avg[data-width='10']:before {
+  width: 10%;
+}
+.glyphicon-star.avg[data-width='9']:before {
+  width: 9%;
+}
+.glyphicon-star.avg[data-width='8']:before {
+  width: 8%;
+}
+.glyphicon-star.avg[data-width='7']:before {
+  width: 7%;
+}
+.glyphicon-star.avg[data-width='6']:before {
+  width: 6%;
+}
+.glyphicon-star.avg[data-width='5']:before {
+  width: 5%;
+}
+.glyphicon-star.avg[data-width='4']:before {
+  width: 4%;
+}
+.glyphicon-star.avg[data-width='3']:before {
+  width: 3%;
+}
+.glyphicon-star.avg[data-width='2']:before {
+  width: 2%;
+}
+.glyphicon-star.avg[data-width='1']:before {
+  width: 1%;
+}
+
+.product-rating {
+  position: relative;
+  top: 4px;
+}
+.product-rating i.glyphicon { 
+  font-size: 20px;
+  text-shadow: 0px 0px 1px #464646;
+  letter-spacing: 3px;
+}
+.product-rating i.glyphicon.glyphicon-star {
+  color: #FFE800;
+}
+
+
+
+
+
+
+.review-modal textarea {
+  resize: none;
+  height: 100px;  
+  max-height: 100px;
+}
+
+.padding-none .col-xs-12, .padding-none .col-sm-12{
+  padding: 0px !important;
+}
+
+
+.product-reviews {
+
+}
+
+
+.product-reviews .product-image {
+  display: block;
+  text-align: center;
+}
+
+.product-reviews .product-image img {
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin: auto;
+}
+
+.customer-reviews {
+
+}
+
+.customer-reviews .customer-review-row {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  margin-left: 15px;
+  margin-left: 15px;
+}
+
+.segment .panel,
+.points-pay .panel {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.reward-details {
+
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.segment .panel.user-reward-box {
+  background-color: #F0F8FF;
+  min-height: 70px;
+}
+
+.user-point-account {
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid #D8D8D8;
+}
+
+.user-point-account .text-success {
+  color: #48A348;
+}
+
+.rewards-select-wrapper {
+  margin-top: 12px;
+  border: 1px solid #ddd;
+}
+
+.rewards-select-wrapper .sortContainer {
+  margin-bottom: 0px;
+}
+
+
+.reward-details {
+  font-family: 'Helvetica'; 
+}
+
+.reward-details .head {
+  color: #333 !important;
+  font-size: 26px !important;
+  font-family: 'Georgia';
+}
+
+.reward-details .title {
+  color: #333 !important;
+  font-size: 14px !important;
+}
+
+.reward-details .info {
+  color: #2a6496;
+  font-size: 14px;
+}
+
+.padding0 {
+  padding : 0px !important;
+}
+
+
+
+
+.points-pay .points-going-label {
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.points-pay .points-slider-wrapper {
+  margin-top: 20px;
+}
+
+#pointsSlider .ui-slider-range {
+  background: #729fcf;
+}
+
+#points-slider {
+  border-radius: 10px;
+  background: #FFF5CC;
+}
+
+#points-slider .ui-slider-handle {
+  border-radius: 100%;
+  outline: none !important;
+  background: #00B451;
+}
+
+
+
+
+.text-green {
+  color: #00B451;
+}
+
+.text-red{
+  color: #ff0000;
+}
+
+
+.checkbox.loyalty input[type="checkbox"] {
+  margin-left: 0px !important
+}
+
+.orderhistory {
+  margin-bottom:10px !important;
+}
+
+.points-right-padding{
+  padding-right: 25px;
+}
+
+.reward-table-padding{
+  padding-left:30px !important;
+}
+
+.point
+{
+  font-size:17px;
+  color:blue;
+  text-align:left;
+  display:block;
+}
+
+.point.redeemRed
+{
+  color:  #FF3A30;
+}
+
+.point.orderGreen
+{
+ color : #19BD33;
+}
+
+.imagesAccount
+{
+
+  width: 70px;       
+
+}   
+.floatRight{
+  float: right;
+}
+.floatleft{
+  float: left;
+}
+.reedmTextInfo{
+  font-size: 30px;
+  color: #337ab7;
+}
+
+.reward_text_desc {
+  float: right;
+  padding: 10px;
+}
+
+.progress-container{
+
+  margin-top: 25px;
+
+}
+.padright10px{
+
+  padding-right: 10px;
+
+}
+
+.padleft10px{
+
+  padding-left: 10px;
+
+}
+.progress-bar {
+  border-radius: 15px;
+}
+.progress {
+  border-radius: 15px;
+}
+.program-link {
+  padding-right: 50px;
+}
+
+.userMargin {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.labelWidth{
+  width: 25%;
+}
+.tell_a_friend_icon {
+  font-size:1.7em;
+}
+
+
+section.points-calc {
+
+  padding: 20px 10px !important;
+  width: 70% !important;
+  margin: auto !important;
+  margin-top: 20px !important;
+}
+
+section.points-calc .row-group {
+  margin-bottom: 15px;
+}
+
+.ratingAvg{
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.marginBottom5{
+  margin-bottom: 5px;
+}
+
+.progressMargin{
+  margin-bottom: 10px;
+  border-radius: 0px !important;
+}
+.progressMargin .progress-bar{
+  border-radius: 0px !important;
+  background-color: #FFE800;
+}
+
+.userReviewHeading{
+  border-bottom: 1px solid #eee;
+  margin-left: 15px;
+}
+
+.userBottomMargin{
+  margin-bottom: 10px;
+}
+
+.referralText {
+  font-size: 12px;
+  color: #888888;
+}
+
+.earnPointText{
+  color: #858585;
+  font-size: 12px;
+}
+
+.earnedPointText{
+  color: green;
+  font-size: 12px;
+}
+
+.marginTop100{
+  margin-top: 100px;
+}
+/******************************************************************/
+
+
+/*************************************************************/
+tags-input {
+  display: block;
+}
+tags-input *, tags-input *:before, tags-input *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+tags-input .host {
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 100%;
+}
+tags-input .host:active {
+  outline: none;
+}
+
+tags-input .tags {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  padding: 1px;
+  overflow: hidden;
+  word-wrap: break-word;
+  cursor: text;
+  background-color: white;
+  border: 1px solid darkgray;
+  box-shadow: 1px 1px 1px 0 lightgray inset;
+  height: 100%;
+}
+tags-input .tags.focused {
+  outline: none;
+  -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, 0.6);
+  -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, 0.6);
+  box-shadow: 0 0 3px 1px rgba(5, 139, 242, 0.6);
+}
+tags-input .tags .tag-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+tags-input .tags .tag-item {
+  margin: 2px;
+  color: white;
+  padding: 0 5px;
+  display: inline-block;
+  float: left;
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  height: 26px;
+  line-height: 25px;
+  border: 1px solid #acacac;
+  border-radius: 3px;
+  /*background: -webkit-linear-gradient(top, #f0f9ff 0%, #cbebff 47%, #a1dbff 100%);
+  background: linear-gradient(to bottom, #f0f9ff 0%, #cbebff 47%, #a1dbff 100%);*/
+  background:#3994D4;
+}
+tags-input .tags .tag-item.selected {
+  background: -webkit-linear-gradient(top, #febbbb 0%, #fe9090 45%, #ff5c5c 100%);
+  background: linear-gradient(to bottom, #febbbb 0%, #fe9090 45%, #ff5c5c 100%);
+}
+tags-input .tags .tag-item .remove-button {
+  margin: 0 0 0 5px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  vertical-align: middle;
+  font: bold 16px Arial, sans-serif;
+  color: white;
+}
+tags-input .tags .tag-item .remove-button:active {
+  color: red;
+}
+tags-input .tags .input {
+  border: 0;
+  outline: none;
+  margin: 2px;
+  padding: 0;
+  padding-left: 5px;
+  float: left;
+  height: 26px;
+  width: 100%;
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+tags-input .tags .input.invalid-tag {
+  color: red;
+}
+tags-input .tags .input::-ms-clear {
+  display: none;
+}
+tags-input.ng-invalid .tags {
+  -webkit-box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
+  box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
+}
+tags-input[disabled] .host:focus {
+  outline: none;
+}
+tags-input[disabled] .tags {
+  background-color: #eeeeee;
+  cursor: default;
+}
+tags-input[disabled] .tags .tag-item {
+  opacity: 0.65;
+  background: -webkit-linear-gradient(top, #f0f9ff 0%, rgba(203, 235, 255, 0.75) 47%, rgba(161, 219, 255, 0.62) 100%);
+  background: linear-gradient(to bottom, #f0f9ff 0%, rgba(203, 235, 255, 0.75) 47%, rgba(161, 219, 255, 0.62) 100%);
+}
+tags-input[disabled] .tags .tag-item .remove-button {
+  cursor: default;
+}
+tags-input[disabled] .tags .tag-item .remove-button:active {
+  color: #585858;
+}
+tags-input[disabled] .tags .input {
+  background-color: #eeeeee;
+  cursor: default;
+}
+
+tags-input .autocomplete {
+  margin-top: 5px;
+  position: absolute;
+  padding: 5px 0;
+  z-index: 999;
+  width: 100%;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+tags-input .autocomplete .suggestion-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  max-height: 280px;
+  overflow-y: auto;
+  position: relative;
+}
+tags-input .autocomplete .suggestion-item {
+  padding: 5px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: black;
+  background-color: white;
+}
+tags-input .autocomplete .suggestion-item.selected {
+  color: white;
+  background-color: #0097cf;
+}
+tags-input .autocomplete .suggestion-item.selected em {
+  color: white;
+  background-color: #0097cf;
+}
+tags-input .autocomplete .suggestion-item em {
+  font: normal bold 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: black;
+  background-color: white;
+}
+
+.form-group.has-error .select2-container {
+  border: 1px solid #ff4444;
+}

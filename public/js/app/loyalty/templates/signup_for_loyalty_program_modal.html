@@ -1,0 +1,30 @@
+<div  ng-if="isConfigMaintained">
+    <div class="modal-header">
+        <h4 class="modal-title" id="signup-program-title" translate="{{ 'SIGN_UP_TITLE_PROGRAM_NAME' }}" translate-values="{ programName: userProgramName}"></h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group " ng-if="wrongReferral">
+            <span translate="{{ 'WRONG_REFER_A_FRIEND_INFO_TEXT1' }}" translate-values="{ programName: userProgramName}"></span>
+        </div>
+        <div class="userBottomMargin earnPointText" ng-if="wrongReferral">{{'WRONG_REFER_A_FRIEND_INFO_TEXT2' | translate}}</div>
+        <div class="earnPointText userBottomMargin" ng-if="!wrongReferral"><span>{{'REFER_A_FRIEND_INFO_TEXT' | translate}}</span></div>
+        <div class="form-group input-group" ng-if="configData.enableTellAFriend || loyaltyConfig.enableTellAFriend">
+            <span class="input-group-addon"><label class="control-label" id="signup-referralcode-text">{{'REFERRALCODE' | translate}}</label></span>
+            <input type="text" id="signup-referralcode" class="form-control" name="" ng-model="myUser.referraledCode" ng-focus="clearErrors()" />
+        </div>
+    <!-- 
+        <div class="form-group input-group">
+            <label class="input-group-addon control-label" id="preferred-language-label" for="language">{{'PREFERRED_LANGUAGE' | translate}}</label>
+            <select type="text" class="form-control" id="language" name="language" ng-model="myUser.preferredLanguage">
+                <option  ng-repeat="language in site.languages" ng-selected="{{languageCode == language}}" value="{{language}}"> 
+                    {{language | translate}}
+                </option>
+            </select>
+        </div> -->
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="signup-close-button" class="btn btn-default" ng-click="closeModal()">{{'CLOSE' | translate }}</button>
+        <button type="submit" class="btn btn-primary" id="signup-button" ng-disabled="disableSave" ng-click="registerCustomerForProgram()">{{'SIGN_UP' | translate}}</button>
+    </div>
+</div>

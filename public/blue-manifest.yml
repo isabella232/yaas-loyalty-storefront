@@ -1,0 +1,10 @@
+---
+applications:
+- name: loyaltystoreblue
+  host: loyaltystoretemp
+  domain: us-east.internal.yaas.io
+  url: loyaltystoretemp.us-east.internal.yaas.io
+  command: npm run-script start
+  buildpack: https://github.com/ddollar/heroku-buildpack-multi.git
+  memory: 512M
+  instances: 1

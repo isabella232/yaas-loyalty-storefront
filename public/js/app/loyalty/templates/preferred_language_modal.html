@@ -1,0 +1,43 @@
+<div  ng-if="isConfigMaintained">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="closeModal()" data-dismiss="modal">
+			<span aria-hidden="true" id="language-close">×</span><span id="language-close-label" class="sr-only">{{'CLOSE' | translate }}</span>
+		</button>
+   		<h4 class="modal-title" id="language-title">{{'UPDATE_PREFERRED_LANGUAGE' | translate }}</h4>
+  	</div>
+
+  	<div class="modal-body review-modal">
+  		<form name="languageForm" ng-submit="updatePreferredLanguage()">
+  			
+  			<div class="row">
+	            <div class="col-lg-12">
+	                
+	            	<div class="form-group input-group">
+				        <label class="input-group-addon control-label" id="language-label" for="language">{{'PREFERRED_LANGUAGE' | translate}}</label>
+
+				        <select ng-if="thisUser.loyaltyUser.preferredLanguage" type="text" class="form-control" id="language" name="language" ng-model="myUser.preferredLanguage">
+				            <option  ng-repeat="language in site.languages" ng-selected="{{thisUser.loyaltyUser.preferredLanguage == language}}" value="{{language}}"> 
+				                {{language | translate}}
+				            </option>
+				        </select>
+
+				        <select ng-if="!thisUser.loyaltyUser.preferredLanguage" type="text" class="form-control" id="language" name="language" ng-model="myUser.preferredLanguage">
+				            <option  ng-repeat="language in site.languages" ng-selected="{{languageCode == language}}" value="{{language}}"> 
+				                {{language | translate}}
+				            </option>
+				        </select>
+
+				    </div>
+
+	            </div>
+	        </div>
+
+  			<div class="modal-footer">
+	            <button type="button" ng-click="closeModal()" id="cancel-btn" class="btn btn-secondary btn-lg">{{'CANCEL' | translate}}</button>
+	            <button type="submit" id="save-btn" class="btn btn-primary btn-lg" >{{'SAVE' | translate}}</button>
+	        </div>
+  			
+  			
+	    </form>
+	</div>
+</div>

@@ -1,0 +1,44 @@
+
+	
+<div ng-controller="LoyaltyCartCtrl" ng-if="isConfigMaintained">
+	<div class="" ng-show="thisUser.isMember && loyaltyConfig.showReward">
+		<div class="form-group">
+			<div ng-show="dummyFireProcessing">
+				<h4 class="text-center" id="cart-processing-text">{{ 'PROCESSING_TEXT' | translate}}</h4>
+			</div>
+			<div ng-hide="dummyFireProcessing">
+				<section class="summary">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="" ng-if="!loyaltyConfig.showCashBal">
+									<h4 class="text-left text-green" >
+										<i id="cart-points-text">{{ 'REWARD_PNTS_EARNED_TEXT' | translate}}</i>
+									</h4>
+								</th>
+
+								<th class="text-right" ng-if="!loyaltyConfig.showCashBal">
+									<h4 class="text-right text-green" >
+										<i id="cart-loyalty-points">{{earning.points}}</i>
+									</h4>
+								</th>
+
+								<th class="" ng-if="loyaltyConfig.showCashBal" >
+									<h4 class="text-left text-green" >
+										<i id="cart-cash-text">{{ 'REWARD_CASH_EARNED_TEXT' | translate}}</i>
+									</h4>
+								</th>
+								
+								<th class="text-right" ng-if="loyaltyConfig.showCashBal" >
+									<h4 class="text-right text-green">
+										<i  id="cart-loyalty-cash"> {{earning.cash | currency: currencySymbol}} </i>
+									</h4>
+								</th>
+							</tr>
+						</thead>
+					</table>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>

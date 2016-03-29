@@ -1,0 +1,25 @@
+<div class="col-xs-12 col-sm-12 text-left "  ng-if="isConfigMaintained">
+    <div class="" ng-controller="LoyaltyProgramCtrl">
+        <div class="form-group" ng-controller="registrationController">
+            <div ng-show="loyaltyConfig.showReward">
+                <div class="checkbox loyalty">
+                    <input type="checkbox" ng-model="wantLoyaltyProgram" id="want-loyalty-program" />
+                    <label for="want-loyalty-program" id="signup-description-label" translate="{{ 'SIGN_UP_DESCRIPTION' }}" translate-values="{ name: loyaltyProgram.loyaltyProgramName}"></label>
+                </div>
+                <div class="earnPointText userBottomMargin" ng-if="wantLoyaltyProgram && loyaltyConfig.enableTellAFriend"><span>{{'REFER_A_FRIEND_INFO_TEXT' | translate}}</span></div>
+                <div class="form-group input-group" ng-if="wantLoyaltyProgram && loyaltyConfig.enableTellAFriend">
+                    <label class="input-group-addon control-label" id="referral-code-label" for="referralCode">{{'REFERRALCODE' | translate}}</label>
+                    <input type="text" class="form-control" id="referralCode" name="referralCode" ng-model="user.referraledCode" ng-focus="clearErrors()" />
+                </div>
+                <!-- <div class="form-group input-group" ng-if="wantLoyaltyProgram">
+                    <label class="input-group-addon control-label" id="preferred-language-label" for="language">{{'PREFERRED_LANGUAGE' | translate}}</label>
+                    <select type="text" class="form-control" id="language" name="language" ng-model="user.preferredLanguage">
+                        <option  ng-repeat="language in site.languages" value="{{language}}" ng-selected="{{languageCode == language}}" > 
+                            {{language | translate}}
+                        </option>
+                    </select>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

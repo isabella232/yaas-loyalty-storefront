@@ -1,0 +1,76 @@
+    
+
+    <div ng-controller="LoyaltyCheckoutCtrl"  ng-if="isConfigMaintained">
+        <div class="col-lg-12" ng-if="thisUser.isMember && loyaltyConfig.showReward && (userMaxPoints>0)">
+            <span class="form-block-headline" id="checkout-spend-text">{{'SPEND_YOUR_REWARDS_PNTS' | translate}}</span>
+        </div>
+        <div class="wrapperRewards"  ng-if="thisUser.isMember && loyaltyConfig.showReward && (userMaxPoints>0)">
+            <div class="points-pay">
+                <div class="col-lg-12">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="col-lg-3" ng-if="!loyaltyConfig.showCashBal">
+                                <div class="form-group" ng-class="{'has-error': (paymentForm.pointsGoing.$invalid) }">
+                                    <input type="number" id="checkout-points-input" class="form-control" placeholder="Points" min="0" ng-pattern="/^\d{0,9}(\.\d{1,9})?$/" max="{{userMaxPoints}}" ng-change="changePointsGoing()" ng-model="redeem.pointsGoing" ng-disabled="isSliderDisabled" name="pointsGoing" />
+                                </div>
+                            </div>
+                            <div class="col-lg-9" ng-if="!loyaltyConfig.showCashBal">
+                                <p class="points-going-label ">
+                                <span id="checkout-currency-id" ng-bind="currencyId"></span>
+                                <span id="points-going" ng-bind="redeem.pointsToCurr"></span>
+                                </p>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (paymentForm.cashGoing.$invalid) }">
+                                <div class="col-lg-3" ng-if="loyaltyConfig.showCashBal">
+                                    <input type="number" id="checkout-cash-input" class="form-control" placeholder="Cash" min="0" ng-pattern="/^\d{0,9}(\.\d{1,9})?$/" max="{{userMaxCash}}" ng-change="changeCashGoing()" ng-disabled="isSliderDisabled" ng-model="redeem.cashGoing" name="cashGoing"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="points-slider-wrapper col-lg-10">
+                                    <div class="clearfix">
+                                        <div class="pull-left">
+                                            <p class="minimum-Points"> <span id="minimum-points">{{0}}</span></p>
+                                        </div>
+                                        <div class="pull-right">
+                                            <p class="maximum-Points">
+                                            <span id="maximum-points" ng-if ="!loyaltyConfig.showCashBal" ng-bind="userMaxPoints"></span>
+                                            <span id="maximum-points" ng-if ="loyaltyConfig.showCashBal" ng-bind="((userMaxPoints * redeem.ratio).toFixed(2))">
+                                            </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div
+                                            id="points-slider"
+                                            min="0"
+                                            ui-slider
+                                            ng-disabled="isSliderDisabled"
+                                            ng-if="!loyaltyConfig.showCashBal"
+                                            ng-change="changePointsGoing()"
+                                            ng-model="redeem.pointsGoing"
+                                            max="{{userMaxPoints}}">
+                                        </div>
+                                        <div
+                                            id="points-slider"
+                                            min="0"
+                                            ui-slider
+                                            ng-disabled="isSliderDisabled"
+                                            ng-if="loyaltyConfig.showCashBal"
+                                            ng-change="changeCashGoing()"
+                                            ng-model="redeem.cashGoing"
+                                            max="{{userMaxCash}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <button id="apply-points-button" ng-if="showApplyPoints" ng-click="applyLoyaltyPoints()" class=" btn btn-success points-slider-wrapper" ng-disabled="isSliderDisabled"> {{'APPLY' | translate}}  </button>
+                                    <button id="remove-points-button" ng-if="!showApplyPoints" ng-click="removeLoyaltyPoints()" class=" btn btn-danger points-slider-wrapper"> {{'REMOVE' | translate}}  </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

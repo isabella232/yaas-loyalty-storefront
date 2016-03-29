@@ -1,0 +1,104 @@
+
+<div ng-controller="LoyaltyUserCtrl">
+
+	<div ng-if="thisUser.isUser" ng-if="isConfigMaintained">
+
+		
+		<div class="segment" ng-if="thisUser.isMember && configData.showReward">			
+			
+			<div class="userBottomMargin">		
+						<span class="title" id="rewards-enrolled-text" translate="{{ 'ENROLLED' }}" translate-values="{ programName: thisUser.program}"></span> 
+			</div>
+			<div class="row form-group" >		
+				<div class="col-sm-4 col-md-4" ng-if="thisUser.loyaltyUser.referralCode && configData.enableTellAFriend">
+						<span class="title" id="referral-code-label">{{'REFERRALCODE' | translate}} : </span> 
+						<span class="info"><strong class="text-info" id="my-referral-code" ng-bind="thisUser.loyaltyUser.referralCode">-</strong></span>
+						<!-- <span class=""><button class="btn btn-link" ng-click="openReferralModal()" ><span class="glyphicon glyphicon-envelope tell_a_friend_icon" data-toggle="tooltip" data-placement="top" title="{{'TELL_A_FRIEND' | translate}}"></span></button></span> -->
+						<button class="btn btn-primary btn-sm userMargin" id="invite-friend-button" ng-click="openReferralModal()">{{'INVITE_FRIEND' | translate}}</button>
+				</div>
+
+				<div class="hidden-xs col-sm-8" ng-if="thisUser.isMember">
+					<div class="row">
+						<div class="col-sm-1">
+			                <a ng-click="openPreferredLanguageModal()"><span id="edit-user-info" class="glyphicon glyphicon-pencil"></span></a>
+			            </div>
+			            <div class="col-sm-3 text-right">
+			                <span class="dataLabel">{{'PREFERRED_LANGUAGE' | translate}}</span>
+			                {{thisUser.loyaltyUser.preferredLanguage | translate}}
+			                <span data-toggle="tooltip" title="{{'PREFERRED_LANGUAGE_TOOLTIP' | translate}}" class="glyphicon glyphicon-question-sign"></span>
+			            </div>
+			         </div>
+				</div>
+
+				<div class=" col-sm-8 hidden-sm hidden-md hidden-lg" ng-if="thisUser.isMember">
+					<div class="row">
+						
+			            <div class="col-xs-8">
+			                <div class="mobileDataSection">
+			                    <span class="dataLabel locale">{{'PREFERRED_LANGUAGE' | translate}}</span>
+			                    {{thisUser.loyaltyUser.preferredLanguage | translate}}
+			                    <span data-toggle="tooltip" title="{{'PREFERRED_LANGUAGE_TOOLTIP' | translate}}" class="glyphicon glyphicon-question-sign"></span>
+			                </div>
+
+			            </div>
+			            <div class="col-xs-4">
+			                <button class="btn btn-secondary btn-md pull-right" ng-click="openPreferredLanguageModal()">{{'EDIT' | translate}}</button>
+			            </div>
+		            </div>
+
+				</div>
+
+			</div>
+
+			
+
+			
+
+			<div id="redeem-text-info" class='textInfo floatRight' translate="{{ 'REEDEEM_TEXT_INFO' }}" translate-values="{ redeemPoints: totalRedeemablePoints}"></div>
+			<br>	
+			<div class="progress-container">
+
+				<progressbar id="points-progress-bar" value="dynamicValue" type="primary">
+					
+
+				</progressbar> 
+
+				<span id="user-tier" class="floatleft padleft10px info" translate="{{ 'USER_TIER' }}" translate-values="{ userTier: userPresentTier}"></span>
+				<span id="next-tier" ng-if="dispNextTierFlag" class="floatRight padright10px info" translate="{{ 'REEDEEM_TEXT_INFO_1' }}" translate-values="{ remainingPoints: remainingPoints, upgradadableTier: updagradableTier}"></span>
+
+				
+			</div>
+
+			<div class="row marginTop100">
+
+					<div class=" col-sm-1" ng-if="showAddToAppleWallet">
+						<a ng-href="{{appleWalletUrl}}" class="icon pull-left">
+			                <span> <img src="img/Add_to_Apple_Wallet_rgb_US-UK.svg"> </span>
+			            </a>
+			        </div>
+
+					<div class=" col-sm-2">
+						<div id="saveToWallet"></div>
+					</div>	
+
+					
+			    </div>
+		</div>
+
+				
+
+		
+
+
+		<div class="form-group" ng-if="!thisUser.isMember && configData.showReward">
+			<button class="btn btn-primary" id="get-membership-button" ng-click="getLoyaltyProgramMembership()"  translate="{{ 'SIGN_UP_TITLE_PROGRAM_NAME' }}" translate-values="{ programName: userProgramName}"></button>
+		</div>	
+
+
+
+
+
+
+
+	</div>
+</div>

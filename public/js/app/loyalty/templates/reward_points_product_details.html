@@ -1,0 +1,22 @@
+<div ng-controller="RewardsPointCtrl"  ng-if="isConfigMaintained">
+	<div ng-if="thisUser.isMember && loyaltyConfig.showReward">
+	  	<section class="gray points-calc">
+			<div class="row-group">
+				<h4 class="text-green text-center">
+					<i id="gift-glyphicon" class="glyphicon glyphicon-gift"></i>
+				</h4>
+			</div>
+
+			<div class="row-group">
+
+				<div ng-show="pointsProcessing">
+					<h4 id="product-processing-text">{{ 'PROCESSING_TEXT' | translate}}</h4>
+				</div>
+				<div ng-hide="pointsProcessing">
+					<h4 id="product-points" ng-if="!loyaltyConfig.showCashBal" class="text-green"><b><i translate="{{ 'EARN_POINTS_DESCRIPTION' }}" translate-values="{ points: earning.points}"></i></b></h4>
+					<h4 id="product-cash" ng-if="loyaltyConfig.showCashBal" class="text-center text-green"><b><i> {{'REWARD_CASH_EARNED_TEXT' | translate }} {{earning.cash | currency: currencySymbol}}</i></b></h4>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>

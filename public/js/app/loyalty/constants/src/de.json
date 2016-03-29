@@ -1,0 +1,345 @@
+{
+     //XFLD,255: Display text to the user that something is processing
+     "PROCESSING_TEXT" : "Wird bearbeitet",
+  
+     //XFLD,255: User info to show how points has been earned
+     "REWARD_PNTS_EARNED_TEXT" : "Treuepunkte sammeln",
+
+     //XFLD,255: User info to show how points has been earned after order
+     "LOYALTY_CASH_EARNED_TEXT" : "Gesammelte Treuepunkte im Wert von",
+
+     //XGRP,255: User info to tell you can spend ur reward points
+     "SPEND_YOUR_REWARDS_PNTS": "Lösen Sie Ihre Treuepunkte ein",
+
+    // XFLD,255: User info to show how much cash has been earned
+      
+    "REWARD_CASH_EARNED_TEXT" : "Treuepunkte sammeln im Wert von",
+
+    // XFLD,255: User info to show how much cash has been spent
+      
+    "REWARD_CASH_SPENT_TEXT" : "Ausgegebene Treuepunkte im Wert von",
+    
+    // XFLD,255: Loyalty Discount label shown in checkout cart
+    "LOYALTY_DISCOUNT": "Treuerabatt",
+
+
+     //XLNK,255: Review action link to write review 
+     "WRITE_REVIEW" : "Rezension schreiben", 
+
+     //XGRP,255: Text info show to inform user these are your reward history
+     "REWARD_HISTORY": "Treuepunkte: Übersicht",
+
+     //XTIT,255: Table header cell title to show dates
+     "DATE": "Datum",
+  
+     //XTIT,255: Table header cell title to show prior activities of user (registration, review, rating etc)
+     "ACTIVITY": "Aktivität",
+
+     //XTIT,255: Table header cell title to show list of points user ( spent, redeemed etc)
+     "POINTS" : "Punkte",
+    
+     //XBUT,255: To show all elements
+     "SHOW_ALL": "Alle anzeigen",
+
+     //XBUT,255: To show less elements
+     "SHOW_LESS" : "Weniger anzeigen",
+
+     //XFLD,255: User info to earn reward points
+     "EARN_POINTS_DESCRIPTION" : "Sammeln Sie {{points}} Treuepunkte",
+    
+     //XTOL,255: To close 
+     "CLOSE": "Schließen",
+
+      //XGRP,255: To sign up
+      "SIGN_UP" : "Anmelden",
+
+      //XCKL,255: User info for sign up for loyaltyProgram {{name}} ---> Felton Rewards
+      "SIGN_UP_DESCRIPTION": "Ich möchte mich für <strong>{{name}}</strong> anmelden, um Willkommenspunkte zu sammeln.",
+
+      // XBUT,255: General info to the user for sign up
+      "SIGN_UP_TITLE_PROGRAM_NAME" : "Anmelden für {{programName}}",
+    
+      //XFLD,255: Product ratings
+      "RATING" : "Bewertung",
+  
+      //XFLD,255: user info to write a review
+      "WRITE_A_REVIEW" : "Schreiben Sie eine Rezension",
+
+      //XBUT,255: No thanks button for declining to review or rate
+      "NO_THANKS" : "Nein, danke",
+
+      //XBUT,255: Submit button 
+      "SUBMIT": "Abschicken",
+   
+      //XFLD,255: User info to show these many reward points can be used
+      "REEDEEM_TEXT_INFO": "<strong class='reedmTextInfo' >{{redeemPoints}}</strong> <span class='reward_text_desc'> Verfügbare Treuepunkte</span>",
+      
+      //XFLD,255: User info to show remaining points to upgrade to next tier example --> Only {{223}} more points to {{Silver}} tier.
+      "REEDEEM_TEXT_INFO_1": "Sie benötigen <strong>{{remainingPoints}}</strong> Treuepunkte, um die Stufe <strong>{{upgradadableTier}}</strong> zu erreichen",
+   
+      //XFLD,255: User info to show his present tier. Only translate the last word tier. Exclude the rest
+      "USER_TIER" : "<strong>{{userTier}}</strong> Stufe",
+
+      //XFLD,255: Used to show the stars - in context of Rating a product
+      "STARS" : "{{starValue}} Sterne",
+
+      // XFLD,45: User info for enrolled
+      "ENROLLED" : "Sie sind Mitglied bei <strong class='text-info'  id='rewards-enrolled-program'>{{programName}}</strong>",
+
+      //XFLD,255: Inidcates the Referral code to refer a friend to join the program
+      "REFERRALCODE" : "Empfehlungscode",
+
+      //XFLD,255: Success text
+      "SUCCESS" : "Erfolg",
+
+      //XMSG,255: Success description
+      "SUCCESS_DESC" : "Einladungen zur Anmeldung für das Treueprogramm werden an folgende E-Mail-Adresse(n) gesendet:",
+
+      //XMSG,255: Success warning message
+      "SUCCESS_WARNING" : "Die Einladung wird nicht an Benutzer gesendet, die bereits am Treueprogramm teilnehmen.",
+
+      //XTIT,255: title for referral section
+      "REF_TIT": "Per E-Mail weiterempfehlen",
+
+      //XFLD,255: Referral modal description
+      "REF_MOD_DESC" : "Geben Sie bis zu 5 E-Mail-Adressen ein",
+
+      //XBUT,255: To send invitation
+      "SEND_INV" : "Einladung senden",
+
+      //XFLD,255: Email address placeholder, for a text box where the user will enter the email addresses
+      "EMAIL_ADDRESS" : "E-Mail-Adresse(n) eingeben, getrennt durch Leerzeichen, Komma oder Eingabetaste",
+
+      // XFLD,255: rating text0
+      "RATING_TEXT0" : "Bitte wählen Sie eine Bewertung aus.",
+
+      //XFLD,255: Indicates a rating with score 1, Eg. I hate this product so i rate it 1
+      "RATING_TEXT1" : "Gefällt mir gar nicht",
+
+      //XFLD,255: Indicates a rating with score 2
+      "RATING_TEXT2" : "Gefällt mir nicht",
+
+      //XFLD,255: Indicates a rating with score 3
+      "RATING_TEXT3" : "Ist okay",
+
+      //XFLD,255: Indicates a rating with score 4
+      "RATING_TEXT4" : "Gefällt mir",
+
+      //XFLD,255: Indicates a rating with score 5
+      "RATING_TEXT5" : "Gefällt mir sehr",
+
+      //XSEL,255: Indicates that the activity is of type redeem (Redemption)
+      "REDEEM" : "Einlösen",
+
+      //XSEL,255: Indicates that the activity is of type Order 
+      "ORDER" : "Bestellung",
+
+      //XSEL,255: Indicates that the activity is of type Registration 
+      "REGISTRATION" : "Registrierung",
+
+      //XSEL,255: Indicates that the activity is of type Award points
+      "AWARD" : "Punktevergabe",
+
+      //XSEL,255: Indicates that the activity is of type deduct points
+      "DEDUCT" : "Punkteabzug",
+
+      //XSEL,255: Indicates that the activity is of type expiration points
+      "EXPIRATION" : "Punkteverfall",
+
+      //XSEL,255: Indicates that the activity is of type Rating
+      "RATING" : "Bewertung",
+
+      //XSEL,255: Indicates that the activity is of type Review
+      "REVIEW" : "Rezension",
+
+      //XSEL,255: Referral activity
+      "REFERRAL" : "Empfehlung",
+
+      //XSEL,255: Accrual activity
+      "ACCRUAL" : "Punkteerwerb",
+
+      //XFLD,255: Short name for month January
+      "JAN" : "Jan",
+
+      //XFLD,255: Short name for month February
+      "FEB" : "Feb",
+
+      //XFLD,255: Short name for month March
+      "MAR" : "Mär",
+
+      //XFLD,255: Short name for month April
+      "APR" : "Apr",
+
+      //XFLD,255: Month May
+      "MAY" : "Mai",
+
+      //XFLD,255: Short name for month June
+      "JUN" : "Jun",
+
+      //XFLD,255: Short name for month July
+      "JUL" : "Jul",
+
+      //XFLD,255: Short name for month August
+      "AUG" : "Aug",
+
+      //XFLD,255: Short name for month September
+      "SEP" : "Sep",
+
+      //XFLD,255: Short name for month October
+      "OCT" : "Okt",
+
+      //XFLD,255: Short name for month November
+      "NOV" : "Nov",
+
+      //XFLD,255: Short name for month December
+      "DEC" : "Dez",
+
+      //NOTR,255: AM
+      "AM" : "AM",
+
+      //NOTR,255: PM
+      "PM": "PM",
+
+      // XFLD,255: User review text
+      "USER_REVIEW" : "({{totalRatingReviews}}) Benutzerrezensionen", 
+
+     // XFLD,255: User rated text
+     "USER_RATED" : "{{ totalRatingReviews }} Benutzer haben bewertet", 
+
+     // XTIT,255: Write review header text
+     "RATE_REVIEW": "{{product}} bewerten und rezensieren",
+
+     // XFLD,255: User review for text
+     "USER_REVIEW_FOR" : "Benutzerrezensionen für", 
+
+     // XFLD,255: Average user rating
+     "AVERAGE_USER_RATING" : "Durchschnittliche Benutzerbewertung", 
+
+     // XFLD,255: Ratings text
+     "RATINGS" : "({{ totalRatingReviews }}) Bewertungen", 
+
+     // XBUT,255: Add your review text
+     "ADD_REVIEW" : "Fügen Sie Ihre Rezension hinzu", 
+
+     // XFLD,255: A user text
+     "A_USER" : "Anonym",
+
+     //XBUT,255: Invite friend text
+     "INVITE_FRIEND" : "Weiterempfehlen",
+
+     // XFLD,255: My rating text
+     "MY_RATING" : "Meine Bewertung",
+
+     //XFLD,255: Review title text
+     "REVIEW_TITLE" : "Titel der Rezension",
+
+     //XFLD,255: Review description text
+     "REVIEW_DESC" : "Beschreibung",
+
+     // XFLD,255: User review list text
+      "USER_REVIEW_LIST" : "Benutzerrezensionen ({{ totalReviewsToShow }})",
+
+    // XFLD,255: Single Ratings text
+     "SINGLE_RATING" : "({{ totalRatingReviews }}) Bewertung",
+
+    // XFLD,255: Advocacy Point text
+     "ADVOCACY_POINTS" : "Sammeln Sie {{ point }} Punkte",
+
+    // XFLD,255: Refer a friend signup information
+     "REFER_A_FRIEND_INFO_TEXT" : "Geben Sie unten den Empfehlungscode ein, wenn Sie eine Empfehlung von einem Freund erhalten haben. (optional)", 
+
+    // XFLD,255: Wrong Refer a friend  information text1
+     "WRONG_REFER_A_FRIEND_INFO_TEXT1" : "Es tut uns leid! Aufgrund eines fehlerhaften Empfehlungscodes konnten Sie nicht für {{ programName}} angemeldet werden.", 
+
+    // XFLD,255: Wrong Refer a friend  information text2
+     "WRONG_REFER_A_FRIEND_INFO_TEXT2" : "Wenn Sie eine Empfehlung von einem Freund erhalten haben, geben Sie den Empfehlungscode ein oder lassen Sie das Feld leer.",
+
+    // XFLD,255: Confirmation page text
+    "CONFIRMATION_LOYALTY_TEXT" : "Eine Übersicht über Ihre Treuepunkte finden Sie auf der Seite 'Mein Konto'.",
+
+    //XMSG, 255: Error message indicating the request sent is not in appropriate form
+    "BAD_REQUEST": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating unauthorized access for some resource
+    "UNAUTHORIZED": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating unauthorized access for some resource
+    "FORBIDDEN": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating the request sent is not in appropriate form
+    "BAD_PAYLOAD": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating request timeout occurred
+    "GATEWAY_TIMEOUT": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating no loyalty configuration present in the system
+    "CONFIGURATION_NOT_FOUND": "Im System wurde keine Treuekonfiguration gefunden.",
+
+    //XMSG, 255: Error message indicating no loyalty membership present in the system
+    "MEMBERSHIP_NOT_FOUND" : "Im System wurde keine Teilnahme gefunden.",
+
+    //XMSG, 255: Error message indicating no loyalty membership present in the system
+    "MEMBERSHIP_ALREADY_EXISTS" : "Teilnahme ist bereits vorhanden.",
+
+    //XMSG, 255: Error message indicating type of content is not suported in the system
+    "UNSUPPORTED_CONTENT" : "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating unknown error
+    "UNKNOWN_ERROR_OCCURED": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating internal error
+    "INTERNAL_SERVER_ERROR": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating unsupported data
+    "UNSUPPORTED_METHOD": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message indicating unsupported response content type
+    "UNSUPPORTED_RESPONSE_CONTENT_TYPE": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+    
+     //XMSG, 255: Error message indicating too long uri
+    "URI_TOO_LONG": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+     //XMSG, 255: Error message indicating referral code is invalid
+    "INVALID_REF_CODE" : "Der von Ihnen eingegebene Empfehlungscode ist ungültig.",
+
+    //XMSG, 255: Error message shown when something went wrong from system (for different error status code mapped with error message)
+    "400": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message shown when something went wrong from system
+    "401": "Sitzung ist abgelaufen.",
+
+    //XMSG, 255: Error message shown when something went wrong from system
+    "403": "Sie sind nicht berechtigt, auf diese Ressource zuzugreifen.",
+    
+    //XMSG, 255: Error message shown when something went wrong from system
+    "404": "Ressource nicht gefunden.",
+    
+    //XMSG, 255: Error message shown when something went wrong from system
+    "500": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+    
+    //XMSG, 255: Error message shown when something went wrong from system
+    "502": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+    
+    //XMSG, 255: Error message shown when something went wrong from system
+    "504": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
+
+    //XMSG, 255: Error message shown when something went wrong from system
+    "ERROR_MEMBER_FETCH"   :  "Beim Abrufen von Teilnehmerdetails ist ein Fehler aufgetreten.",
+
+    //XMSG, 255: Error message shown when something went wrong from system
+    "ERROR_TIER_FETCH"  :   "Beim Abrufen von Stufendetails ist ein Fehler aufgetreten.",
+
+    //XMSG, 255: Error message shown when something went wrong from system
+    "ERROR_CATEGORY_FETCH"  : "Beim Abrufen von Kategorien ist ein Fehler aufgetreten.",
+
+    //XMSG, 255: Error message shown when something went wrong from system
+    "ERROR_PRODUCT_FETCH" : "Beim Abrufen der Produkte ist ein Fehler aufgetreten.",
+
+    //XMSG, 255: Error message shown when something went wrong from system
+    "ERROR_ORDER_FETCH"   : "Beim Abrufen der Auftragsdetails ist ein Fehler aufgetreten.",
+
+    //XMSG, 255: Error message shown when something went wrong from system
+    "ERROR_CUSTOMER_FETCH"  : "Beim Abrufen der Kundendetails ist ein Fehler aufgetreten."
+
+
+}

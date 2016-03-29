@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-class="{'disable-scroll': showCart || showMobileNav || checkoutCartEditVisible, 'force-scroll': forceScroll }">
+<head>
+    <meta charset="utf8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title title-config ng-bind-template="{{titleConfig}}">Store Template</title>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- dynamic optimized style sheet resources -->
+    <!-- build:css css/app/storefront.css -->
+    <link rel="stylesheet" href="js/vendor/angular-ui-select/dist/select.min.css">
+    <link rel="stylesheet" href="css/app/style.css" type="text/css" media="screen, projection">
+    <link href="js/vendor/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    <!-- endbuild -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+          
+        <!-- bower:css -->
+        <link rel="stylesheet" href="js/vendor/jquery-ui/themes/base/jquery-ui.min.css" />
+        <link rel="stylesheet" href="js/vendor/select2/select2.css" />
+        <link rel="stylesheet" href="js/vendor/angular-ui-select/dist/select.css" />
+        <link rel="stylesheet" href="js/vendor/yamm3/yamm/yamm.css" />
+        <!-- endbower -->
+
+        <link rel="stylesheet" href="css/app/store.min.css" />
+
+</head>
+
+<body ng-class="{'fixedLayout': showCart }">
+    <div ng-class="{'right': showCart, 'left': showMobileNav}" class="off-canvas">
+        <div ui-view="sidebarNavigation" class="sidebar-offcanvas hidden-md hidden-lg" id="sidebar" role="navigation"></div>
+        <div class="mainContent" ng-class="{'main-on-top': checkoutCartEditVisible }">
+            <div ui-view="topNavigation"></div>
+            <div class="main">
+                    
+
+                    <div flash-alert="error" active-class="in alert" class="fade error" style="position: relative;">
+                        <span class="alert-message">{{flash.message}}</span>
+                    </div>
+
+
+                <div ui-view="main"></div>
+                <!--<div class="content-mask" ng-click="closeOffcanvas()"></div>-->
+            </div>
+            <div ui-view="footer"></div>
+
+        </div>
+        <div ui-view="cart" class="offcanvas offcanvas-right" id="cart" role="navigation"></div>
+
+
+    </div>
+         <!-- bower:js -->
+         <script src="js/vendor/jquery/dist/jquery.js"></script>
+         <script src="js/vendor/jquery-ui/jquery-ui.js"></script>
+         <script src="js/vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+         <script src="js/vendor/angular/angular.js"></script>
+         <script src="js/vendor/angular-resource/angular-resource.js"></script>
+         <script src="js/vendor/angular-ui-router/release/angular-ui-router.js"></script>
+         <script src="js/vendor/angular-mocks/angular-mocks.js"></script>
+         <script src="js/vendor/angular-translate/angular-translate.js"></script>
+         <script src="js/vendor/select2/select2.js"></script>
+         <script src="js/vendor/angular-ui-select2/src/select2.js"></script>
+         <script src="js/vendor/angular-stripe-js/build/angular-stripe-js.min.js"></script>
+         <script src="js/vendor/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+         <script src="js/vendor/bootstrap/dist/js/bootstrap.js"></script>
+         <script src="js/vendor/lodash/dist/lodash.compat.js"></script>
+         <script src="js/vendor/restangular/dist/restangular.js"></script>
+         <script src="js/vendor/spin.js/spin.js"></script>
+         <script src="js/vendor/angular-cookie/angular-cookie.js"></script>
+         <script src="js/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+         <script src="js/vendor/angular-xeditable/dist/js/xeditable.js"></script>
+         <script src="js/vendor/angular-directive.g-signin/google-plus-signin.js"></script>
+         <script src="js/vendor/angular-ui-select/dist/select.js"></script>
+         <script src="js/vendor/angular-sanitize/angular-sanitize.js"></script>
+         <script src="js/vendor/angular-touch/angular-touch.js"></script>
+         <script src="js/vendor/algoliasearch/dist/algoliasearch.angular.js"></script>
+         <script src="js/vendor/angular-ui-slider/src/slider.js"></script>
+         <script src="js/vendor/angular-flash/dist/angular-flash.js"></script>
+         <!-- endbower -->
+        <script src="https://js.stripe.com/v2/"></script>
+        <script src="js/vendor-static/jquery.menu-aim.js"></script>
+        <script src="https://apis.google.com/js/plusone.js"></script>          
+        <script src="js/app/store.min.js"></script>
+
+</body>
+</html>

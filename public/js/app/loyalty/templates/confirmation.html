@@ -1,0 +1,43 @@
+
+        <div class="amountSection" ng-controller="LoyaltyConfirmationCtrl"  ng-if="isConfigMaintained">
+
+            <div ng-if="thisUser.isMember && loyaltyConfig.showReward">
+
+                <table class="table" style="background: rgba(0, 0, 0, 0)">
+                        
+                        <tr>
+                            <td>
+                                <span id="confirmation-points-text"> {{ 'CONFIRMATION_LOYALTY_TEXT' | translate}} </span> 
+                            </td>
+                        </tr>
+
+                </table>
+
+
+
+
+
+                <!-- <table class="table" style="background: rgba(0, 0, 0, 0)">
+                        
+                        <tr>
+                            <td>
+                                <span id="confirmation-cash-redeemed-text"> {{ 'REWARD_CASH_SPENT_TEXT' | translate}} </span> 
+                            </td>
+                            <td class="text-right">
+                                <span class="error" id="confirmation-cash-redeemed" >- {{amounts.redeemed | currency: currencySymbol}} </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <span id="confirmation-cash-earned-text"> {{ 'LOYALTY_CASH_EARNED_TEXT' | translate}} </span> 
+                            </td>
+                            <td class="text-right">
+                                <span class="text-green" id="confirmation-cash-earned" >{{amounts.earned | currency: currencySymbol}} </span>
+                            </td>
+                        </tr>
+                    
+                </table> -->
+            </div>
+
+        </div>

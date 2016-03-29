@@ -1,0 +1,101 @@
+
+
+	<div ng-controller="RewardHistoryCtrl"  ng-if="isConfigMaintained">
+
+		<div ng-show="thisUser.isMember && loyaltyConfig.showReward">
+
+			<div >
+
+				  <div class="row form-group reward-details">
+						<div class="col-sm-4">
+							<h3 class="section-headline head"><i id="reward-history-label">{{ 'REWARD_HISTORY' | translate}}</i></h3>
+						</div>
+
+					<div class="row form-group">
+						<div class="col-sm-12">
+							<div class="table-responsive hidden-sm hidden-xs">
+								<table class="table">
+									<thead>
+										<tr>
+				                            <th class="reward-table-padding" >
+				                            	<span id="rewards-date">{{'DATE' | translate}}</span>
+				                            </th>
+				                            <th width="30%" id="rewards-activity">{{'ACTIVITY' | translate}}</th>
+				                            <th width="25%">
+				                            	<div class="text-right points-right-padding">
+				                            		<span id="rewards-points" ng-bind="'POINTS' | translate"></span>
+				                            	</div>
+				                            </th>
+				                            <th width="15%"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr  ng-repeat="activity in memberActivities| limitTo: showHistoryFilter">
+											<td class="reward-table-padding" id="{{ 'rewards-date-' + $index }}"> {{activity.metadata.createdAt | date: 'medium'}} </td>
+											<td id="{{ 'rewards-activity-' + $index }}">{{activity.activityType | translate}}</td>
+											<td>
+												<strong class="point" style="padding-right: 25px;" ng-class= "{'redeemRed':activity.activityType=='REDEEM' ||activity.activityType=='DEDUCT' ||activity.activityType=='EXPIRATION', 'orderGreen':activity.activityType=='ORDER' || activity.activityType=='REGISTRATION' || activity.activityType=='AWARD' || activity.activityType=='RATING' || activity.activityType=='REVIEW' ||activity.activityType=='ACCRUAL' || activity.activityType=='REFERRAL'}">
+													<div class="text-right" id="{{ 'rewards-points-' + $index }}">
+													<span ng-if="activity.activityType=='REDEEM' || activity.activityType=='DEDUCT' || activity.activityType=='EXPIRATION'">-</span>
+													{{activity.transactionPoints || 0 | number:0}}
+													</div>
+													
+												</strong>
+											</td>
+											<td></td>
+											<!-- <td>{{point.qualifyingPoints}}</td> -->
+										</tr>
+									</tbody>
+								</table>
+							</div>
+				            <div class="text-center">			
+				                <button class="btn btn-link" ng-show=" ( !showHistoryToggle && memberActivities.length > 10 ) " ng-click="showHistoryToggle =! showHistoryToggle; getMemberActivities(thisUser.loyaltyUser.memberId)">
+				                	<span>{{'SHOW_ALL' | translate}}</span>
+				                	<span class="glyphicon glyphicon-chevron-down"></span>
+				                </button>			
+				                <button class="btn btn-link" ng-show="showHistoryToggle" ng-click="showHistoryToggle =! showHistoryToggle; getMemberActivities(thisUser.loyaltyUser.memberId)">
+				                	<span>{{'SHOW_LESS' | translate}}</span>
+				                	<span class="glyphicon glyphicon-chevron-up"></span>
+				                </button>
+				            </span>
+							</div>
+						</div>
+
+					</div>
+
+
+					   <div class="hidden-md hidden-lg row">
+					       <div ng-repeat="activity in memberActivities| limitTo: showHistoryFilter" class="col-sm-4 col-xs-12 orderHistoryCard">
+					           <div class="cardStatusIdentifier pull-left" ></div>
+					           <div class="panel">
+					               <div class="panel-body " >
+					                   <div class="row">
+					                       <div class="col-sm-8 col-xs-8 leftCol">
+					                           <p id="{{ 'rewards-date-' + $index }}">
+					                           <strong id="{{ 'rewards-date-title-' + $index }}">{{'DATE' | translate}}</strong></br>
+					                            {{activity.metadata.createdAt | date: 'medium'}} 
+					                           </p>
+					                           <p id="{{ 'rewards-activity-' + $index }}">
+					                               <strong id="{{ 'rewards-activity-title-' + $index }}">{{'ACTIVITY' | translate}}</strong></br>
+					                                 {{activity.activityType | translate}}
+					                           </p>
+					                       </div>
+					                       <div class="col-sm-4 col-xs-4" ng-class= "{'redeemRed':activity.activityType=='REDEEM' ||activity.activityType=='DEDUCT' ||activity.activityType=='EXPIRATION', 'orderGreen':activity.activityType=='ORDER' || activity.activityType=='REGISTRATION' || activity.activityType=='AWARD' || activity.activityType=='RATING' || activity.activityType=='REVIEW' ||activity.activityType=='ACCRUAL' || activity.activityType=='REFERRAL'}">
+					                          <p >
+					                        	<span id="{{ 'rewards-minus-' + $index }}" ng-if="activity.activityType=='REDEEM' || activity.activityType=='DEDUCT' || activity.activityType=='EXPIRATION'">-</span>
+					                        	<strong id="{{ 'rewards-points-' + $index }}">
+													{{activity.transactionPoints || 0 | number:0}}
+					                        	</strong>
+					                          </p>
+					                       </div>
+					                   </div>
+					               </div>
+					           </div>
+					       </div>
+					   </div>
+
+
+
+		</div>
+
+	</div>
