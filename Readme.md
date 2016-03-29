@@ -1,7 +1,7 @@
 # hybris Store Template for the Cloud-based Commerce Services
 
 This project is an e-commerce front-end written in AngularJS that is meant to showcase the available commerce services and
-serve as starting point for creating a customized store front.
+serve as starting point for creating a customized loyalty flavored store front.
 
 
 ## Installation
@@ -37,7 +37,7 @@ To locally install the project, execute:
 
 ### 3. Project startup
 
-Start the project on localhost:9000 by executing:
+Start the project on localhost:9099 by executing:
 
 	$ npm start
 
@@ -56,7 +56,7 @@ Follow the steps outlined in the Dev Portal https://devportal.yaas.io/gettingsta
 In gruntfile.js, set the PROJECT_ID to your own project ID. When you build the project, the default project id in bootstrap.js will be replaced with your project-id. At this time you will need to also configure the CLIENT_ID and REDIRECT_URI gruntfile variables with the values set in the application associated with your project.
 
 ### 3.  Launch a new session 
-Execute command "npm start" and open your browser at http://localhost:9000.  You should now see your customized store.
+Execute command "npm start" and open your browser at http://localhost:9099.  You should now see your customized store.
 
 ### 4.  Customize the style or logic of your storefront as desired
 You can now modify the style or logic of your storefront.  Any new JS scripts or CSS files need to be added to index.html.
@@ -169,7 +169,7 @@ This project contains the capability to run the same deployed store template aga
 
 In the multi-project setup, instead of reading the project ID from bootstrap.js, the project-id is the first path segment in the URL. For example, to run the store against project "myproject" you would use the URL: 
 
-    http://localhost:9000/myproject.
+    http://localhost:9099/myproject.
 
 ## Security
 
