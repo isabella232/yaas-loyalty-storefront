@@ -25,9 +25,17 @@ Install bower:
 
 	$ npm install -g bower
 
+
+
+
 ### 2. Project requirements
 
 Create a fork of the repository, clone it to your machine, and ensure you are on the 'master' branch.  **Master** will be kept in sync with service dependencies deployed to prod. **Develop** will change frequently, and may contain experimental features and code changes against services that are only available in development and test environments.
+
+
+Set up Gruntfile.js :
+1.  Configure appConfigs according to environment (test, dev, live, hfx etc).
+2.  Configure baseUrl, tenant, clientId and redirectURI with your tenant details.
 
 To locally install the project, execute:
 

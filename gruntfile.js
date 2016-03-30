@@ -38,7 +38,7 @@
 
                 baseUrl: 'api.yaas.io',
                 tenant: 'saploytest',
-                clientId: 'jrNTWJ3gklQe5m3MAJ8J7MWsR4tM1q5b',
+                clientId: 'clientId',
                 redirectURI: 'https://loyaltyshoptest.yaas.io'
             },
 
@@ -46,7 +46,7 @@
 
                 baseUrl: 'api.stage.yaas.io',
                 tenant: 'saploydev',
-                clientId: 'T2kXYhbrAOCntbgN7lwwxxi6xOfyIFAE',
+                clientId: 'clientId',
                 redirectURI: 'https://loyaltystoredev.stage.yaas.io'
             },
 
@@ -54,7 +54,7 @@
 
                 baseUrl: 'api.yaas.io',
                 tenant: 'cecloyaltylive',
-                clientId: 'bgEPWS2OwUsK5lXoZ1oXfJFwY9smlBf4',
+                clientId: 'clientId',
                 redirectURI: 'https://loyaltyshop.yaas.io'
             },
 
@@ -62,7 +62,7 @@
 
                 baseUrl: 'api.yaas.io',
                 tenant: 'saployaltytest',
-                clientId: 'gvv4VTDHbTAzooa6Td3vVZEnpxfdiQLV',
+                clientId: 'clientId',
                 redirectURI: 'https://loyaltyshoptest.yaas.io'
             }
         };
