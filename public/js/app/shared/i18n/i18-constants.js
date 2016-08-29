@@ -17,28 +17,4 @@ angular.module('ds.i18n')
     .constant('translateSettings', {
         defaultLanguageCode: 'en',
         supportedLanguages: ['en', 'de']
-    })
-/** Provides access to the dictionaries.*/
-    .provider('i18nConstants', ['TranslationsEN', 'TranslationLoyaltyEN', 'TranslationsDE','TranslationLoyaltyDE',
-        function i18nConstantsProvider(TranslationsEN, TranslationLoyaltyEN, TranslationsDE, TranslationLoyaltyDE) {
-
-            this.$get = [function () {
-                return this;
-            }];
-
-            this.languages = {
-                en: {
-                    code: 'en',
-                    translations: TranslationsEN,
-                    loyaltyTrans: TranslationLoyaltyEN
-
-                },
-                de: {
-                    code: 'de',
-                    translations: TranslationsDE,
-                    loyaltyTrans: TranslationLoyaltyDE
-
-                }
-            };
-        }
-    ]);
+    });

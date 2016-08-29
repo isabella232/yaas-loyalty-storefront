@@ -14,28 +14,48 @@
     'use strict';
 
     angular.module('ds.account')
-        .controller('EditUserEmailDialogCtrl', ['$scope', 'account', 'AccountSvc', '$modalInstance', '$injector','$rootScope',
-            function ($scope, account, AccountSvc, $modalInstance,  $injector, $rootScope) {
+        .controller('EditUserEmailDialogCtrl', ['$scope', 'account', 'AccountSvc', '$modalInstance', '$translate','$injector','$rootScope',
+            function ($scope, account, AccountSvc, $modalInstance, $translate,$injector,$rootScope) {
 
                 var LoyaltySvc = $injector.get('LoyaltySvc');
-                $scope.account = angular.copy(account);
+                $scope.account = account;
+                $scope.error = '';
+                $scope.step = 1;
 
                 $scope.closeEditUserDialog = function () {
                     $modalInstance.dismiss('cancel');
                 };
 
                 $scope.updateUserInfo = function () {
-                    var account = angular.copy($scope.account);
+                    
+                    //Force sync of email address
+                    $scope.account.syncContactEmail = true;
 
-                    AccountSvc.updateAccount(account).then(function () {
+                    AccountSvc.updateEmail($scope.account).then(function () {
+
                         //loyalty call
                         LoyaltySvc.getUser().then(function(user){
                            $rootScope.$broadcast('loyaltyInformation:updated', user);
-                            LoyaltySvc.updateAccountDetails(account);
+
+                            //LoyaltySvc.updateAccountDetails($scope.account,'EMAIL_UPDATE');
 
                         });
-                        $modalInstance.close(account);
+                        $scope.step = 2;
+                    }, function (error) {
+                        if (error.status === 401) {
+                            $scope.error = $translate.instant('EDIT_EMAIL_PASSWORD_NOT_CORRECT');
+                        }
+                        else if(error.status === 409) {
+                            $scope.error = $translate.instant('EDIT_EMAIL_ALREADY_IN_USE');
+                        }
+                        else {
+                            $scope.error = $translate.instant('EDIT_EMAIL_SOMETHING_WENT_WRONG');
+                        }
                     });
+                };
+
+                $scope.confirm = function () {
+                    $modalInstance.close($scope.account);
                 };
 
             }]);

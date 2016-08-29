@@ -1,9 +1,11 @@
 
 
-    var path = require('path');
+    var path        = require('path');
+    var glob        = require('glob');
+    var relaxedJSON = require('relaxed-json');
 
-    var host = process.env.VCAP_APP_HOST || 'localhost';
-    var port = process.env.VCAP_APP_PORT || 9099;
+
+
 
     module.exports = function (grunt) {
 
@@ -12,10 +14,7 @@
             cwd: './',
 
             dists: {
-
-                prepare: './dist',
-                dev: './dist/dev',
-                test: './dist/test'
+                prepare: './dist'
             }
         };
 
@@ -25,88 +24,78 @@
         paths['manifestConfig'] = paths.cwd + '/manifest.yml';
         paths['loyaltyConfigsSrc'] = paths.publicSource + '/js/app/loyalty/services/loyalty-config-raw.js';
         paths['loyaltyConfigsDest'] = paths.publicSource + '/js/app/loyalty/services/loyalty-config.js';
-        paths['loyaltyLangsSrc'] = paths.publicSource + '/js/app/loyalty/constants/src';
-        paths['loyaltyLangsDest'] = paths.publicSource + '/js/app/loyalty/constants';
-
+        paths['translationSrc'] = paths.publicSource + '/js/app/shared/i18n/dev';
+        paths['translationDest'] = paths.publicSource + '/js/app/shared/i18n/lang';
+        paths['translationLoyaltySrc'] = paths.publicSource + '/js/app/loyalty/constants/src/dev';
 
 
 
 
         var appConfigs = {
 
-            test: {
-
-                baseUrl: 'api.yaas.io',
-                tenant: 'saploytest',
-                clientId: 'clientId',
-                redirectURI: 'https://loyaltyshoptest.yaas.io'
-            },
-
             dev: {
-
                 baseUrl: 'api.stage.yaas.io',
                 tenant: 'saploydev',
-                clientId: 'clientId',
+                clientId: 'U84Iy0WLC8I3H8zb5GmmRcCPvYhkYwDc',
                 redirectURI: 'https://loyaltystoredev.stage.yaas.io'
             },
 
-            live: {
-
-                baseUrl: 'api.yaas.io',
-                tenant: 'cecloyaltylive',
-                clientId: 'clientId',
-                redirectURI: 'https://loyaltyshop.yaas.io'
+            test: {
+                baseUrl: 'api.stage.yaas.io',
+                tenant: 'saploytest',
+                clientId: 'T2kXYhbrAOCntbgN7lwwxxi6xOfyIFAE',
+                redirectURI: 'https://loyaltyshoptest.stage.yaas.io'
             },
 
             hfx: {
-
                 baseUrl: 'api.yaas.io',
                 tenant: 'saployaltytest',
-                clientId: 'clientId',
+                clientId: 'gvv4VTDHbTAzooa6Td3vVZEnpxfdiQLV',
                 redirectURI: 'https://loyaltyshoptest.yaas.io'
+            },
+
+            live: {
+                baseUrl: 'api.yaas.io',
+                tenant: 'cecloyaltylive',
+                clientId: 'bgEPWS2OwUsK5lXoZ1oXfJFwY9smlBf4',
+                redirectURI: 'https://loyaltyshop.yaas.io'
             }
         };
 
         var manifestConfigs = {
 
-            test: {
-               
-                name: 'loyaltyshoptest',
-                host: 'loyaltyshoptest',
-                domain: 'yaas.io',
-                url: 'loyaltyshoptest.yaas.io'
-            },
-
-            dev: {
-               
+            dev: {               
                 name: 'loyaltystoredev',
                 host: 'loyaltystoredev',
                 domain: 'stage.yaas.io',
                 url: 'loyaltystoredev.stage.yaas.io'
             },
 
-            live: {
-               
-                name: 'loyaltyshop',
-                host: 'loyaltyshop',
-                domain: 'yaas.io',
-                url: 'loyaltyshop.yaas.io'
+            test: {               
+                name: 'loyaltyshoptest',
+                host: 'loyaltyshoptest',
+                domain: 'stage.yaas.io',
+                url: 'loyaltyshoptest.stage.yaas.io'
             },
 
-            hfx: {
-               
+            hfx: {               
                 name: 'loyaltystorehfx',
                 host: 'loyaltystorehfx',
                 domain: 'yaas.io',
                 url: 'loyaltyshoptest.yaas.io'
+            },
+
+            live: {               
+                name: 'loyaltyshop',
+                host: 'loyaltyshop',
+                domain: 'yaas.io',
+                url: 'loyaltyshop.yaas.io'
             }
         };
-
 
         var configs = {
 
             app: {
-
                 baseUrl: '',
                 tenant: '',
                 clientId: '',
@@ -114,27 +103,18 @@
             },
 
             manifest: {
-
                 name: '',
                 host: '',
                 domain: '',
                 url: ''
             },
            
-            urls: '',
-
-            langs: {
-
-                supported: [ 'en', 'de' ],
-                filePrefix: '',
-                fileSuffix: '.json'
-            }
+            urls: ''
         };
 
 
 
        
-
 
 
 
@@ -144,8 +124,9 @@
             pkg: grunt.file.readJSON('package.json'),
 
 
-            exec: {
 
+            exec: {
+                start: 'npm start',
                 bowerInstall: 'bower install',
             },
 
@@ -160,16 +141,13 @@
                     ],
 
                     overrides: {
-
                         'jquery-ui': {
                             main: [
                                 'jquery-ui.js',
                                 'themes/base/jquery-ui.min.css'
                             ]
                         },
-
                         'algoliasearch': {
-
                             main: [
                                 'dist/algoliasearch.angular.js'
                             ]
@@ -230,30 +208,9 @@
                     }]
                 },
             },
-
-            cssmin: {
-
-                prepare: {
-
-                    files: [
-
-                        {
-                            dest: paths.publicSource + '/css/app/store.min.css',
-
-                            src: [
-
-                                paths.publicSource + '/css/app/style.css',
-                                paths.publicSource + '/js/app/loyalty/css/loyalty.css'
-                            ]
-                        }
-                    ]
-                }
-            },
            
             ngtemplates: {
-
                 app: {
-
                     cwd: paths.publicSource,
                     src: 'js/app/**/*.html',
                     dest: paths.publicSource + '/js/app/templates.js',
@@ -283,6 +240,7 @@
                                 paths.publicSource + '/js/app/auth/directives/create-account.js',
                                 paths.publicSource + '/js/app/auth/services/auth-rest.js',
                                 paths.publicSource + '/js/app/auth/services/token-service.js',
+                                paths.publicSource + '/js/app/auth/services/google-provider.js',
                                 paths.publicSource + '/js/app/auth/services/session-service.js',
                                 paths.publicSource + '/js/app/auth/services/auth-service.js',
                                 paths.publicSource + '/js/app/auth/services/anon-auth-service.js',
@@ -297,6 +255,7 @@
                                 paths.publicSource + '/js/app/account/account-index.js',
                                 paths.publicSource + '/js/app/account/controllers/account-ctrl.js',
                                 paths.publicSource + '/js/app/account/controllers/account-order-detail-ctrl.js',
+                                paths.publicSource + '/js/app/account/controllers/change-email-confirmation-ctrl.js',
 
                                 paths.publicSource + '/js/app/account/controllers/dialogs/address-remove-dialog-ctrl.js',
                                 paths.publicSource + '/js/app/account/controllers/modals/edit-user-email-dialog-ctrl.js',
@@ -326,15 +285,18 @@
                                 paths.publicSource + '/js/app/products/directives/product-attribute.js',
                                 paths.publicSource + '/js/app/products/directives/product-attribute-group.js',
                                 paths.publicSource + '/js/app/products/directives/product-attribute-groups.js',
+                                paths.publicSource + '/js/app/products/directives/product-img-carousel.js',
 
 
 
 
                                 paths.publicSource + '/js/app/cart/cart-index.js',
                                 paths.publicSource + '/js/app/cart/controllers/cart-ctrl.js',
+                                paths.publicSource + '/js/app/cart/controllers/cart-note-mixin-ctrl.js',
                                 paths.publicSource + '/js/app/cart/directives/cart-auto-toggle.js',
                                 paths.publicSource + '/js/app/cart/services/cart-rest.js',
                                 paths.publicSource + '/js/app/cart/services/cart-service.js',
+                                paths.publicSource + '/js/app/cart/services/cart-note-mixin-service.js',
 
                                 paths.publicSource + '/js/app/orders/orders-index.js',
                                 paths.publicSource + '/js/app/orders/services/order-list-service.js',
@@ -381,6 +343,7 @@
                                 paths.publicSource + '/js/app/shared/app-config.js',
                                 paths.publicSource + '/js/app/shared/site-config.js',
                                 paths.publicSource + '/js/app/shared/http-proxy.js',
+                                paths.publicSource + '/js/app/shared/countries.js',
                                 paths.publicSource + '/js/app/shared/directives/quantity-input.js',
                                 paths.publicSource + '/js/app/shared/directives/menu-aim.js',
                                 paths.publicSource + '/js/app/shared/directives/match-background.js',
@@ -392,6 +355,7 @@
                                 paths.publicSource + '/js/app/shared/directives/y-search.js',
                                 paths.publicSource + '/js/app/shared/directives/popover.js',
                                 paths.publicSource + '/js/app/shared/directives/y-inputs-dir.js',
+                                paths.publicSource + '/js/app/shared/directives/stop-event.js',
 
                                 paths.publicSource + '/js/app/shared/directives/force-scroll.js',
                                 paths.publicSource + '/js/app/shared/directives/site-selector/site-selector-ctrl.js',
@@ -416,6 +380,9 @@
                                 paths.publicSource + '/js/app/shared/filters/filters.js',
                                 paths.publicSource + '/js/app/shared/filters/show-number-of-items-filter.js',
                                 paths.publicSource + '/js/app/shared/filters/sum-by-key-filter.js',
+
+                                paths.publicSource + '/js/app/shared/media/committed-media-filter.js',
+                                paths.publicSource + '/js/app/shared/media/main-media-extractor.js',
 
                                 paths.publicSource + '/js/app/shared/i18n/i18-index.js',
                                 paths.publicSource + '/js/app/shared/i18n/i18-constants.js',
@@ -461,12 +428,24 @@
                 }
             },
 
-            uglify: {
+            cssmin: {
+                prepare: {
+                    files: [
+                        {
+                            dest: paths.publicSource + '/css/app/store.min.css',
+                            src: [
+                                paths.publicSource + '/css/app/style.css',
+                                paths.publicSource + '/js/app/loyalty/css/loyalty.css'
+                            ]
+                        }
+                    ]
+                }
+            },
 
+            uglify: {
                 options: {
                     mangle: false
                 },
-
                 prepare: {
                     src : paths.publicSource + '/js/app/store.min.js',
                     dest : paths.publicSource + '/js/app/store.min.js'
@@ -474,7 +453,6 @@
             },
 
             clean: {
-
                 prepare: {
                     files: [
                         {
@@ -488,75 +466,64 @@
             copy: {
 
                 prepare: {
-
                     dot: true,
                     expand: true,
                     cwd: paths.cwd,
-                    src: [ '!**', 'server.js', 'bower.json', 'package_dist.json', 'gruntfile_dist.js', '*.cfignore', '*.buildpacks', '*.bowerrc', '*.yml' ],
-                    dest: paths.dists.prepare,
-                    rename: function (dest, src) {
-
-                        var isDist = src.indexOf('_dist');
-
-                        if ( isDist >= 0 ) {
-                            src = src.substr(0, isDist) + '.' + src.split('.')[1]
-                        }
-
-                        var file = dest + '/' + src;
-                        return file;
-                    }
+                    src: [ '!**', 'app.js', 'package.json', 'manifest.yml' ],
+                    dest: paths.dists.prepare
                 },
 
-                forEnv: {
-
+                env: {
                     dot: true,
                     expand: true,
                     cwd: paths.publicSource,
-                    src: [ '!**', 'index.html', 'favicon.ico', 'img', 'img/**', 'img/*.*', 'css', 'css/fonts', 'css/fonts/**', '!css/app/*.*', 'js', 'js/**', '!js/bootstrap.js', '!js/app/**', '!js/app/**/*.html', 'js/app/store.min.js', 'css/app/store.min.css' ],
+                    src: [ '!**', 'index.html', 'favicon.ico', 'img', 'img/**', 'img/*.*', 'css', 'css/fonts', 'css/fonts/**', '!css/app/*.*', 'js', 'js/**', '!js/app/**', '**/app/shared', '**/app/shared/i18n', '**/app/shared/i18n/lang', '**/app/shared/i18n/lang/*.json', '!js/app/**/*.html', 'js/app/store.min.js', 'css/app/store.min.css' ],
                     dest: paths.dists.prepare + '/public'
+                },
+
+                translation: {
+                    options: {
+                        process: function (content, src) {
+                            return JSON.stringify(relaxedJSON.parse(content, {
+                                duplicate: false
+                            }), null, 2);
+                        }
+                    },
+                    files: [
+                        {
+                            expand: true,
+                            cwd: paths.translationSrc,
+                            src: ['dev_*.json'],
+                            dest: paths.translationDest + '/',
+                            rename: function (dest, src) {
+                                return dest + src.replace(/^dev_/, 'lang_');
+                            }
+                        }
+                    ]
                 }
             },
 
-            express: {
-
-                options: {
-                    port: port,
-                    hostname: host
-                },
-
-                run: {
-
-                    options: {
-                        server: path.resolve('./server.js'),
-                        serverreload: true,
-                        bases: [path.resolve('./server.js')]
-                    }
-                },
+            'json-minify': {
+                translation: {
+                    files: paths.translationDest + '/lang_*.json'
+                }
             },
 
             watch: {
-
                 prepare: {
-
+                    tasks: [ 'watcher' ],
                     files: [
-
                         paths.publicSource + '/js/app/**',
-
                         '!' + paths.publicSource + '/js/app/templates.js',
-                        '!' + paths.publicSource + '/js/app/store.min.js',
+                        '!' +   paths.publicSource + '/js/app/store.min.js',
                         '!' + paths.publicSource + '/css/app/store.min.css'
-                    ],
-
-                    tasks: [ 'watcher' ]
+                    ]
                 }
             },
 
             concurrent: {
-
                 run: {
-
-                    tasks: ['express:run', 'watch:prepare'],
-
+                    tasks: ['exec:start', 'watch:prepare'],
                     options: {
                         logConcurrentOutput: true
                     }
@@ -568,26 +535,25 @@
 
 
 
-        grunt.option('force', true);
+        grunt.option('force', false);
 
         require('load-grunt-tasks')(grunt);
 
         
         
-        grunt.registerTask('default', 'Hello', function() {
-            grunt.log.writeln('Loyalty Store.').ok();            
+        grunt.registerTask('default', 'Welcome', function() {
+            grunt.log.writeln('Loyalty Store.').ok();
         });
 
-        grunt.registerTask('resolve', [
-            'exec:bowerInstall',
-            'wiredep'
-        ]);
+        grunt.registerTask('resolve', 'Resolve the dependencies and add them in index', function () {
+            grunt.task.run( [ 'exec:bowerInstall', 'wiredep' ] );
+        });
 
-        grunt.registerTask('config', 'Load the configuration into the file', function(env) {
+        grunt.registerTask('config', 'Load the configuration into the file', function (env) {
 
             configs.app = appConfigs[env];
             configs.manifest = manifestConfigs[env];
-            configs.urls = grunt.file.read('./configs/urls/' + env + '.js');
+            configs.urls = grunt.file.read('./config/url/' + env + '.js');
 
             grunt.config('configs', configs);
             grunt.config('currentEnv', env);
@@ -595,44 +561,51 @@
             grunt.task.run( [ 'replace:urlConfig', 'replace:appConfig', 'replace:manifestConfig' ] );
         });
 
-        grunt.registerTask('translation', 'Load the translation files', function() {
+        grunt.registerTask('translation', 'Load the translation files', function () {
 
-            var fs = require('fs');
-            var stripJSONComments = require('strip-json-comments');
+            var files = glob.sync( [ paths.translationSrc, '*.json' ].join('/') );
 
-            for (var i = 0; i < configs.langs.supported.length; i++ ) {
+            files.forEach(function (file) {
 
-                var sourceFile = paths.loyaltyLangsSrc + '/' + configs.langs.filePrefix + configs.langs.supported[i] + configs.langs.fileSuffix;
-                var destFile = paths.loyaltyLangsDest + '/' + configs.langs.filePrefix + configs.langs.supported[i] + '.js';
+                if ( file.indexOf('dev_') < 0 && file.indexOf('test') < 0 ) {
 
-                var translationWithComments = fs.readFileSync(sourceFile, 'utf8');
-                var translationWithoutComments = JSON.parse(stripJSONComments(translationWithComments));
+                    var lang = file.split('/').reverse()[0];
+                    var fileName = 'loyalty_i18n_storefront_' + lang;
 
-                var finalTranslation = 'angular.module(\'ds.loyalty\')' + '.constant(\'TranslationLoyalty' + configs.langs.supported[i].toUpperCase() + '\', ' + JSON.stringify(translationWithoutComments, null, 2) + ');';
+                    var i18nForCaaS = grunt.file.read( [ paths.translationSrc, lang ].join('/') );
+                    var i18nForLoyalty = grunt.file.read( [ paths.translationLoyaltySrc, fileName ].join('/') );
 
-                fs.writeFileSync(destFile, finalTranslation);
-            }
+                    var lastCurlyBracketIndex = i18nForCaaS.lastIndexOf('}');
+                    var firstCurlyBracketIndex = i18nForLoyalty.indexOf('{');
+
+                    var finalTranslation = '';
+
+                    finalTranslation = finalTranslation + i18nForCaaS.substr( 0, lastCurlyBracketIndex - 1 );
+                    finalTranslation = finalTranslation + ',';
+                    finalTranslation = finalTranslation + '\n\n\n';
+                    finalTranslation = finalTranslation + i18nForLoyalty.substr( firstCurlyBracketIndex + 1 );
+                    grunt.file.write( ( paths.translationSrc + '/dev_' + lang ), finalTranslation );
+                }
+            });
+
+            grunt.task.run( [ 'copy:translation', 'json-minify:translation' ] );
         });
 
         grunt.registerTask('watcher', 'watch the envinronment for local development', function () {            
-            grunt.task.run( [ 'ngtemplates', 'cssmin:prepare', 'concat:prepare' ]);
+            grunt.task.run( [ 'ngtemplates', 'cssmin:prepare', 'concat:prepare' ] );
         });
 
         grunt.registerTask('prepare', 'Prepare the envinronment for local development', function (env) {
-
             var configForEnv = 'config:' + env;
-            grunt.task.run( [ 'ngtemplates', 'cssmin:prepare', configForEnv, 'concat:prepare' ]);
+            grunt.task.run( [ 'ngtemplates', 'cssmin:prepare', configForEnv, 'concat:prepare' ] );
         });
 
         grunt.registerTask('build', 'Build for the envinronment for the deployement', function (env) {
-
             var configForEnv = 'config:' + env;
-            var copyForEnv = 'copy:' + 'forEnv';
-            grunt.task.run( [ 'ngtemplates', 'cssmin:prepare', configForEnv, 'translation', 'concat:prepare', 'uglify:prepare', 'clean:prepare', 'copy:prepare', copyForEnv ] );
+            grunt.task.run( [ 'ngtemplates', 'cssmin:prepare', configForEnv, 'translation', 'concat:prepare', 'uglify:prepare', 'clean:prepare', 'copy:prepare', 'copy:env' ] );
         });
 
         grunt.registerTask('run', 'Run for the envinronment for the deployement', function (env) {
-
             var prepareForEnv = 'prepare:' + env;
             grunt.task.run( [ prepareForEnv, 'concurrent:run' ] );
         });

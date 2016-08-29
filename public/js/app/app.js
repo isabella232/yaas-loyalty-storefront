@@ -15,9 +15,8 @@
 /**  Initializes and configures the application. */
 window.app = angular.module('ds.app', [
     'restangular',
-    'ds.loyalty',
     'ds.i18n',
-    'ui.router',
+    'ui.router',   
     'ds.shared',
     'ds.security',
     'ds.home',
@@ -38,6 +37,7 @@ window.app = angular.module('ds.app', [
     'xeditable',
     'ngSanitize',
     'ui.select',
+    'ui-notification',
     'ds.ybreadcrumb',
     'ds.ytracking',
     'ds.localstorage',
@@ -45,7 +45,9 @@ window.app = angular.module('ds.app', [
     'ds.searchlist',
     'ds.ysearch',
     'angular-flash.service',
-    'angular-flash.flash-alert-directive'
+    'angular-flash.flash-alert-directive',
+    'ds.loyalty'
+
 ])
     .constant('_', window._)
 
@@ -250,8 +252,8 @@ window.app = angular.module('ds.app', [
 
 
             $rootScope.$on('cart:updated', function (event, cartOb) {
-                if(cartOb.cart.items){
-                    $rootScope.calculatePoints(cartOb);                    
+                if(cartOb.cart.items &&  cartOb.cart.items.length>0 ) {
+                    $rootScope.calculatePoints(cartOb);
                 }
             });
 

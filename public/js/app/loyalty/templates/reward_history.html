@@ -32,7 +32,10 @@
 									<tbody>
 										<tr  ng-repeat="activity in memberActivities| limitTo: showHistoryFilter">
 											<td class="reward-table-padding" id="{{ 'rewards-date-' + $index }}"> {{activity.metadata.createdAt | date: 'medium'}} </td>
-											<td id="{{ 'rewards-activity-' + $index }}">{{activity.activityType | translate}}</td>
+											
+											<td ng-if="activity.activityType !== 'ORDER'" id="{{ 'rewards-activity-' + $index }}">{{activity.activityType | translate}}</td>
+											<td ng-if="activity.activityType === 'ORDER'" id="{{ 'rewards-activity-' + $index }}"> <a ui-sref="base.orderDetail({orderId: activity.refId})"> {{activity.activityType | translate}} </a> </td>
+
 											<td>
 												<strong class="point" style="padding-right: 25px;" ng-class= "{'redeemRed':activity.activityType=='REDEEM' ||activity.activityType=='DEDUCT' ||activity.activityType=='EXPIRATION', 'orderGreen':activity.activityType=='ORDER' || activity.activityType=='REGISTRATION' || activity.activityType=='AWARD' || activity.activityType=='RATING' || activity.activityType=='REVIEW' ||activity.activityType=='ACCRUAL' || activity.activityType=='REFERRAL'}">
 													<div class="text-right" id="{{ 'rewards-points-' + $index }}">

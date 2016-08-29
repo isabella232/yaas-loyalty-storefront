@@ -14,7 +14,7 @@
                         <div class="col-sm-12">
 
                             <label class="control-label pull-left" id="write-review-ratingText">{{'RATING' | translate}}</label>
-                            <strong ng-if="thisUser.isMember && loyaltyConfig.showReward"><span ng-show="thisUser.loyaltyUser.memberId" class="userMargin pull-right " id="write-review-ratingPointText" ng-class="{ 'earnPointText' : review.rating===0,'earnedPointText' : review.rating > 0 }" translate="{{ 'ADVOCACY_POINTS' }}" translate-values="{ point: ratingPoint}"></span></strong>
+                            <strong ng-if="thisUser.isMember && loyaltyConfig.showReward && showRatingPoint"><span ng-show="thisUser.loyaltyUser.memberId" class="userMargin pull-right " id="write-review-ratingPointText" ng-class="{ 'earnPointText' : review.rating===0,'earnedPointText' : review.rating > 0 }" translate="{{ 'ADVOCACY_POINTS' }}" translate-values="{ point: ratingPoint}"></span></strong>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -31,7 +31,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <label class="control-label pull-left" id="write-review-labelText">{{'WRITE_A_REVIEW' | translate}}</label>
-                    <strong ng-if="thisUser.isMember && loyaltyConfig.showReward"><span ng-show="thisUser.loyaltyUser.memberId" class="userMargin pull-right" id="write-review-reviewPointText" translate="{{ 'ADVOCACY_POINTS' }}" translate-values="{ point: reviewPoint}" ng-class="{ 'earnPointText' : review.reviewComment==='','earnedPointText' : review.reviewComment!==''}" ></span></strong>
+                    <strong ng-if="thisUser.isMember && loyaltyConfig.showReward && showReviewPoint"><span ng-show="thisUser.loyaltyUser.memberId" class="userMargin pull-right" id="write-review-reviewPointText" translate="{{ 'ADVOCACY_POINTS' }}" translate-values="{ point: reviewPoint}" ng-class="{ 'earnPointText' : review.reviewComment==='','earnedPointText' : review.reviewComment!==''}" ></span></strong>
                 </div>
             </div>
             <div class="form-group row">

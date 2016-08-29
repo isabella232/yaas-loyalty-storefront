@@ -30,6 +30,8 @@ angular.module('ds.loyalty')
         $scope.errorRating = false;
         $scope.isAddReview = false;
         $scope.disabledSave = false;
+        $scope.showRatingPoint = false;
+        $scope.showReviewPoint = false;
 
         $scope.ratingData = {
                                 
@@ -56,8 +58,12 @@ angular.module('ds.loyalty')
             LoyaltySvc.fireDummyRule(fireRuleObject).then(
 
                 function(fireRuleData) {
+                    $scope.showRatingPoint = true;
                     $scope.ratingPoint = fireRuleData.qualifyingPointsEarned;
 
+                },
+                function (error){
+                    $scope.showRatingPoint = false;
                 });
 
 
@@ -78,8 +84,12 @@ angular.module('ds.loyalty')
             LoyaltySvc.fireDummyRule(fireRuleObject).then(
 
                 function(fireRuleData) {
+                    $scope.showReviewPoint = true;
                     $scope.reviewPoint = fireRuleData.qualifyingPointsEarned;
 
+                },
+                function (error){
+                    $scope.showReviewPoint = false;
                 });
 
 
@@ -146,6 +156,7 @@ angular.module('ds.loyalty')
 
         $scope.totalRatingReviews = 0;
         $scope.totalReviewsToShow = 0;
+        $scope.ratingShowFlag = true;
 
         $scope.getProductAvgRating = function () {
 
@@ -161,10 +172,19 @@ angular.module('ds.loyalty')
                         $scope.avgRatingModel = (productAvgRatingData.avg.rating).toFixed(1);
 
                         $scope.avgRating = Math.round( productAvgRatingData.avg.rating );
-                        $scope.avgRatingView = Math.floor( ( ( productAvgRatingData.avg.rating - $scope.avgRating ) * 100 ) );
+                        $scope.floorRating = Math.floor(productAvgRatingData.avg.rating);
+                        $scope.avgRatingView = Math.floor( ( ( productAvgRatingData.avg.rating - $scope.floorRating ) * 100 ) ) - 10;
 
                         $scope.totalRatingReviews = productAvgRatingData.count;
                         $scope.totalReviewsToShow = productAvgRatingData.reviewCount;
+
+                        if($scope.avgRatingModel > $scope.avgRating){
+
+                            $scope.ratingShowFlag = false;
+
+                        }else{
+                            $scope.ratingShowFlag = true;
+                        }   
 
 
                         //$scope.getProductReviewCount();

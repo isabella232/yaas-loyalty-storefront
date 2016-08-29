@@ -26,73 +26,79 @@
                     
                     // Dynamic Configurations
 
-            
+           
                     apis: {
 
 
                         core: {
 
-                            url: '/hybris/test-loy-member/v1',
+                            url: '/hybris/loy-member/v1',
 
                             program: {
-                                loyaltyPrograms: '/hybris/test-loy-member/v1/loyaltyPrograms',
-                                tiers: '/hybris/test-loy-member/v1/tiers'
+                                loyaltyPrograms: '/hybris/loy-member/v1/loyaltyPrograms',
+                                tiers: '/hybris/loy-member/v1/tiers'
                             },
 
                             member: {
-                                members: '/hybris/test-loy-member/v1/members',
-                                activities: '/hybris/test-loy-member/v1/memberActivities'
+                                members: '/hybris/loy-member/v1/members',
+                                activities: '/hybris/loy-member/v1/memberActivities'
                             },
 
                             mash: {
-                                activities: '/hybris/test-loy-member/v1/activities',
-                                registration: '/hybris/test-loy-member/v1/memberRegistrations'
+                                activities: '/hybris/loy-member/v1/activities',
+                                registration: '/hybris/loy-member/v1/memberRegistrations'
                             },
 
                             discount : {
-                                loyaltyDiscount : '/hybris/test-loy-member/v1/discount',
-                                remove : '/hybris/test-loy-member/v1/discount/remove'
+                                loyaltyDiscount : '/hybris/loy-member/v1/discount',
+                                remove : '/hybris/loy-member/v1/discount/remove'
                             }
                         },
 
 
                         config: {
 
-                            url: '/hybris/test-loy-config/v1/',
+                            url: '/hybris/loy-config/v1/',
 
-                            loyaltyConfig: '/hybris/test-loy-config/v1/laasConfigurations',
-                            programConfig: '/hybris/test-loy-config/v1/programConfigurations'
+                            loyaltyConfig: '/hybris/loy-config/v1/laasConfigurations',
+                            programConfig: '/hybris/loy-config/v1/programConfigurations'
                         },
 
 
                         engine: {
 
-                            url: '/hybris/test-loy-rule/v1',
+                            url: '/hybris/loy-rule/v1',
 
-                            fireRule: '/hybris/test-loy-rule/v1/dummyFire',
-                            rewardInfo: '/hybris/test-loy-rule/v1/rewardInfo',
+                            fireRule: '/hybris/loy-rule/v1/dummyFire',
+                            rewardInfo: '/hybris/loy-rule/v1/rewardInfo',
                         },
 
                         
                         advocacy: {
 
-                            url: '/hybris/test-loy-advocacy/v1',
+                            url: '/hybris/loy-advocacy/v1',
 
-                            reviewRating :'/hybris/test-loy-advocacy/v1/ratingReviews',
-                            ratingReview: '/hybris/test-loy-advocacy/v1/ratingReviewMashup',
-                            sendReferral :'/hybris/test-loy-advocacy/v1/sendReferral'
+                            reviewRating :'/hybris/loy-advocacy/v1/ratingReviews',
+                            ratingReview: '/hybris/loy-advocacy/v1/ratingReviewMashup',
+                            sendReferral :'/hybris/loy-advocacy/v1/sendReferral'
                         },
-
 
                         wallet: {
                             
-                            googleWallet : '/hybris/test-loy-google-wallet/v1/',
-                            appleWallet:'/hybris/test-loy-apple-wallet/v1/STORECARD/',
+                            googleWallet : '/hybris/loy-google-wallet/v1/',
+                            appleWallet:'/hybris/loy-apple-wallet/v1/STORECARD/',
                             appleWalletEndPoint : '/generateWalletUrl'
 
-                        }
+                        },
 
-                    }
+                        hybrisProfile: {
+                            consentReference: '/hybris/profile-consent/b2',
+                            analytics: '/hybris/dev-yprofile-analytics/v1'
+                        },
+
+
+                    }               
+                
                 };
 
                 return LoyaltyConfig;

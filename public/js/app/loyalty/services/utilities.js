@@ -41,24 +41,15 @@
 
 
 					getApp: function () {
-
-						var app = '';
-						app = appConfig.app();
-						return app;
+						return appConfig.app();
 					},
 
 					getTenant: function () {
-
-						var tenant = '';
-						tenant = appConfig.storeTenant();
-						return tenant;
+						return appConfig.storeTenant();
 					},
 
 					getBaseUrl: function ( dontWantProtocol ) {
-
-						var baseUrl = '';
-						baseUrl = 'https://' + appConfig.dynamicDomain();
-						return baseUrl;
+						return 'https://' + appConfig.dynamicDomain();
 					},
 
 					getLoyaltyConfigurationUrl: function () {
@@ -128,7 +119,15 @@
 
 					getAppleWalletUrl : function (customerId) {
 						return this.getBaseUrl() + LoyaltyConfig.apis.wallet.appleWallet +customerId + LoyaltyConfig.apis.wallet.appleWalletEndPoint;
-					}
+					},
+
+					getHybrisProfileConsentReferenceUrl: function () {
+						return this.getBaseUrl() + [ LoyaltyConfig.apis.hybrisProfile.consentReference, this.getTenant(), 'consentReferences' ].join('/');
+					},
+
+					getHybrisProfileAnalyticsUrl: function () {
+						return this.getBaseUrl() + LoyaltyConfig.apis.hybrisProfile.analytics;
+					},
 
 				};
 			}

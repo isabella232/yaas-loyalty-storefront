@@ -294,13 +294,14 @@
                             member: {
                                 
                             },
+                            customAttributes: [],
                             productAttributes : [],
                             orderAttributes : {
                               transactionCurrency :GlobalData.getCurrencyId(),
-                              total:0,
-                              subTotal:0,
-                              shippingAmount:0,
-                              discountAmount:0,
+                              total:'',
+                              subTotal:'',
+                              shippingAmount:'',
+                              discountAmount:'',
                               shippingCountry:'',
                               shippingState:'',
                               customAttributes:[]
@@ -652,6 +653,7 @@
                                                     customerId: memberData[0].customerId,
                                                     dateValidFrom: memberData[0].dateValidFrom,
                                                     dateValidTo: memberData[0].dateValidTo,
+                                                    tierId : memberData[0].tierId,
                                                     tierHistory: memberData[0].tierHistory,
                                                     createdBy: memberData[0].createdBy,
                                                     memberStatus: memberData[0].memberStatus,
@@ -686,10 +688,15 @@
                         return LoyaltyREST.getJWTForGoogleWallet(url, data);
                     },
 
-                    getURLForAppleWallet : function (customerId) {
-                        var url = Utilities.getAppleWalletUrl(customerId);
-                        return LoyaltyREST.getURLForAppleWallet(url);
-                    }
+                    getHybrisProfileConsentReference: function () {
+                        var url = Utilities.getHybrisProfileConsentReferenceUrl();
+                        return LoyaltyREST.getHybrisProfileConsentReference(url);
+                    },
+
+                    checkForHybrisProfileSubscription: function () {
+                        var url = Utilities.getHybrisProfileAnalyticsUrl() + '/tenantsubscription';
+                        return LoyaltyREST.checkForHybrisProfileSubscription(url);
+                    },
 
 
 

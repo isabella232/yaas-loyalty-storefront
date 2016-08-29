@@ -7,6 +7,7 @@ angular.module('ds.loyalty')
         var $modal = $injector.get('$modal');
         var $timeout = $injector.get('$timeout');
         var LoyaltySvc = $injector.get('LoyaltySvc');
+        var cookieSvc = $injector.get('CookieSvc');
 
         $scope.thisUser = $rootScope.thisUser;
 
@@ -41,6 +42,10 @@ angular.module('ds.loyalty')
                 function(rewardData) {
 
                     $scope.dispNextTierFlag = true;
+                    $scope.displayRewardInfo = false;
+
+                    if(rewardData && rewardData.totalBalancePoints && rewardData.currentTierName)
+                        $scope.displayRewardInfo = true;
 
                     $scope.totalRedeemablePoints = rewardData.totalBalancePoints;
 
@@ -60,7 +65,11 @@ angular.module('ds.loyalty')
                         $scope.updagradableTier = rewardData.nextTierName;
 
                         $scope.remainingPoints = rewardData.nextTierThreshold - rewardData.totalQualifyingPoints;
-
+                        
+                        if($scope.remainingPoints <= 0){
+                            $scope.dispNextTierFlag = false;
+                            $scope.nextTierThreshold = rewardData.totalQualifyingPoints;
+                        }
                     }
 
 
@@ -119,6 +128,7 @@ angular.module('ds.loyalty')
        $scope.registerCustomerForProgram = function() {
 
             $scope.disableSave = true; 
+
             var user = {
                 email: $scope.thisUser.hybrisUser.contactEmail,
                 customerId: $scope.thisUser.hybrisUser.id,
@@ -129,21 +139,45 @@ angular.module('ds.loyalty')
                 preferredLanguage : $scope.languageCode
             };
 
-            LoyaltySvc.registerForMembership(user).then(
 
-                function(registrationResponse) {
+            var loyaltyProgramRegistration = function (user) {
+                LoyaltySvc.registerForMembership(user).then(function (response) {
                     $scope.wrongReferral = false;
                     $scope.disableSave = false; 
                     LoyaltySvc.getMemberData(user.customerId);
                     $scope.closeModal();
-              //      GlobalData.setLanguage($scope.myUser.preferredLanguage);
-                },
-                function(error){
+                    //GlobalData.setLanguage($scope.myUser.preferredLanguage);
+                }, function (response) {
                     $scope.wrongReferral = true;
                     $scope.disableSave = false; 
                     $scope.myUser.referraledCode = "";
+                });
+            };
+
+            LoyaltySvc.checkForHybrisProfileSubscription().then(function (subscriptionData) {
+                try {
+                    return ( subscriptionData.status === 'ACTIVE' );
+                } catch ( exception ) {
+                    return false;
                 }
-            );
+            }).then(function (subscriptionStatus) {
+                if ( subscriptionStatus ) {
+                    
+                        
+                        var consentReference =  cookieSvc.getConsentReferenceCookie();
+                        user = angular.extend(user, {
+                            customAttributes: [{
+                                cname: 'consentReference',
+                                cvalue: consentReference
+                            }]
+                        });
+                        loyaltyProgramRegistration(user);
+                } else {
+                    loyaltyProgramRegistration(user);
+                }
+            }, function (response) {
+                loyaltyProgramRegistration(user);
+            });
         };
         
         var modalInstance = {

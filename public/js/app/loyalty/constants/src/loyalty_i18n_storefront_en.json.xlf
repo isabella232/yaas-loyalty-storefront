@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file datatype="x-json" date="2016-08-23T11:00:59Z" original="/usr/sap/ljs/app/Converter_521077208520367041/storefront/public/js/app/loyalty/constants/src/loyalty_i18n_storefront.json" source-language="en" target-language="en">
+		<header>
+			<skl>
+				<internal-file crc="7ca1df4fe4cdf331706ae6c826db2768" form="base64">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</internal-file>
+			</skl>
+			<phase-group>
+				<phase company-name="SAP AG" date="2016-08-09T14:00:52Z" phase-name="file-creation" process-name="file-creation" tool-id="urn:x-sap:sls-mlt:java:json-flexible-converter"/>
+			</phase-group>
+			<tool tool-company="SAP AG" tool-id="urn:x-sap:sls-mlt:java:json-flexible-converter" tool-name="TEW: JSON Flexible File Converter" tool-version="1.1.0"/>
+		</header>
+		<body>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="PROCESSING_TEXT" maxwidth="255" resname="PROCESSING_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Processing</source>
+				<target>Processing</target>
+				<note annotates="source" from="Developer">Display text to the user that something is processing</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REWARD_PNTS_EARNED_TEXT" maxwidth="255" resname="REWARD_PNTS_EARNED_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Earn Loyalty Points</source>
+				<target>Earn Loyalty Points</target>
+				<note annotates="source" from="Developer">User info to show how points has been earned</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="LOYALTY_CASH_EARNED_TEXT" maxwidth="255" resname="LOYALTY_CASH_EARNED_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Earned Loyalty Points Worth</source>
+				<target>Earned Loyalty Points Worth</target>
+				<note annotates="source" from="Developer">User info to show how points has been earned after order</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SPEND_YOUR_REWARDS_PNTS" maxwidth="255" resname="SPEND_YOUR_REWARDS_PNTS" sap:sc="XGRP" size-unit="char">
+				<source>Redeem Your Loyalty Points</source>
+				<target>Redeem Your Loyalty Points</target>
+				<note annotates="source" from="Developer">User info to tell you can spend ur reward points</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REWARD_CASH_EARNED_TEXT" maxwidth="255" resname="REWARD_CASH_EARNED_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Earn Loyalty Points Worth</source>
+				<target>Earn Loyalty Points Worth</target>
+				<note annotates="source" from="Developer">User info to show how much cash has been earned</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REWARD_CASH_SPENT_TEXT" maxwidth="255" resname="REWARD_CASH_SPENT_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Spent Loyalty Points Worth</source>
+				<target>Spent Loyalty Points Worth</target>
+				<note annotates="source" from="Developer">User info to show how much cash has been spent</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REWARD_POINTS_EARNED_TEXT" maxwidth="255" resname="REWARD_POINTS_EARNED_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Earned Loyalty Points</source>
+				<target>Earned Loyalty Points</target>
+				<note annotates="source" from="Developer">User info to show how much points has been earned</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REWARD_POINTS_SPENT_TEXT" maxwidth="255" resname="REWARD_POINTS_SPENT_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Spent Loyalty Points</source>
+				<target>Spent Loyalty Points</target>
+				<note annotates="source" from="Developer">User info to show how much points has been spent</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="LOYALTY_DISCOUNT" maxwidth="255" resname="LOYALTY_DISCOUNT" sap:sc="XFLD" size-unit="char">
+				<source>Loyalty Discount</source>
+				<target>Loyalty Discount</target>
+				<note annotates="source" from="Developer">Loyalty Discount label shown in checkout cart</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="WRITE_REVIEW" maxwidth="255" resname="WRITE_REVIEW" sap:sc="XLNK" size-unit="char">
+				<source>Write Review</source>
+				<target>Write Review</target>
+				<note annotates="source" from="Developer">Review action link to write review</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REWARD_HISTORY" maxwidth="255" resname="REWARD_HISTORY" sap:sc="XGRP" size-unit="char">
+				<source>Loyalty History</source>
+				<target>Loyalty History</target>
+				<note annotates="source" from="Developer">Text info show to inform user these are your reward history</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="DATE" maxwidth="255" resname="DATE" sap:sc="XTIT" size-unit="char">
+				<source>Date</source>
+				<target>Date</target>
+				<note annotates="source" from="Developer">Table header cell title to show dates</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ACTIVITY" maxwidth="255" resname="ACTIVITY" sap:sc="XTIT" size-unit="char">
+				<source>Activity</source>
+				<target>Activity</target>
+				<note annotates="source" from="Developer">Table header cell title to show prior activities of user (registration, review, rating etc)</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="POINTS" maxwidth="255" resname="POINTS" sap:sc="XTIT" size-unit="char">
+				<source>Points</source>
+				<target>Points</target>
+				<note annotates="source" from="Developer">Table header cell title to show list of points user ( spent, redeemed etc)</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SHOW_ALL" maxwidth="255" resname="SHOW_ALL" sap:sc="XBUT" size-unit="char">
+				<source>Show All</source>
+				<target>Show All</target>
+				<note annotates="source" from="Developer">To show all elements</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SHOW_LESS" maxwidth="255" resname="SHOW_LESS" sap:sc="XBUT" size-unit="char">
+				<source>Show Less</source>
+				<target>Show Less</target>
+				<note annotates="source" from="Developer">To show less elements</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="EARN_POINTS_DESCRIPTION" maxwidth="255" resname="EARN_POINTS_DESCRIPTION" sap:sc="XFLD" size-unit="char">
+				<source>Earn <ph id="1">{{points}}</ph> Loyalty Points</source>
+				<target>Earn <ph id="1">{{points}}</ph> Loyalty Points</target>
+				<note annotates="source" from="Developer">User info to earn reward points</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="CLOSE" maxwidth="255" resname="CLOSE" sap:sc="XTOL" size-unit="char">
+				<source>Close</source>
+				<target>Close</target>
+				<note annotates="source" from="Developer">To close</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SIGN_UP" maxwidth="255" resname="SIGN_UP" sap:sc="XGRP" size-unit="char">
+				<source>Sign Up</source>
+				<target>Sign Up</target>
+				<note annotates="source" from="Developer">To sign up</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SIGN_UP_DESCRIPTION" maxwidth="255" resname="SIGN_UP_DESCRIPTION" sap:sc="XCKL" size-unit="char">
+				<source>Sign me up for <ph id="1">&lt;strong&gt;</ph><ph id="2">{{name}}</ph><ph id="3">&lt;/strong&gt;</ph> to earn welcome points.</source>
+				<target>Sign me up for <ph id="1">&lt;strong&gt;</ph><ph id="2">{{name}}</ph><ph id="3">&lt;/strong&gt;</ph> to earn welcome points.</target>
+				<note annotates="source" from="Developer">User info for sign up for loyaltyProgram {{name}} ---&gt; Felton Rewards</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SIGN_UP_TITLE_PROGRAM_NAME" maxwidth="255" resname="SIGN_UP_TITLE_PROGRAM_NAME" sap:sc="XBUT" size-unit="char">
+				<source>Sign Up for <ph id="1">{{programName}}</ph></source>
+				<target>Sign Up for <ph id="1">{{programName}}</ph></target>
+				<note annotates="source" from="Developer">General info to the user for sign up</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATING" maxwidth="255" resname="RATING" sap:sc="XFLD" size-unit="char">
+				<source>Rating</source>
+				<target>Rating</target>
+				<note annotates="source" from="Developer">Product ratings</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="WRITE_A_REVIEW" maxwidth="255" resname="WRITE_A_REVIEW" sap:sc="XFLD" size-unit="char">
+				<source>Write a Review</source>
+				<target>Write a Review</target>
+				<note annotates="source" from="Developer">user info to write a review</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="NO_THANKS" maxwidth="255" resname="NO_THANKS" sap:sc="XBUT" size-unit="char">
+				<source>No Thanks</source>
+				<target>No Thanks</target>
+				<note annotates="source" from="Developer">No thanks button for declining to review or rate</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SUBMIT" maxwidth="255" resname="SUBMIT" sap:sc="XBUT" size-unit="char">
+				<source>Submit</source>
+				<target>Submit</target>
+				<note annotates="source" from="Developer">Submit button</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REEDEEM_TEXT_INFO" maxwidth="255" resname="REEDEEM_TEXT_INFO" sap:sc="XFLD" size-unit="char">
+				<source><ph id="1">&lt;strong class='reedmTextInfo' &gt;</ph><ph id="2">{{redeemPoints}}</ph><ph id="3">&lt;/strong&gt;</ph> <ph id="4">&lt;span class='reward_text_desc'&gt;</ph> Available Loyalty Points<ph id="5">&lt;/span&gt;</ph></source>
+				<target><ph id="1">&lt;strong class='reedmTextInfo' &gt;</ph><ph id="2">{{redeemPoints}}</ph><ph id="3">&lt;/strong&gt;</ph> <ph id="4">&lt;span class='reward_text_desc'&gt;</ph> Available Loyalty Points<ph id="5">&lt;/span&gt;</ph></target>
+				<note annotates="source" from="Developer">User info to show these many reward points can be used</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REEDEEM_TEXT_INFO_1" maxwidth="255" resname="REEDEEM_TEXT_INFO_1" sap:sc="XFLD" size-unit="char">
+				<source>You require <ph id="1">&lt;strong&gt;</ph><ph id="2">{{remainingPoints}}</ph><ph id="3">&lt;/strong&gt;</ph> loyalty points to promote to  <ph id="4">&lt;strong&gt;</ph><ph id="5">{{upgradadableTier}}</ph><ph id="6">&lt;/strong&gt;</ph> tier</source>
+				<target>You require <ph id="1">&lt;strong&gt;</ph><ph id="2">{{remainingPoints}}</ph><ph id="3">&lt;/strong&gt;</ph> loyalty points to promote to  <ph id="4">&lt;strong&gt;</ph><ph id="5">{{upgradadableTier}}</ph><ph id="6">&lt;/strong&gt;</ph> tier</target>
+				<note annotates="source" from="Developer">User info to show remaining points to upgrade to next tier example --&gt; Only {{223}} more points to {{Silver}} tier.</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="USER_TIER" maxwidth="255" resname="USER_TIER" sap:sc="XFLD" size-unit="char">
+				<source><ph id="1">&lt;strong&gt;</ph><ph id="2">{{userTier}}</ph><ph id="3">&lt;/strong&gt;</ph> tier</source>
+				<target><ph id="1">&lt;strong&gt;</ph><ph id="2">{{userTier}}</ph><ph id="3">&lt;/strong&gt;</ph> tier</target>
+				<note annotates="source" from="Developer">User info to show his present tier. Only translate the last word tier. Exclude the rest</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="STARS" maxwidth="255" resname="STARS" sap:sc="XFLD" size-unit="char">
+				<source><ph id="1">{{starValue}}</ph> Stars</source>
+				<target><ph id="1">{{starValue}}</ph> Stars</target>
+				<note annotates="source" from="Developer">Used to show the stars - in context of Rating a product</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ENROLLED" maxwidth="45" resname="ENROLLED" sap:sc="XFLD" size-unit="char">
+				<source>You are enrolled with <ph id="1">&lt;strong class='text-info'  id='rewards-enrolled-program'&gt;</ph><ph id="2">{{programName}}</ph><ph id="3">&lt;/strong&gt;</ph></source>
+				<target>You are enrolled with <ph id="1">&lt;strong class='text-info'  id='rewards-enrolled-program'&gt;</ph><ph id="2">{{programName}}</ph><ph id="3">&lt;/strong&gt;</ph></target>
+				<note annotates="source" from="Developer">User info for enrolled</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REFERRALCODE" maxwidth="255" resname="REFERRALCODE" sap:sc="XFLD" size-unit="char">
+				<source>Referral Code</source>
+				<target>Referral Code</target>
+				<note annotates="source" from="Developer">Inidcates the Referral code to refer a friend to join the program</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SUCCESS" maxwidth="255" resname="SUCCESS" sap:sc="XFLD" size-unit="char">
+				<source>Success</source>
+				<target>Success</target>
+				<note annotates="source" from="Developer">Success text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SUCCESS_DESC" maxwidth="255" resname="SUCCESS_DESC" sap:sc="XMSG" size-unit="char">
+				<source>Invitations to sign up for the loyalty program are sent to the following email address(es): </source>
+				<target>Invitations to sign up for the loyalty program are sent to the following email address(es):</target>
+				<note annotates="source" from="Developer">Success description</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SUCCESS_WARNING" maxwidth="255" resname="SUCCESS_WARNING" sap:sc="XMSG" size-unit="char">
+				<source>Invitation will not be sent to users who are already members of the loyalty program</source>
+				<target>Invitation will not be sent to users who are already members of the loyalty program.</target>
+				<note annotates="source" from="Developer">Success warning message</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REF_TIT" maxwidth="255" resname="REF_TIT" sap:sc="XTIT" size-unit="char">
+				<source>Refer Friends by Email</source>
+				<target>Refer Friends by Email</target>
+				<note annotates="source" from="Developer">title for referral section</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REF_MOD_DESC" maxwidth="255" resname="REF_MOD_DESC" sap:sc="XFLD" size-unit="char">
+				<source>Enter up to 5 email addresses at a time</source>
+				<target>Enter up to 5 email addresses at a time</target>
+				<note annotates="source" from="Developer">Referral modal description</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SEND_INV" maxwidth="255" resname="SEND_INV" sap:sc="XBUT" size-unit="char">
+				<source>Send Invitation</source>
+				<target>Send Invitation</target>
+				<note annotates="source" from="Developer">To send invitation</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="EMAIL_ADDRESS" maxwidth="255" resname="EMAIL_ADDRESS" sap:sc="XFLD" size-unit="char">
+				<source>Enter email address(es)</source>
+				<target>Enter email address(es)</target>
+				<note annotates="source" from="Developer">Email address placeholder, for a text box where the user will enter the email addresses</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATING_TEXT0" maxwidth="255" resname="RATING_TEXT0" sap:sc="XFLD" size-unit="char">
+				<source>Please select a rating</source>
+				<target>Please select a rating.</target>
+				<note annotates="source" from="Developer">rating text0</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATING_TEXT1" maxwidth="255" resname="RATING_TEXT1" sap:sc="XFLD" size-unit="char">
+				<source>I hate it</source>
+				<target>I hate it</target>
+				<note annotates="source" from="Developer">Indicates a rating with score 1, Eg. I hate this product so i rate it 1</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATING_TEXT2" maxwidth="255" resname="RATING_TEXT2" sap:sc="XFLD" size-unit="char">
+				<source>I don't like it</source>
+				<target>I don't like it</target>
+				<note annotates="source" from="Developer">Indicates a rating with score 2</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATING_TEXT3" maxwidth="255" resname="RATING_TEXT3" sap:sc="XFLD" size-unit="char">
+				<source>It's okay</source>
+				<target>It's okay</target>
+				<note annotates="source" from="Developer">Indicates a rating with score 3</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATING_TEXT4" maxwidth="255" resname="RATING_TEXT4" sap:sc="XFLD" size-unit="char">
+				<source>I like it</source>
+				<target>I like it</target>
+				<note annotates="source" from="Developer">Indicates a rating with score 4</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATING_TEXT5" maxwidth="255" resname="RATING_TEXT5" sap:sc="XFLD" size-unit="char">
+				<source>I love it</source>
+				<target>I love it</target>
+				<note annotates="source" from="Developer">Indicates a rating with score 5</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REDEEM" maxwidth="255" resname="REDEEM" sap:sc="XSEL" size-unit="char">
+				<source>Redeem</source>
+				<target>Redeem</target>
+				<note annotates="source" from="Developer">Indicates that the activity is of type redeem (Redemption)</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ORDER" maxwidth="255" resname="ORDER" sap:sc="XSEL" size-unit="char">
+				<source>Order</source>
+				<target>Order</target>
+				<note annotates="source" from="Developer">Indicates that the activity is of type Order</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REGISTRATION" maxwidth="255" resname="REGISTRATION" sap:sc="XSEL" size-unit="char">
+				<source>Registration</source>
+				<target>Registration</target>
+				<note annotates="source" from="Developer">Indicates that the activity is of type Registration</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="AWARD" maxwidth="255" resname="AWARD" sap:sc="XSEL" size-unit="char">
+				<source>Award</source>
+				<target>Award</target>
+				<note annotates="source" from="Developer">Indicates that the activity is of type Award points</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="DEDUCT" maxwidth="255" resname="DEDUCT" sap:sc="XSEL" size-unit="char">
+				<source>Deduct</source>
+				<target>Deduct</target>
+				<note annotates="source" from="Developer">Indicates that the activity is of type deduct points</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="EXPIRATION" maxwidth="255" resname="EXPIRATION" sap:sc="XSEL" size-unit="char">
+				<source>Expiration</source>
+				<target>Expiration</target>
+				<note annotates="source" from="Developer">Indicates that the activity is of type expiration points</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATING_DUMMYDUPID1" maxwidth="255" resname="RATING" sap:sc="XSEL" size-unit="char">
+				<source>Rating</source>
+				<target>Rating</target>
+				<note annotates="source" from="Developer">Indicates that the activity is of type Rating</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REVIEW" maxwidth="255" resname="REVIEW" sap:sc="XSEL" size-unit="char">
+				<source>Review</source>
+				<target>Review</target>
+				<note annotates="source" from="Developer">Indicates that the activity is of type Review</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REFERRAL" maxwidth="255" resname="REFERRAL" sap:sc="XSEL" size-unit="char">
+				<source>Referral</source>
+				<target>Referral</target>
+				<note annotates="source" from="Developer">Referral activity</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ACCRUAL" maxwidth="255" resname="ACCRUAL" sap:sc="XSEL" size-unit="char">
+				<source>Accrual</source>
+				<target>Accrual</target>
+				<note annotates="source" from="Developer">Accrual activity</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="JAN" maxwidth="255" resname="JAN" sap:sc="XFLD" size-unit="char">
+				<source>Jan</source>
+				<target>Jan</target>
+				<note annotates="source" from="Developer">Short name for month January</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="FEB" maxwidth="255" resname="FEB" sap:sc="XFLD" size-unit="char">
+				<source>Feb</source>
+				<target>Feb</target>
+				<note annotates="source" from="Developer">Short name for month February</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="MAR" maxwidth="255" resname="MAR" sap:sc="XFLD" size-unit="char">
+				<source>Mar</source>
+				<target>Mar</target>
+				<note annotates="source" from="Developer">Short name for month March</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="APR" maxwidth="255" resname="APR" sap:sc="XFLD" size-unit="char">
+				<source>Apr</source>
+				<target>Apr</target>
+				<note annotates="source" from="Developer">Short name for month April</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="MAY" maxwidth="255" resname="MAY" sap:sc="XFLD" size-unit="char">
+				<source>May</source>
+				<target>May</target>
+				<note annotates="source" from="Developer">Month May</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="JUN" maxwidth="255" resname="JUN" sap:sc="XFLD" size-unit="char">
+				<source>Jun</source>
+				<target>Jun</target>
+				<note annotates="source" from="Developer">Short name for month June</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="JUL" maxwidth="255" resname="JUL" sap:sc="XFLD" size-unit="char">
+				<source>Jul</source>
+				<target>Jul</target>
+				<note annotates="source" from="Developer">Short name for month July</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="AUG" maxwidth="255" resname="AUG" sap:sc="XFLD" size-unit="char">
+				<source>Aug</source>
+				<target>Aug</target>
+				<note annotates="source" from="Developer">Short name for month August</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SEP" maxwidth="255" resname="SEP" sap:sc="XFLD" size-unit="char">
+				<source>Sep</source>
+				<target>Sep</target>
+				<note annotates="source" from="Developer">Short name for month September</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="OCT" maxwidth="255" resname="OCT" sap:sc="XFLD" size-unit="char">
+				<source>Oct</source>
+				<target>Oct</target>
+				<note annotates="source" from="Developer">Short name for month October</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="NOV" maxwidth="255" resname="NOV" sap:sc="XFLD" size-unit="char">
+				<source>Nov</source>
+				<target>Nov</target>
+				<note annotates="source" from="Developer">Short name for month November</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="DEC" maxwidth="255" resname="DEC" sap:sc="XFLD" size-unit="char">
+				<source>Dec</source>
+				<target>Dec</target>
+				<note annotates="source" from="Developer">Short name for month December</note>
+			</trans-unit>
+			<trans-unit datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="AM" maxwidth="255" resname="AM" size-unit="char" translate="no">
+				<source>AM</source>
+				<target>AM</target>
+				<note annotates="source" from="Developer">AM</note>
+			</trans-unit>
+			<trans-unit datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="PM" maxwidth="255" resname="PM" size-unit="char" translate="no">
+				<source>PM</source>
+				<target>PM</target>
+				<note annotates="source" from="Developer">PM</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="USER_REVIEW" maxwidth="255" resname="USER_REVIEW" sap:sc="XFLD" size-unit="char">
+				<source>(<ph id="1">{{totalRatingReviews}}</ph>) User Reviews</source>
+				<target>(<ph id="1">{{totalRatingReviews}}</ph>) User Reviews</target>
+				<note annotates="source" from="Developer">User review text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="USER_RATED" maxwidth="255" resname="USER_RATED" sap:sc="XFLD" size-unit="char">
+				<source><ph id="1">{{ totalRatingReviews }}</ph> Users Rated</source>
+				<target><ph id="1">{{ totalRatingReviews }}</ph> Users Rated</target>
+				<note annotates="source" from="Developer">User rated text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATE_REVIEW" maxwidth="255" resname="RATE_REVIEW" sap:sc="XTIT" size-unit="char">
+				<source>Rate and Review <ph id="1">{{product}}</ph></source>
+				<target>Rate and Review <ph id="1">{{product}}</ph></target>
+				<note annotates="source" from="Developer">Write review header text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="USER_REVIEW_FOR" maxwidth="255" resname="USER_REVIEW_FOR" sap:sc="XFLD" size-unit="char">
+				<source>User Reviews for</source>
+				<target>User Reviews for</target>
+				<note annotates="source" from="Developer">User review for text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="AVERAGE_USER_RATING" maxwidth="255" resname="AVERAGE_USER_RATING" sap:sc="XFLD" size-unit="char">
+				<source>Average User Rating</source>
+				<target>Average User Rating</target>
+				<note annotates="source" from="Developer">Average user rating</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="RATINGS" maxwidth="255" resname="RATINGS" sap:sc="XFLD" size-unit="char">
+				<source>(<ph id="1">{{ totalRatingReviews }}</ph>) Ratings</source>
+				<target>(<ph id="1">{{ totalRatingReviews }}</ph>) Ratings</target>
+				<note annotates="source" from="Developer">Ratings text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ADD_REVIEW" maxwidth="255" resname="ADD_REVIEW" sap:sc="XBUT" size-unit="char">
+				<source>Add your Review</source>
+				<target>Add your Review</target>
+				<note annotates="source" from="Developer">Add your review text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="A_USER" maxwidth="255" resname="A_USER" sap:sc="XFLD" size-unit="char">
+				<source>Anonymous</source>
+				<target>Anonymous</target>
+				<note annotates="source" from="Developer">A user text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="INVITE_FRIEND" maxwidth="255" resname="INVITE_FRIEND" sap:sc="XBUT" size-unit="char">
+				<source>Refer Friends</source>
+				<target>Refer Friends</target>
+				<note annotates="source" from="Developer">Invite friend text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="MY_RATING" maxwidth="255" resname="MY_RATING" sap:sc="XFLD" size-unit="char">
+				<source>My Rating</source>
+				<target>My Rating</target>
+				<note annotates="source" from="Developer">My rating text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REVIEW_TITLE" maxwidth="255" resname="REVIEW_TITLE" sap:sc="XFLD" size-unit="char">
+				<source>Review Title</source>
+				<target>Review Title</target>
+				<note annotates="source" from="Developer">Review title text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REVIEW_DESC" maxwidth="255" resname="REVIEW_DESC" sap:sc="XFLD" size-unit="char">
+				<source>Description</source>
+				<target>Description</target>
+				<note annotates="source" from="Developer">Review description text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="USER_REVIEW_LIST" maxwidth="255" resname="USER_REVIEW_LIST" sap:sc="XFLD" size-unit="char">
+				<source>User Reviews (<ph id="1">{{ totalReviewsToShow }}</ph>)</source>
+				<target>User Reviews (<ph id="1">{{ totalReviewsToShow }}</ph>)</target>
+				<note annotates="source" from="Developer">User review list text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="SINGLE_RATING" maxwidth="255" resname="SINGLE_RATING" sap:sc="XFLD" size-unit="char">
+				<source>(<ph id="1">{{ totalRatingReviews }}</ph>) Rating</source>
+				<target>(<ph id="1">{{ totalRatingReviews }}</ph>) Rating</target>
+				<note annotates="source" from="Developer">Single Ratings text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ADVOCACY_POINTS" maxwidth="255" resname="ADVOCACY_POINTS" sap:sc="XFLD" size-unit="char">
+				<source>Earn <ph id="1">{{ point }}</ph> Points</source>
+				<target>Earn <ph id="1">{{ point }}</ph> Points</target>
+				<note annotates="source" from="Developer">Advocacy Point text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REFER_A_FRIEND_INFO_TEXT" maxwidth="255" resname="REFER_A_FRIEND_INFO_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Enter the referral code below if you are referred by your friend. (Optional)</source>
+				<target>Enter the referral code below if you are referred by your friend. (Optional)</target>
+				<note annotates="source" from="Developer">Refer a friend signup information</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="WRONG_REFER_A_FRIEND_INFO_TEXT1" maxwidth="255" resname="WRONG_REFER_A_FRIEND_INFO_TEXT1" sap:sc="XFLD" size-unit="char">
+				<source>Sorry! We could not sign you up for the <ph id="1">{{ programName}}</ph> due to an incorrect referral code.</source>
+				<target>Sorry! We could not sign you up for the <ph id="1">{{ programName}}</ph> due to an incorrect referral code.</target>
+				<note annotates="source" from="Developer">Wrong Refer a friend  information text1</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="WRONG_REFER_A_FRIEND_INFO_TEXT2" maxwidth="255" resname="WRONG_REFER_A_FRIEND_INFO_TEXT2" sap:sc="XFLD" size-unit="char">
+				<source>If you are referred by your friend, enter the referral code or leave it blank.</source>
+				<target>If you are referred by your friend, enter the referral code or leave it blank.</target>
+				<note annotates="source" from="Developer">Wrong Refer a friend  information text2</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="CONFIRMATION_LOYALTY_TEXT" maxwidth="255" resname="CONFIRMATION_LOYALTY_TEXT" sap:sc="XFLD" size-unit="char">
+				<source>Please refer to the \"My Account\" page to view your loyalty points</source>
+				<target>Please refer to the \"My Account\" page to view your loyalty points</target>
+				<note annotates="source" from="Developer">Confirmation page text</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="BAD_REQUEST" maxwidth="255" resname="BAD_REQUEST" sap:sc="XMSG" size-unit="char">
+				<source>Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating the request sent is not in appropriate form</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="UNAUTHORIZED" maxwidth="255" resname="UNAUTHORIZED" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating unauthorized access for some resource</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="FORBIDDEN" maxwidth="255" resname="FORBIDDEN" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating unauthorized access for some resource</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="BAD_PAYLOAD" maxwidth="255" resname="BAD_PAYLOAD" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating the request sent is not in appropriate form</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="GATEWAY_TIMEOUT" maxwidth="255" resname="GATEWAY_TIMEOUT" sap:sc="XMSG" size-unit="char">
+				<source>Sorry! Something went wrong! Please try again later.</source>
+				<target>Sorry! Something went wrong! Please try again later.</target>
+				<note annotates="source" from="Developer">Error message indicating request timeout occurred</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="CONFIGURATION_NOT_FOUND" maxwidth="255" resname="CONFIGURATION_NOT_FOUND" sap:sc="XMSG" size-unit="char">
+				<source>Loyalty configuration is not found in the system.</source>
+				<target>Loyalty configuration is not found in the system.</target>
+				<note annotates="source" from="Developer">Error message indicating no loyalty configuration present in the system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="MEMBERSHIP_NOT_FOUND" maxwidth="255" resname="MEMBERSHIP_NOT_FOUND" sap:sc="XMSG" size-unit="char">
+				<source>Membership is not found in the system.</source>
+				<target>Membership is not found in the system.</target>
+				<note annotates="source" from="Developer">Error message indicating no loyalty membership present in the system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="MEMBERSHIP_ALREADY_EXISTS" maxwidth="255" resname="MEMBERSHIP_ALREADY_EXISTS" sap:sc="XMSG" size-unit="char">
+				<source>Membership already exists</source>
+				<target>Membership already exists.</target>
+				<note annotates="source" from="Developer">Error message indicating no loyalty membership present in the system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="UNSUPPORTED_CONTENT" maxwidth="255" resname="UNSUPPORTED_CONTENT" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating type of content is not suported in the system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="UNKNOWN_ERROR_OCCURED" maxwidth="255" resname="UNKNOWN_ERROR_OCCURED" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong! Please try again later.</source>
+				<target>Sorry! Something went wrong! Please try again later.</target>
+				<note annotates="source" from="Developer">Error message indicating unknown error</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="INTERNAL_SERVER_ERROR" maxwidth="255" resname="INTERNAL_SERVER_ERROR" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating internal error</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="UNSUPPORTED_METHOD" maxwidth="255" resname="UNSUPPORTED_METHOD" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating unsupported data</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="UNSUPPORTED_RESPONSE_CONTENT_TYPE" maxwidth="255" resname="UNSUPPORTED_RESPONSE_CONTENT_TYPE" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating unsupported response content type</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="URI_TOO_LONG" maxwidth="255" resname="URI_TOO_LONG" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message indicating too long uri</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="INVALID_REF_CODE" maxwidth="255" resname="INVALID_REF_CODE" sap:sc="XMSG" size-unit="char">
+				<source>You have entered an invalid referral code</source>
+				<target>You have entered an invalid referral code.</target>
+				<note annotates="source" from="Developer">Error message indicating referral code is invalid</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="400" maxwidth="255" resname="400" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system (for different error status code mapped with error message)</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="401" maxwidth="255" resname="401" sap:sc="XMSG" size-unit="char">
+				<source>Session expired.</source>
+				<target>Session expired.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="403" maxwidth="255" resname="403" sap:sc="XMSG" size-unit="char">
+				<source>You are not authorized to access this resource.</source>
+				<target>You are not authorized to access this resource.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="404" maxwidth="255" resname="404" sap:sc="XMSG" size-unit="char">
+				<source>Sorry! Something went wrong! Please try again later.</source>
+				<target>Sorry! Something went wrong! Please try again later.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="500" maxwidth="255" resname="500" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong! Please try again later.</source>
+				<target>Sorry! Something went wrong! Please try again later.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="502" maxwidth="255" resname="502" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong! Please try again later.</source>
+				<target>Sorry! Something went wrong! Please try again later.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="504" maxwidth="255" resname="504" sap:sc="XMSG" size-unit="char">
+				<source> Sorry! Something went wrong!</source>
+				<target>Sorry! Something went wrong!</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ERROR_MEMBER_FETCH" maxwidth="255" resname="ERROR_MEMBER_FETCH" sap:sc="XMSG" size-unit="char">
+				<source>An error occurred while fetching member details.</source>
+				<target>An error occurred while fetching member details.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ERROR_TIER_FETCH" maxwidth="255" resname="ERROR_TIER_FETCH" sap:sc="XMSG" size-unit="char">
+				<source>An error occurred while fetching tier details.</source>
+				<target>An error occurred while fetching tier details.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ERROR_CATEGORY_FETCH" maxwidth="255" resname="ERROR_CATEGORY_FETCH" sap:sc="XMSG" size-unit="char">
+				<source>An error occurred while fetching categories.</source>
+				<target>An error occurred while fetching categories.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ERROR_PRODUCT_FETCH" maxwidth="255" resname="ERROR_PRODUCT_FETCH" sap:sc="XMSG" size-unit="char">
+				<source>An error occurred while fetching products.</source>
+				<target>An error occurred while fetching products.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ERROR_ORDER_FETCH" maxwidth="255" resname="ERROR_ORDER_FETCH" sap:sc="XMSG" size-unit="char">
+				<source>An error occurred while fetching order details.</source>
+				<target>An error occurred while fetching order details.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="ERROR_CUSTOMER_FETCH" maxwidth="255" resname="ERROR_CUSTOMER_FETCH" sap:sc="XMSG" size-unit="char">
+				<source>An error occurred while fetching customer details.</source>
+				<target>An error occurred while fetching customer details.</target>
+				<note annotates="source" from="Developer">Error message shown when something went wrong from system</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="PREFERRED_LANGUAGE" maxwidth="255" resname="PREFERRED_LANGUAGE" sap:sc="XFLD" size-unit="char">
+				<source>Preferred Language</source>
+				<target>Preferred Language</target>
+				<note annotates="source" from="Developer">Indicates the language preference</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="UPDATE_PREFERRED_LANGUAGE" maxwidth="255" resname="UPDATE_PREFERRED_LANGUAGE" sap:sc="XTIT" size-unit="char">
+				<source>Update Preferred Language</source>
+				<target>Update Preferred Language</target>
+				<note annotates="source" from="Developer">Title for Edit preferred language modal</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="PREFERRED_LANGUAGE_TOOLTIP" maxwidth="255" resname="PREFERRED_LANGUAGE_TOOLTIP" sap:sc="XMSG" size-unit="char">
+				<source>Applicable to loyalty-specific content such as content for emails, offers, and coupons</source>
+				<target>Applicable to loyalty-specific content such as content for emails, offers, and coupons</target>
+				<note annotates="source" from="Developer">Tool Tip message for preferred Language</note>
+			</trans-unit>
+			<trans-unit datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="APPLY" resname="APPLY">
+				<source>Apply</source>
+				<target>Apply</target>
+				<note annotates="source" from="Developer">XBTN, 255 : Apply points button during checkout</note>
+			</trans-unit>
+			<trans-unit datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REMOVE" resname="REMOVE">
+				<source>Remove</source>
+				<target>Remove</target>
+				<note annotates="source" from="Developer">XBTN, 255 : Remove points button during checkout</note>
+			</trans-unit>
+			<trans-unit xmlns:sap="urn:x-sap:sls-mlt" datatype="x-urn:x-sap:sls-mlt:json:flexible-converter:messageformat" id="REF_FRND_INFO" maxwidth="255" resname="REF_FRND_INFO" sap:sc="XMSG" size-unit="char">
+				<source>Press the Enter key after providing each email address.</source>
+				<target>Press the Enter key after providing each email address.</target>
+				<note annotates="source" from="Developer">Info messgae for Refer a friend</note>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

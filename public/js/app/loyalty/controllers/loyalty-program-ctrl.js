@@ -5,68 +5,96 @@
 
             function ($rootScope, $scope, $injector, $modalInstance, userData) {
 
-                    $scope.userData = userData;
-                    $scope.myUser = {};
-                    $scope.wrongReferral = true;
-                    var LoyaltySvc = $injector.get('LoyaltySvc');
+                $scope.userData = userData;
+                $scope.myUser = {};
+                $scope.wrongReferral = true;
+                var LoyaltySvc = $injector.get('LoyaltySvc');
+                var cookieSvc = $injector.get('CookieSvc');
 
-                    $scope.getLoyaltyPrograms = function() {
+                $scope.getLoyaltyPrograms = function() {
 
-                        $scope.loyaltyPrograms = [];
+                    $scope.loyaltyPrograms = [];
 
-                        LoyaltySvc.getLoyaltyPrograms().then(
+                    LoyaltySvc.getLoyaltyPrograms().then(
 
-                            function(loyaltyProgramData) {
+                        function(loyaltyProgramData) {
 
-                                $scope.loyaltyPrograms.push(loyaltyProgramData[0]);
-                                $scope.userProgram = $scope.loyaltyPrograms[0].programId;
-                                $scope.userProgramName = $scope.loyaltyPrograms[0].loyaltyProgramName;
-                            }
-                        );
-                    };
+                            $scope.loyaltyPrograms.push(loyaltyProgramData[0]);
+                            $scope.userProgram = $scope.loyaltyPrograms[0].programId;
+                            $scope.userProgramName = $scope.loyaltyPrograms[0].loyaltyProgramName;
+                        }
+                    );
+                };
 
-                    $scope.init = function() {
-                        $scope.getLoyaltyPrograms();
-                    };
+                $scope.init = function() {
+                    $scope.getLoyaltyPrograms();
+                };
 
-                     $scope.init();
+                 $scope.init();
 
-                    $scope.closeModal = function() {
-                        $modalInstance.dismiss();
-                    };
-
-                    $scope.registerCustomerForProgram = function() {
+                $scope.closeModal = function() {
+                    $modalInstance.dismiss();
+                };
 
 
-                        var user = {
-                            email: $scope.userData.email,
-                            customerId: $scope.userData.customerId,
-                            loyaltyProgramId: $scope.userData.loyaltyProgramId,
-                            referralCode: $scope.myUser.referraledCode
-                        };
-
-                        LoyaltySvc.registerForMembership(user).then(
-
-                            function (registrationResponse) {
-                                $scope.wrongReferral = true;
-                                LoyaltySvc.getMemberData(user.customerId);
-                                if($rootScope.loyaltyConfig.enableTellAFriend)
+                var loyaltyProgramRegistration = function (user) {
+                    LoyaltySvc.registerForMembership(user).then(
+                        function (registrationResponse) {
+                            $scope.wrongReferral = true;
+                            LoyaltySvc.getMemberData(user.customerId);
+                            if ( $rootScope.loyaltyConfig.enableTellAFriend) {
                                 $scope.closeModal();
-                            },
-                            function (error) {
-                                $scope.wrongReferral = true;
-                                $scope.myUser.referraledCode = "";
                             }
-                        );
+                        },
+                        function (error) {
+                            $scope.wrongReferral = true;
+                            $scope.myUser.referraledCode = '';
+                        }
+                    );
+                };
+
+                $scope.registerCustomerForProgram = function() {
+
+
+                    var user = {
+                        email: $scope.userData.email,
+                        customerId: $scope.userData.customerId,
+                        loyaltyProgramId: $scope.userData.loyaltyProgramId,
+                        referralCode: $scope.myUser.referraledCode
                     };
 
+                    LoyaltySvc.checkForHybrisProfileSubscription().then(function (subscriptionData) {
+                        try {
+                            return ( subscriptionData.status === 'ACTIVE' );
+                        } catch ( exception ) {
+                            return false;
+                        }
+                    }).then(function (subscriptionStatus) {
+                        if ( subscriptionStatus ) {
+                            var consentReference =  cookieSvc.getConsentReferenceCookie();
+                            user = angular.extend(user, {
+                                customAttributes: [{
+                                    cname: 'consentReference',
+                                    cvalue: consentReference
+                                }]
+                            });
+                            loyaltyProgramRegistration(user);
+                        } else {
+                            loyaltyProgramRegistration(user);
+                        }
+                    }, function (response) {
+                        loyaltyProgramRegistration(user);
+                    });
+                };
             }
-            ])
+        ])
+
         .controller('LoyaltyProgramCtrl', ['$rootScope', '$scope', '$injector',
 
             function ($rootScope, $scope, $injector) {
 
                 var LoyaltySvc = $injector.get('LoyaltySvc');
+                var cookieSvc = $injector.get('CookieSvc');
             
                 $scope.registrationServiceCalled = false;
                 var $modal = $injector.get('$modal');
@@ -133,10 +161,10 @@
                             templateUrl: 'js/app/loyalty/templates/signup_for_loyalty_program_modal.html',
                             controller: 'RegisterForLoyaltyProgramCtrl',
                             resolve: {
-                                        userData: function () {
-                                          return $scope.userData;
-                                        }
-                                    }
+                                userData: function () {
+                                  return $scope.userData;
+                              }
+                          }
                         });                       
                     };
 
@@ -144,9 +172,21 @@
                     $scope.init();
 
 
-                    $rootScope.$on('user:signedup', function( eve, userData ) { 
+                    var loyaltyProgramRegistration = function (user) {
+                        LoyaltySvc.registerForMembership(user).then(function (response) {
+                            $scope.registrationServiceCalled = true;
+                        }, function (response) {
+                            $scope.registrationServiceCalled = false;
+                            if(response.status === 404 && response.message === "INVALID_REF_CODE"){
+                                $scope.userData = user;
+                                $scope.getLoyaltyProgramMembership();
+                            }
+                        });
+                    };
+
+                    $scope.$on('user:signedup', function( eve, userData ) { 
                         
-                        $rootScope.$on('user:signedin', function() { 
+                        $scope.$on('user:signedin', function() { 
 
                             if( $scope.wantLoyaltyProgram || !$rootScope.loyaltyConfig.showReward ) {
 
@@ -158,28 +198,38 @@
 
                                     $scope.registrationServiceCalled = true;
 
-                                    LoyaltySvc.registerForMembership(userData).then(
-
-                                        function (response) {
-                                            $scope.registrationServiceCalled = true;
-                                            //GlobalData.setLanguage($scope.user.preferredLanguage);
-                                        },
-                                        
-                                        function (response) {
-                                            $scope.registrationServiceCalled = false;
-                                            if(response.status === 404 && response.message === "INVALID_REF_CODE"){
-                                                $scope.userData = userData;                                 
-                                                $scope.getLoyaltyProgramMembership();
-                                            }
-                                            
+                                    /*
+                                        If yProfile package is subscribed for the particular tenant, then generate the consent reference and pass the same id to the Loyalty member registration service as the custom attributes
+                                     */
+                                    
+                                    LoyaltySvc.checkForHybrisProfileSubscription().then(function (subscriptionData) {
+                                        try {
+                                            return ( subscriptionData.status === 'ACTIVE' );
+                                        } catch ( exception ) {
+                                            return false;
                                         }
-                                    );
-                                }                            
+                                    }).then(function (subscriptionStatus) {
+                                        if ( subscriptionStatus ) {
+                                                var consentReference =  cookieSvc.getConsentReferenceCookie();
+                                                userData = angular.extend(userData, {
+                                                    customAttributes: [{
+                                                        cname: 'consentReference',
+                                                        cvalue: consentReference
+                                                    }]
+                                                });
+                                                loyaltyProgramRegistration(userData);
+
+
+                                        } else {
+                                            loyaltyProgramRegistration(userData);
+                                        }
+                                    }, function (response) {
+                                        loyaltyProgramRegistration(userData);
+                                    });
+                                }
                             }
                         });
-
                     });
-
-                };                   
+                };
             }
         ]);

@@ -14,6 +14,11 @@
                 	ratio : -1
                 };
 
+                $scope.points = {
+                    redeemed : 0,
+                    earned : 0
+                }
+
                 $scope.getRedeemRatio = function() {
 
                     return LoyaltySvc.getRedeemRatio().then(
@@ -32,9 +37,11 @@
 
 							for( var temp = 0; temp < data.length; temp++ ){
 								if(data[temp].activityType === "REDEEM"){
+                                    $scope.points.redeemed = data[temp].transactionPoints;
 									$scope.amounts.redeemed = data[temp].transactionPoints * $scope.redeem.ratio ;
 								}
 								else if(data[temp].activityType === "ORDER"){
+                                    $scope.points.earned = data[temp].transactionPoints;
 									$scope.amounts.earned = data[temp].transactionPoints * $scope.redeem.ratio ;
 								}
 							};

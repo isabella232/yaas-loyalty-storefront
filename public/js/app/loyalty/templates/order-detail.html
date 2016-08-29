@@ -8,19 +8,19 @@
                         
                         <tr>
                             <td>
-                                <span id="confirmation-cash-redeemed-text"> {{ 'REWARD_CASH_SPENT_TEXT' | translate}} </span> 
+                                <span id="confirmation-cash-redeemed-text"> {{ 'REWARD_POINTS_SPENT_TEXT' | translate}} </span> 
                             </td>
                             <td class="text-right">
-                                <span class="error" id="confirmation-cash-redeemed" >-{{amounts.redeemed | currency: currencySymbol}} </span>
+                                <span class="error" id="confirmation-cash-redeemed" >-{{points.redeemed}} </span>
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <span id="confirmation-cash-earned-text"> {{ 'LOYALTY_CASH_EARNED_TEXT' | translate}} </span> 
+                                <span id="confirmation-cash-earned-text"> {{ 'REWARD_POINTS_EARNED_TEXT' | translate}} </span> 
                             </td>
                             <td class="text-right">
-                                <span class="text-green" id="confirmation-cash-earned" >{{amounts.earned | currency: currencySymbol}} </span>
+                                <span class="text-green" id="confirmation-cash-earned" >{{points.earned}} </span>
                             </td>
                         </tr>
                     

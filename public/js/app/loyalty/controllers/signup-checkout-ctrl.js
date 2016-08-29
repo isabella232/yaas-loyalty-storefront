@@ -7,6 +7,7 @@
 
                 var $state = $injector.get('$state');
                 var CartSvc = $injector.get('CartSvc');
+                var cookieSvc = $injector.get('CookieSvc');
 
                 $scope.thisUser = $rootScope.thisUser;
                 $scope.wrongReferral = false;
@@ -93,35 +94,61 @@
                 $scope.closeModal = function() {
                     modalInstance.close();
                 };
+
+
+
+
+                var loyaltyProgramRegistration = function (user) {
+                    LoyaltySvc.registerForMembership(user).then(function (response) {
+                        $scope.wrongReferral = false;
+                        $scope.disableSave = false; 
+                        LoyaltySvc.getMemberData(user.customerId);
+                        if ( $scope.configData.enableTellAFriend ) {
+                            $scope.closeModal();
+                        }
+                    }, function (error) {
+                        $scope.wrongReferral = true;
+                        $scope.disableSave = false; 
+                        $scope.myUser.referraledCode = "";
+                    });
+                };
+
                 $scope.registerCustomerForProgram = function () {   
 
-                        $scope.disableSave = true;     
-                        var user = {
-                            email: $scope.thisUser.hybrisUser.contactEmail,
-                            customerId: $scope.thisUser.hybrisUser.id,
-                            loyaltyProgramId: $scope.loyaltyProgram.programId,
-                            firstName: $scope.thisUser.hybrisUser.firstName,
-                            lastName: $scope.thisUser.hybrisUser.lastName,
-                            referralCode: $scope.myUser.referraledCode
-                        };
+                    $scope.disableSave = true;     
+                    var user = {
+                        email: $scope.thisUser.hybrisUser.contactEmail,
+                        customerId: $scope.thisUser.hybrisUser.id,
+                        loyaltyProgramId: $scope.loyaltyProgram.programId,
+                        firstName: $scope.thisUser.hybrisUser.firstName,
+                        lastName: $scope.thisUser.hybrisUser.lastName,
+                        referralCode: $scope.myUser.referraledCode
+                    };
 
-                       LoyaltySvc.registerForMembership(user).then(
+                    LoyaltySvc.checkForHybrisProfileSubscription().then(function (subscriptionData) {
+                        try {
+                            return ( subscriptionData.status === 'ACTIVE' );
+                        } catch ( exception ) {
+                            return false;
+                        }
+                    }).then(function (subscriptionStatus) {
+                        if ( subscriptionStatus ) {
+                            var consentReference =  cookieSvc.getConsentReferenceCookie();
+                            user = angular.extend(user, {
+                                    customAttributes: [{
+                                        cname: 'consentReference',
+                                        cvalue: consentReference
+                                    }]
+                                });
+                               loyaltyProgramRegistration(user);
 
-                            function(registrationResponse) {
-                                $scope.wrongReferral = false;
-                                $scope.disableSave = false; 
-                                LoyaltySvc.getMemberData(user.customerId);
-                                if($scope.configData.enableTellAFriend)
-                                $scope.closeModal();
-                            },
-                            function(error){
-                                $scope.wrongReferral = true;
-                                $scope.disableSave = false; 
-                                $scope.myUser.referraledCode = "";
-                            }
-                        );
-                    
-                }
-
+                        } else {
+                            loyaltyProgramRegistration(user);
+                        }
+                    }, function (response) {
+                        loyaltyProgramRegistration(user);
+                    });
+                };
             }
-        ]);
+        ])
+    ;

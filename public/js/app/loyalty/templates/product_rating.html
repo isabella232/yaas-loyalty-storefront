@@ -4,8 +4,13 @@
 			<rating class="product-rating" id="rating-average" ng-model="avgRating" max="5" readonly="true"></rating>
 		</span> -->
         <span class="product-rating" id="rating-average">
-            <i ng-repeat="rateStar in [1, 2, 3, 4, 5] track by $index" class="glyphicon" data-width="{{avgRatingView}}" ng-class="{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }"></i>
-            </span>
+            
+
+             <i ng-if="!ratingShowFlag" ng-repeat="rateStar in [1, 2, 3, 4, 5] track by $index" class="glyphicon" data-width="{{avgRatingView}}" ng-class="{ 'glyphicon-star': $index <= avgRating,  'glyphicon-star-empty': $index > avgRating, 'avg': $index === avgRating }"></i>
+
+            <i ng-if="ratingShowFlag" ng-repeat="rateStar in [1, 2, 3, 4, 5] track by $index" class="glyphicon" data-width="{{avgRatingView}}" ng-class="{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }"></i>
+
+        </span>
         <span>
 			<span><a ng-click="getProductReviews()" id="reviews-link" translate="{{ 'USER_REVIEW' }}" translate-values="{ totalRatingReviews: totalRatingReviews}"></a>
         </span>

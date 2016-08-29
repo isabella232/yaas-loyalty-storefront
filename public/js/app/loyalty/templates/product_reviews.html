@@ -15,9 +15,13 @@
                 <div class="form-group rating-review-row">
                     <div class="marginBottom5"><Label id="product-average-rating">{{'AVERAGE_USER_RATING' | translate}} </Label></div>
                     <div class="marginBottom5">
+
                         <strong><span class="ratingAvg" id="average-rating-model" ng-bind="avgRatingModel"></span></strong>
                          <span class="product-rating" id="rating-average">
-                            <i ng-repeat="rateStar in [1, 2, 3, 4, 5] track by $index" class="glyphicon" data-width="{{avgRatingView}}" ng-class="{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }"></i>
+
+                            <i ng-if="!ratingShowFlag" ng-repeat="rateStar in [1, 2, 3, 4, 5] track by $index" class="glyphicon" data-width="{{avgRatingView}}" ng-class="{ 'glyphicon-star': $index <= avgRating,  'glyphicon-star-empty': $index > avgRating, 'avg': $index === avgRating }"></i>
+
+                            <i ng-if="ratingShowFlag" ng-repeat="rateStar in [1, 2, 3, 4, 5] track by $index" class="glyphicon" data-width="{{avgRatingView}}" ng-class="{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }"></i>
                         </span>
                     </div>
                     <div class="form-group">

@@ -15,8 +15,8 @@
 angular.module('ds.httpproxy', [])
 
        /** Defines the HTTP interceptors. */
-    .factory('interceptor', ['$q', '$injector', 'settings', 'TokenSvc', 'httpQueue', 'GlobalData', 'SiteConfigSvc','flash',
-        function ($q, $injector, settings, TokenSvc, httpQueue, GlobalData, siteConfig, flash) {
+    .factory('interceptor', ['$q', '$injector', 'settings', 'TokenSvc', 'httpQueue', 'GlobalData', 'SiteConfigSvc','flash', '$location', '$rootScope',
+        function ($q, $injector, settings, TokenSvc, httpQueue, GlobalData, siteConfig,flash, $location, $rootScope) {
 
             return {
                 request: function (config) {
@@ -56,7 +56,7 @@ angular.module('ds.httpproxy', [])
 
                             if ( response.config.url.indexOf('loy-') > -1 ) {
 
-                                if(!(response.config.url.indexOf('wallet') > -1)){
+                                if(!(response.config.url.indexOf('wallet') > -1) && !(response.config.url.indexOf('dummyFire') > -1) && !(response.config.url.indexOf('ratingReviews') > -1) ){
                                     if(response.data.message){
                                         $translate([response.data.message]).then(
                                             function(translatedStrings) {
@@ -79,6 +79,7 @@ angular.module('ds.httpproxy', [])
                     if (response.config.url.indexOf('/hybris/piwik') > -1 ||
                         response.config.url.indexOf('loginconfig') > -1 ||
                         response.config.url.indexOf('shippingcost') > -1 ||
+                        response.config.url.indexOf('me/accounts/internal/email/change') > -1 ||
                         response.config.url.indexOf('algolia') > -1) {
                         //Ignore if request to one of this endpoints fails.
                                 } else {
@@ -107,7 +108,10 @@ angular.module('ds.httpproxy', [])
 
                         } else if (response.status === 403) {
                             // if 403 during login, should already be handled by auth dialog controller
-                            if (response.config.url.indexOf('login') < 0 && response.config.url.indexOf('coupon') < 0) {
+                            if ( response.config.url.indexOf('login') < 0 && response.config.url.indexOf('coupon') < 0 
+                                    && response.config.url.indexOf('hybris/profile') < 0
+                                    && response.config.url.indexOf('yprofile') < 0
+                                ) {
                                 // using injector lookup to prevent circular dependency
                                 var AuthSvc = $injector.get('AuthSvc');
                                 if (AuthSvc.isAuthenticated()) {
@@ -126,6 +130,9 @@ angular.module('ds.httpproxy', [])
                             }
                         } else if (response.status === 404 && response.config.url.indexOf('cart') < 0 && response.config.url.indexOf('login') < 0 && response.config.url.indexOf('password/reset') < 0 && response.config.url.indexOf('coupon') < 0) {
                             $injector.get('$state').go('errors', { errorId: '404' });
+                        } else if (response.status === 404 && response.config.url.indexOf('cart') > -1 && $location.url().indexOf('checkout') > -1) {
+                            $rootScope.showCart = true;
+                            $injector.get('$state').go(settings.allProductsState);
                         } else if (response.status === 500) {
                             //show error view with default message.
                             if(response.config.url.indexOf('orders') < 0 && response.config.url.indexOf('me') < 0) {

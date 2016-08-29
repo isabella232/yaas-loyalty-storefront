@@ -25,6 +25,8 @@
 
                 $scope.isLoyaltyPointsApplied = false;
 
+                $scope.checkIsloyaltyPointsApplied = false;
+
                 $scope.applyLoyaltyPoints =  function(){
                     $scope.isSliderDisabled = true;
                     var applyDiscountData = {
@@ -35,6 +37,9 @@
                         transactionCurrency : GlobalData.getCurrencyId()
                     };                    
                     
+                     $scope.checkIsloyaltyPointsApplied = true;
+
+
                     LoyaltySvc.applyLoyaltyPoints(applyDiscountData).then(
                         
                         function(response) {
@@ -67,6 +72,8 @@
                             }
                         });
                     
+                        $scope.checkIsloyaltyPointsApplied = false;
+
                         removeDiscountData.cartId = $scope.cart.id;
 
                         if(removeDiscountData.loyaltyDiscountId !== -1){
@@ -82,6 +89,10 @@
                                         $scope.isLoyaltyPointsApplied = false;
 
                                     });
+
+                                     $rootScope.$emit('redeem:partial', $scope.amounts);
+
+
                                 },
 
                                 function(errorresponse) {
@@ -144,6 +155,10 @@
                         $scope.amounts.originalAmount = angular.copy($scope.cart.subTotalPrice.amount);
                         $scope.amounts.originalTotalAmount = angular.copy($scope.cart.totalPrice.amount);
     
+                        if($scope.cart.totalDiscount){
+                             $scope.amounts.discountAmount = $scope.cart.totalDiscount.amount;
+                        }
+    
                         // $scope.coupon = UserCoupon.getCoupon();
                         // $scope.amounts.couponDiscount = $scope.coupon.amounts.discountAmount;
 
@@ -167,28 +182,36 @@
                     }
                 };
 
+                var unbindUpdateShippingCost = $rootScope.$on('shipping-cost:updated', function(eve, shippingObject){
+                    $scope.amounts.shippingAmount = shippingObject.fee.amount;
+                    $scope.changeShippingAmount();
+                });
 
-
-
+                $scope.$on('$destroy', unbindUpdateShippingCost);
 
                 $scope.userMaxCash = 0;
                 $scope.userMaxPoints = 0;
 
 
                 $scope.setUserMaxPoints = function () {
+
+                    if(!$scope.checkIsloyaltyPointsApplied){
                     $scope.userMaxPoints = $scope.getUserMaxPoints($scope.thisUser.loyaltyUser.totalBalancePoints || 0);
                     $scope.userMaxCash = ($scope.userMaxPoints * $scope.redeem.ratio).toFixed(2);
                     $rootScope.$broadcast('amountChanged:redeemablePoints', $scope.userMaxPoints);
+                    }
+
+                   
 
                 };
 
                 $scope.getUserMaxPoints = function(userMaxpPoints) {
 
-                    var productPoints = $scope.getPointsFromPrice($scope.amounts.originalAmount - $scope.amounts.couponDiscount);
-                    
+                    var productPoints = $scope.getPointsFromPrice($scope.amounts.originalAmount - $scope.amounts.discountAmount);
+                    var discountPoints = $scope.getPointsFromPrice($scope.amounts.discountAmount);
                     var result = userMaxpPoints;
 
-                    if ( productPoints <= userMaxpPoints ) {
+                    if ( productPoints <= userMaxpPoints &&  userMaxpPoints != discountPoints ) {
                         result = productPoints;
                     }
 
@@ -210,7 +233,7 @@
                     $scope.changeNewAmount();
                     $scope.changeTotalDiscount();
 
-                    if ( $scope.amounts.redeemDiscount >= ($scope.amounts.originalTotalAmount - $scope.amounts.couponDiscount) ){
+                    if ( $scope.amounts.redeemDiscount >= ($scope.amounts.originalTotalAmount - $scope.amounts.discountAmount) ){
                         $rootScope.$emit('redeem:full', $scope.amounts);
                     }
                     else{
@@ -227,7 +250,7 @@
                     $scope.changeNewAmount();
                     $scope.changeTotalDiscount();
 
-                    if ( $scope.amounts.redeemDiscount >= ($scope.amounts.originalTotalAmount - $scope.amounts.couponDiscount) ){
+                    if ( $scope.amounts.redeemDiscount >= ($scope.amounts.originalTotalAmount - $scope.amounts.discountAmount) ){
                         $rootScope.$emit('redeem:full', $scope.amounts);
 
                     }
@@ -249,8 +272,8 @@
                     $rootScope.$emit('amountChanged:total', $scope.amounts.newAmount);
                 };   
 
-                $scope.changeTotalDiscount = function () {                    
-                    $scope.amounts.discountAmount = parseFloat( $scope.amounts.redeemDiscount ).toFixed(2);                    
+                $scope.changeTotalDiscount = function () {                                     
+                    //$scope.amounts.discountAmount = parseFloat( $scope.amounts.redeemDiscount ).toFixed(2);                    
                     $rootScope.$emit('amountChanged:discount', $scope.amounts.discountAmount);
                 };
 
@@ -279,7 +302,6 @@
 
 
                 var unBindCartUpdated = $rootScope.$on('cart:updated', function (eve, cartObj) {
-                    
                     if( cartObj.source !=='reset' ){
                         
                         $scope.amounts.originalTotalAmount = cartObj.cart.totalPrice.amount;                        
@@ -291,13 +313,25 @@
                     $rootScope.$emit('amountChanged:total', $scope.amounts.originalTotalAmount);
                     $rootScope.$emit('amountChanged:discount', $scope.amounts.discountAmount);
                     
+                    
+
+                    if(cartObj.source){
                     if ( cartObj.source !=='reset' ) {
 
+                            $scope.checkIsloyaltyPointsApplied= false;
                         $scope.calcAmounts();
 
                         $scope.redeem.cashGoing = 0;
                         $scope.redeem.pointsGoing = 0;
                         $scope.redeem.pointsToCurr = 0;
+
+                        $scope.isSliderDisabled = false;
+                        $scope.showApplyPoints = true;
+
+
+                    }
+                    }else{
+                          $scope.calcAmounts();
                     }
 
                     if ( $scope.thisUser.isMember ) {
@@ -308,7 +342,6 @@
                 $scope.isOrderPlaced = false;
 
                 var unBindOrderPlaced = $rootScope.$on('order:placed', function (eve, orderData) {
-                    
                     $scope.isOrderPlaced = true;
 
                     if ( $scope.thisUser.isMember ) {
@@ -325,6 +358,9 @@
                 var unBindCouponRemoved = $rootScope.$on('coupon:removed', function (e) {
                     $scope.isSliderDisabled = false;
                     $scope.showApplyPoints = true;
+                    $scope.redeem.pointsGoing = 0;
+                    $scope.amounts.redeemDiscount = 0;
+                    $scope.isLoyaltyPointsApplied = false;
                 });
 
 
@@ -335,50 +371,48 @@
                     angular.forEach($scope.cart.items, function(item){
                         totalItems = totalItems + item.quantity;
                     });
+
                     var orderActivity = {
                         customerId: customerId,
                         activityType: 'ORDER',
                         transactionAmount: transactionAmount,
                         refId: orderId,
-                            transactionCurrency :GlobalData.getCurrencyId(),
-                            rulesPayload : {
-                                productAttributes :[],
-                                orderAttributes : {
-                                  transactionCurrency :GlobalData.getCurrencyId(),
-                                  total : $scope.amounts.originalTotalAmount,
-                                  subTotal : $scope.amounts.originalAmount,
-                                  shippingAmount : $scope.amounts.shippingAmount,
-                                  discountAmount : $scope.amounts.discountAmount,
-                                  shippingCountry: $scope.order.shipTo.country,
-                                  shippingState : $scope.order.shipTo.state,
-                                  totalItems : totalItems,
-                                  customAttributes:[]
-                                }
+                        transactionCurrency : GlobalData.getCurrencyId(),
+                        rulesPayload : {
+                            productAttributes :[],
+                            orderAttributes : {
+                                transactionCurrency :GlobalData.getCurrencyId(),
+                                total : $scope.amounts.originalTotalAmount,
+                                subTotal : $scope.amounts.originalAmount,
+                                shippingAmount : $scope.amounts.shippingAmount,
+                                discountAmount : $scope.amounts.discountAmount,
+                                shippingCountry: $scope.order.shipTo.country,
+                                shippingState : $scope.order.shipTo.state,
+                                totalItems : totalItems,
+                                customAttributes:[]
                             },
+                            customAttributes: [{
+                                key: 'STORE_ID',
+                                value: '1003'
+                            }]
+                        }
                     };
 
-                        LoyaltySvc.getProductAttributes($scope.cart).then(function(productAttributes){
+                    LoyaltySvc.getProductAttributes($scope.cart).then(function(productAttributes){
 
-                                orderActivity.rulesPayload.productAttributes = productAttributes;
+                        orderActivity.rulesPayload.productAttributes = productAttributes;
 
-                    if ( ! $scope.serviceCalled['ORDER'] ) {
+                        if ( ! $scope.serviceCalled['ORDER'] ) {
 
-                        $scope.serviceCalled['ORDER'] = true ;
+                            $scope.serviceCalled['ORDER'] = true ;
 
-                        LoyaltySvc.postMemberActivity(orderActivity).then(
-
-                            function(responseMemberActivity) {
-                                
-                                $rootScope.$emit('loyalty:orderId', orderId)
-
-                            },
-
-                            function(errorresponse) {
+                            LoyaltySvc.postMemberActivity(orderActivity).then(function(responseMemberActivity) {
+                                $rootScope.$emit('loyalty:orderId', orderId);
+                            }, function(errorresponse) {
                                 $scope.serviceCalled['ORDER'] = false;
-                            }
-                        ); 
-                    }
-                        });
+                            }); 
+                        }
+                    });
                 };
 
                 $scope.postRedeemActivity = function (customerId, pointsGoing, orderId) {                   

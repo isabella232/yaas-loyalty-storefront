@@ -2,8 +2,8 @@
 applications:
 - name: loyaltyshoptest
   host: loyaltyshoptest
-  domain: yaas.io
-  url: loyaltyshoptest.yaas.io
+  domain: stage.yaas.io
+  url: loyaltyshoptest.stage.yaas.io
   command: npm run-script start
   buildpack: https://github.com/heroku/heroku-buildpack-nodejs.git
   memory: 512M

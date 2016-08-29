@@ -7,4 +7,4 @@ applications:
   command: npm run-script start
   buildpack: https://github.com/ddollar/heroku-buildpack-multi.git
   memory: 512M
-  instances: 1
+  instances: 1 

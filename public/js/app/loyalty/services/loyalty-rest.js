@@ -102,7 +102,15 @@
 
                     deleteLoyaltyPoints: function(url) {
                         return RESTSvc.delete(url);
-                    }
+                    },
+
+                    getHybrisProfileConsentReference: function (url, data) {
+                        return RESTSvc.post(url, data);
+                    },
+
+                    checkForHybrisProfileSubscription: function (url) {
+                        return RESTSvc.get(url);
+                    },
                 };
 
                 return LoyaltyREST;

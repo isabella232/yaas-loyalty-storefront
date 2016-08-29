@@ -8,7 +8,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            <div class=\"page-headline hidden-xs\">\n" +
     "                <h1>\n" +
     "                    <small>{{'MY_ACCOUNT' | translate}}</small>\n" +
-    "                    <span class=\"welcomeTxt pull-left\">{{'WELCOME' | translate}} <span ng-if=\"account.firstName\">{{account.firstName}}</span></span>\n" +
+    "                    <span class=\"welcomeTxt pull-left\">{{'WELCOME' | translate}} <span ng-if=\"account.firstName\" id=\"accountFirstName\">{{account.firstName}}</span></span>\n" +
     "                    <img src=\"./img/user-icon_big.png\" class=\"img-circle pull-left \" />\n" +
     "                </h1>\n" +
     "            </div>\n" +
@@ -35,7 +35,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                {{account.title|translate}} {{account.firstName}} {{account.middleName}} {{account.lastName}}\n" +
     "            </div>\n" +
     "            <div class=\"col-sm-1 editLinkContainer\">\n" +
-    "                <a ng-click=\"editUserEmail(account)\"><span class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "                <a ng-click=\"editUserEmail(account)\"><span id=\"update-email\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
     "            </div>\n" +
     "            <div class=\"col-sm-3\">\n" +
     "                <span class=\"dataLabel\">{{'EMAIL' | translate}}</span>\n" +
@@ -49,20 +49,12 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                <span class=\"dataLabel\">{{'PASSWORD' | translate}}</span>\n" +
     "                &#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;\n" +
     "            </div>\n" +
-    "        \n" +
     "        </div>\n" +
-    "\n" +
     "        <!-- /desktop -->\n" +
     "\n" +
-    "        \n" +
     "        <!-- mobile display -->\n" +
     "        <div class=\"row userInfoRow mobile hidden-sm hidden-md hidden-lg\" ng-if=\"account\">\n" +
     "\n" +
-    "            <div class=\"col-xs-12\">\n" +
-    "                <span class=\"titleRow visible-xs hidden-md hidden-lg\">\n" +
-    "                    {{'ACCOUNT_DETAILS' | translate}}\n" +
-    "                </span>\n" +
-    "            </div>\n" +
     "            <div class=\"col-xs-8\">\n" +
     "                <div class=\"mobileDataSection\">\n" +
     "                    <span class=\"dataLabel locale\">{{'NAME' | translate}}</span>\n" +
@@ -75,7 +67,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            <div class=\"col-xs-8\">\n" +
     "                <div class=\"mobileDataSection\">\n" +
     "                    <span class=\"dataLabel locale\">{{'EMAIL' | translate}}</span>\n" +
-    "                    {{showLanguageLocale()}}\n" +
+    "                    {{account.contactEmail}}\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"col-xs-4\">\n" +
@@ -91,7 +83,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                <button class=\"btn btn-secondary btn-md pull-right\" ng-click=\"updatePassword()\">{{'EDIT' | translate}}</button>\n" +
     "            </div>\n" +
     "\n" +
-    "        </div>    \n" +
+    "        </div>\n" +
     "\n" +
     "        <div class=\"row\" ng-if=\"account\">\n" +
     "            <div class=\"col-sm-12\" ng-include src=\"'js/app/loyalty/templates/user_reward_program.html'\"></div>\n" +
@@ -123,8 +115,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "-->\n" +
     "<div class=\"account\">\n" +
     "\n" +
-    "    <customer-details account=\"account\"></customer-details>\r" +
-    "\n" +
+    "    <customer-details account=\"account\"></customer-details>\n" +
     "\n" +
     "\n" +
     "\r" +
@@ -219,12 +210,12 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "      </div>\n" +
     "\n" +
     "      \n" +
-    "    </div>\n" +
+    "    </div>\r" +
+    "\n" +
     "    <div class=\"mediumgray\" style=\"padding-left:10px\" match-background>\n" +
     "       <div ng-include src=\"'js/app/loyalty/templates/reward_history.html'\"></div>\n" +
     "    </div>\n" +
-    "  </section>\r" +
-    "\n" +
+    "  </section>\n" +
     "\n" +
     "\n" +
     "</div>\n"
@@ -238,7 +229,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    <button class=\"close\" ng-click=\"closeAddressModal()\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">{{'CLOSE' | translate}}</span></button>\n" +
     "    <h4 class=\"modal-title\" id=\"myModalLabel\">{{'ADD_ADDRESS' | translate}}</h4>\n" +
     "  </div>\n" +
-    "  <div class=\"modal-body\">\n" +
+    "  <div class=\"modal-body\" stop-event=\"touchend\">\n" +
     "\n" +
     "      <input type=\"hidden\" name=\"id\" ng-model=\"address.id\">\n" +
     "      <input type=\"hidden\" name=\"account\" ng-model=\"address.account\">\n" +
@@ -264,9 +255,19 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "  <button type=\"button\" class=\"close\" ng-click=\"closeAddressDialog()\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">{{'CLOSE' | translate}}</span></button>\n" +
     "  <h4 class=\"modal-title\" id=\"myModalLabel\">{{'ADDRESS_BOOK' | translate}}</h4>\n" +
     "</div>\n" +
-    "<div class=\"modal-body\">\n" +
+    "<div class=\"modal-body\" stop-event=\"touchend\">\n" +
     "  <div class=\"row\">\n" +
     "    <div ng-include=\"'./js/app/account/templates/addresses.html'\"></div>\n" +
+    "  </div>\n" +
+    "  <div class=\"text-center row\" ng-show=\"showAllAddressButton\">\n" +
+    "    <button class=\"btn btn-link\" ng-show=\"!showAllAddresses\" ng-click=\"toggleAddresses()\">\n" +
+    "        {{'SHOW_ALL' | translate}}\n" +
+    "        <span class=\"glyphicon glyphicon-chevron-down\"/>\n" +
+    "    </button>\n" +
+    "    <button class=\"btn btn-link\" ng-show=\"showAllAddresses\" ng-click=\"toggleAddresses()\">\n" +
+    "        {{'SHOW_LESS' | translate}}\n" +
+    "        <span class=\"glyphicon glyphicon-chevron-up\"/>\n" +
+    "    </button>  \n" +
     "  </div>\n" +
     "</div>"
   );
@@ -274,7 +275,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('js/app/account/templates/addresses.html',
     "<div address-decorator ng-class=\"{ 'col-sm-6 col-md-4 col-lg-4': !isDialog, 'col-xs-12 col-sm-6 col-lg-4': isDialog }\" ng-repeat=\"address in addresses | limitTo: showAddressFilter \" ng-cloak>\n" +
-    "  <div class=\"panel\" ng-class=\"{'defaultAddress': address.isDefault, disableAddressTest: !isShipToCountry(address.country) && isDialog}\">\n" +
+    "  <div class=\"panel\" ng-class=\"{'defaultAddress': address.isDefault, disableAddress: disableAddress(address.country)}\">\n" +
     "    <div class=\"panel-body\" ng-if=\"!isDialog\">\n" +
     "      <div class=\"btn-group-vertical pull-right states-toolbar\">\n" +
     "        <button id=\"set-default-btn\" class=\"btn btn-link btn-lg\"  ng-if=\"addresses.length > 1 && !address.isDefault\" ng-class=\"{ active: address.isDefault }\" ng-click=\"setAddressAsDefault(address)\"><span class=\"glyphicon glyphicon-star\"></span></button>\n" +
@@ -307,7 +308,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "          <span>{{address.city}}, {{address.state}} {{address.zipCode}}</span><br>\n" +
     "          <span>{{address.country}}</span><br>\n" +
     "          <span>{{address.contactPhone}}</span><br>\n" +
-    "          <span ng-hide=\"isShipToCountry(address.country)\" class=\"list-unstyled text-danger\">{{'CANT_BE_SHIPPED' | translate}}</span><br>\n" +
+    "          <span ng-show=\"disableAddress(address.country)\" class=\"list-unstyled text-danger\">{{'CANT_BE_SHIPPED' | translate}}</span><br>\n" +
     "        </address>\n" +
     "    </div>\n" +
     "\n" +
@@ -326,6 +327,44 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('js/app/account/templates/change-email-confirmation.html',
+    "<div ng-if=\"!error\">\n" +
+    "    <div ng-if=\"!confirmed\" class=\"text-center\">\n" +
+    "        <h1>{{'EDIT_EMAIL_UPDATED'|translate}}</h1>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div ng-if=\"confirmed\">\n" +
+    "        <section class=\"white text-center\" match-background ng-cloak>\n" +
+    "            <h2>{{'EDIT_EMAIL_SUCESSFULLY_UPDATED'|translate}}</h2>\n" +
+    "            <p>{{'EDIT_EMAIL_CHANGED_MSG'|translate}}</p>\n" +
+    "\n" +
+    "            <div class=\"actionButton clearfix emailChangeButton\">\n" +
+    "                <button class=\"btn btn-secondary btn-lg\" ui-sref=\"base.home\">\n" +
+    "                    {{'CONTINUE_SHOPPING'|translate}}\n" +
+    "                </button>\n" +
+    "            </div>\n" +
+    "\n" +
+    "        </section>\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n" +
+    "\n" +
+    "<div ng-if=\"error\">\n" +
+    "    <section class=\"white text-center\" match-background ng-cloak>\n" +
+    "        <h2>{{'OOPS_MSG'|translate}}</h2>\n" +
+    "        <p>\n" +
+    "            {{'EDIT_EMAIL_CHANGE_FAILED'|translate}}\n" +
+    "        </p>\n" +
+    "        <div class=\"actionButton clearfix emailChangeButton\">\n" +
+    "            <button class=\"btn btn-secondary btn-lg\" ui-sref=\"base.account\">\n" +
+    "                {{'RESET_EMAIL'|translate}}\n" +
+    "            </button>\n" +
+    "        </div>\n" +
+    "    </section>\n" +
+    "</div>"
+  );
+
+
   $templateCache.put('js/app/account/templates/dialogs/address-remove-dialog.html',
     "<div class=\"modal-header\" ng-cloak>\n" +
     "    <button type=\"button\" class=\"close\" ng-click=\"close()\" data-dismiss=\"modal\">\n" +
@@ -334,7 +373,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    </button>\n" +
     "    <h4 class=\"modal-title\" id=\"myModalLabel\">{{'CONFIRM_DELETE_ADDRESS_TITLE' | translate}}</h4>\n" +
     "</div>\n" +
-    "<div class=\"modal-body\">\n" +
+    "<div class=\"modal-body\" stop-event=\"touchend\">\n" +
     "    <div class=\"row\">\n" +
     "        <div class=\"col-xs-12\">\n" +
     "            {{'CONFIRM_ADDRESS_REMOVAL'|translate}}\n" +
@@ -349,32 +388,61 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/account/templates/modals/edit-user-email-dialog.html',
-    "<div class=\"modal-header\" ng-cloak>\n" +
-    "    <button type=\"button\" class=\"close\" ng-click=\"closeEditUserDialog()\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n" +
-    "    <h4 class=\"modal-title\">\n" +
-    "        {{'UPDATE_EMAIL' | translate}}\n" +
-    "    </h4>\n" +
-    "</div>\n" +
-    "<form name=\"updateUserInfoForm\" ng-submit=\"updateUserInfo()\" novalidate>\n" +
-    "    <div class=\"modal-body\">\n" +
-    "        <div class=\"row\">\n" +
-    "            <div class=\"col-lg-12 col\">\n" +
-    "                <div class=\"form-group input-group\"\n" +
-    "                     ng-class=\"{'has-error': updateUserInfoForm.email.$invalid && (updateUserInfoForm.email.$dirty  || showPristineErrors)}\">\n" +
-    "                    <label class=\"input-group-addon control-label\" for=\"email\">{{'NEW_EMAIL' | translate}}</label>\n" +
-    "                    <input inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                           type=\"email\" class=\"form-control ui-autocomplete\" id=\"email\" name=\"email\"\n" +
-    "                           ng-model=\"account.contactEmail\" required autocomplete=\"on\"\n" +
-    "                           reqired>\n" +
+    "<!--Step 1-->\n" +
+    "<div ng-if=\"step === 1\">\n" +
+    "    <div class=\"modal-header\" ng-cloak>\n" +
+    "        <button type=\"button\" class=\"close\" ng-click=\"closeEditUserDialog()\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n" +
+    "        <h4 class=\"modal-title\">\n" +
+    "            {{'UPDATE_EMAIL' | translate}}\n" +
+    "        </h4>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <form name=\"updateUserInfoForm\" ng-submit=\"updateUserInfo()\" novalidate stop-event=\"touchend\">\n" +
+    "        <div class=\"modal-body\">\n" +
+    "            <div class=\"row\">\n" +
+    "                <div class=\"col-lg-12 col\">\n" +
+    "                    <div class=\"form-group input-group\">\n" +
+    "                        <label class=\"input-group-addon control-label\" for=\"email\">{{'CURRENT_EMAIL' | translate}}</label>\n" +
+    "                        <input type=\"email\" class=\"form-control ui-autocomplete\" id=\"email\" name=\"email\"\n" +
+    "                               ng-model=\"account.email\" disabled reqired>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group input-group\"\n" +
+    "                         ng-class=\"{'has-error': updateUserInfoForm.newEmail.$invalid && (updateUserInfoForm.newEmail.$dirty  || showPristineErrors)}\">\n" +
+    "                        <label class=\"input-group-addon control-label\" for=\"newEmail\">{{'NEW_EMAIL' | translate}}</label>\n" +
+    "                        <input inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                               type=\"email\" class=\"form-control ui-autocomplete\" id=\"newEmail\" name=\"newEmail\"\n" +
+    "                               ng-model=\"account.newEmail\" required autocomplete=\"on\">\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group input-group\"\n" +
+    "                         ng-class=\"{'has-error': updateUserInfoForm.password.$invalid && (updateUserInfoForm.password.$dirty  || showPristineErrors)}\">\n" +
+    "                        <label class=\"input-group-addon control-label\" for=\"password\">{{'PASSWORD' | translate}}</label>\n" +
+    "                        <input inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                               type=\"password\" class=\"form-control ui-autocomplete\" id=\"password\" name=\"password\"\n" +
+    "                               ng-model=\"account.password\" required autocomplete=\"on\">\n" +
+    "                    </div>\n" +
+    "\n" +
+    "                    <div class=\"error\" ng-if=\"error\">\n" +
+    "                        {{error}}\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
+    "            <div class=\"modal-footer\">\n" +
+    "                <button type=\"button\" ng-click=\"closeEditUserDialog()\" id=\"cancel-btn\" class=\"btn btn-secondary btn-lg\">{{'CANCEL' | translate}}</button>\n" +
+    "                <button type=\"submit\" id=\"save-btn\" class=\"btn btn-primary btn-lg\" ng-disabled=\"updateUserInfoForm.$invalid\">{{'SAVE' | translate}}</button>\n" +
+    "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"modal-footer\">\n" +
-    "            <button type=\"button\" ng-click=\"closeEditUserDialog()\" id=\"cancel-btn\" class=\"btn btn-secondary btn-lg\">{{'CANCEL' | translate}}</button>\n" +
-    "            <button type=\"submit\" id=\"save-btn\" class=\"btn btn-primary btn-lg\" ng-disabled=\"updateUserInfoForm.$invalid\">{{'SAVE' | translate}}</button>\n" +
+    "    </form>\n" +
+    "</div>\n" +
+    "\n" +
+    "<!--Step 2-->\n" +
+    "<div ng-if=\"step === 2\">\n" +
+    "    <section>\n" +
+    "        <div class=\"page-header\">\n" +
+    "            <h2>{{'CHECK_EMAIL' | translate }}</h2>\n" +
+    "            <p>{{'CHECK_EMAIL_INSTRUCT_CHANGE_EMAIL' | translate }}</p>\n" +
     "        </div>\n" +
-    "    </div>\n" +
-    "</form>\n"
+    "    </section>\n" +
+    "</div>"
   );
 
 
@@ -385,14 +453,21 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        {{'UPDATE_ACCOUNT_DETAILS' | translate}}\n" +
     "    </h4>\n" +
     "</div>\n" +
-    "<form name=\"updateUserInfoForm\" ng-submit=\"updateUserInfo()\" novalidate>\n" +
+    "<form name=\"updateUserInfoForm\" ng-submit=\"updateUserInfo()\" novalidate stop-event=\"touchend\">\n" +
     "    <div class=\"modal-body\">\n" +
     "        <div class=\"row\">\n" +
     "\n" +
-    "            <div class=\"col-lg-12\">\n" +
+    "            <div class=\"col-lg-12 custom-select-container checkout-selector\">\n" +
     "                <div class=\"form-group input-group\">\n" +
     "                    <label class=\"input-group-addon control-label\" for=\"titleAccount\">{{'TITLE' | translate}}</label>\n" +
-    "                    <select class=\"form-control\" ng-model=\"account.title\" id=\"titleAccount\" name=\"title\" ng-options=\"title | translate for title in titles\"></select>\n" +
+    "                    <ui-select ng-model=\"account.title\">\n" +
+    "                      <ui-select-match>\n" +
+    "                        {{$select.selected}}\n" +
+    "                      </ui-select-match>\n" +
+    "                      <ui-select-choices repeat=\"title in titles | filter: $select.search\">\n" +
+    "                        {{title}}\n" +
+    "                      </ui-select-choices>\n" +
+    "                    </ui-select>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"col-lg-12 col\">\n" +
@@ -614,7 +689,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                    </tfoot>\n" +
     "                </table>\n" +
     "                \n" +
-    "                <div ng-include src=\"'js/app/loyalty/templates/order-detail.html'\"></div>\n" +
+    "                <div ng-include src=\"'js/app/loyalty/templates/order-detail.html'\" class=\"orderDetailPoints\"></div>\n" +
     "\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -626,17 +701,25 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/addresses/templates/addAddressCA.html',
     "<div>\n" +
     "\n" +
+    "      <div class=\"checkout-selector\">\n" +
+    "        <div class=\"form-group input-group custom-select-container\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
+    "            <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "\n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.contactName.$invalid && (addressForm.contactName.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"contactName\">{{'FULL_NAME' | translate}}</label>\n" +
     "        <input inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" type=\"text\" class=\"form-control ui-autocomplete\" id=\"contactName\" name=\"contactName\" ng-model=\"address.contactName\" required autocomplete=\"on\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
     "        ng-required=\"addressForm.country.$viewValue.id === 'CA'\">\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"form-group input-group\">\n" +
-    "          <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "          <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\" required>\n" +
-    "          </select>\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\">\n" +
@@ -665,25 +748,19 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        ng-required=\"addressForm.country.$viewValue.id === 'CA'\">\n" +
     "      </div>\n" +
     "\n" +
-    "      <div class=\"form-group input-group\"\n" +
-    "          ng-class=\"{'has-error': addressForm.state.$invalid && (addressForm.state.$dirty || showPristineErrors) }\">\n" +
-    "          <label class=\"input-group-addon control-label\" for=\"state\">{{'PROVINCE' | translate}}</label>\n" +
-    "          <select class=\"form-control\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"addressForm.country.$viewValue.id === 'CA'\" ng-model=\"address.state\" id=\"state\" name=\"state\">\n" +
-    "            <option value=\"\"></option> \n" +
-    "            <option value=\"AB\">Alberta</option> \n" +
-    "            <option value=\"BC\">British Columbia</option> \n" +
-    "            <option value=\"MB\">Manitoba</option> \n" +
-    "            <option value=\"NB\">New Brunswick</option> \n" +
-    "            <option value=\"NL\">Newfoundland and Labrador</option> \n" +
-    "            <option value=\"NS\">Nova Scotia</option> \n" +
-    "            <option value=\"NT\">Northwest Territories</option> \n" +
-    "            <option value=\"NU\">Nunavut</option> \n" +
-    "            <option value=\"ON\">Ontario</option> \n" +
-    "            <option value=\"PE\">Prince Edward Island</option> \n" +
-    "            <option value=\"QC\">Quebec</option> \n" +
-    "            <option value=\"SK\">Saskatchewan</option> \n" +
-    "            <option value=\"YT\">Yukon</option>\n" +
-    "          </select>\n" +
+    "      <div class=\"checkout-selector\">\n" +
+    "        <div class=\"form-group input-group custom-select-container checkout-selector\"\n" +
+    "            ng-class=\"{'has-error': addressForm.state.$invalid && (addressForm.state.$dirty || showPristineErrors) }\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"state\">{{'PROVINCE' | translate}}</label>\n" +
+    "            <ui-select ng-model=\"address.state\" id=\"state\" name=\"state\" ng-required=\"addressForm.country.$viewValue.id === 'CA'\">\n" +
+    "                  <ui-select-match>\n" +
+    "                      {{$select.selected.name}}\n" +
+    "                  </ui-select-match>\n" +
+    "                  <ui-select-choices repeat=\"item.id as item in (caProvinces | filter: $select.search)\">\n" +
+    "                      {{item.name}}\n" +
+    "                  </ui-select-choices>\n" +
+    "              </ui-select>\n" +
+    "        </div>\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\"\n" +
@@ -706,10 +783,16 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/addresses/templates/addAddressCN.html',
     "<div>\n" +
     "\n" +
-    "      <div class=\"form-group input-group\">\n" +
+    "      <div class=\"form-group input-group custom-select-container\">\n" +
     "          <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "          <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\" required>\n" +
-    "          </select>\n" +
+    "          <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\">\n" +
+    "              <ui-select-match>\n" +
+    "                  {{$select.selected.name}}\n" +
+    "              </ui-select-match>\n" +
+    "              <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                  {{item.name}}\n" +
+    "              </ui-select-choices>\n" +
+    "          </ui-select>\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\"\n" +
@@ -780,17 +863,23 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/addresses/templates/addAddressDE.html',
     "<div>\n" +
     "\n" +
+    "      <div class=\"form-group input-group custom-select-container\">\n" +
+    "          <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
+    "          <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\">\n" +
+    "              <ui-select-match>\n" +
+    "                  {{$select.selected.name}}\n" +
+    "              </ui-select-match>\n" +
+    "              <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                  {{item.name}}\n" +
+    "              </ui-select-choices>\n" +
+    "          </ui-select>\n" +
+    "      </div>\n" +
+    "\n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.contactName.$invalid && (addressForm.contactName.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"contactName\">{{'FULL_NAME' | translate}}</label>\n" +
     "        <input inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" type=\"text\" class=\"form-control ui-autocomplete\" id=\"contactName\" name=\"contactName\" ng-model=\"address.contactName\" required autocomplete=\"on\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
     "        ng-required=\"addressForm.country.$viewValue.id === 'DE'\">\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"form-group input-group\">\n" +
-    "          <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "          <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\" required>\n" +
-    "          </select>\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\">\n" +
@@ -837,8 +926,26 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/addresses/templates/addAddressDefault.html',
-    "<div>\n" +
+    "<!-- address default -->\n" +
+    "<div> \n" +
+    "      \n" +
+    "      <!-- country -->\n" +
+    "      <div class=\"checkout-selector\">\n" +
+    "        <div class=\"form-group input-group custom-select-container\"\n" +
+    "          ng-class=\"{'has-error': !addressForm.country.$viewValue.id && ( addressForm.country.$dirty || showPristineErrors) }\">\n" +
+    "          <label class=\"input-group-addon control-label\" for=\"country\">{{'COUNTRY' | translate}}</label>\n" +
+    "          <ui-select ng-model=\"address.country\" on-select=\"setLocale($item)\" ng-required=\"isDefaultForm\" id=\"country\" name=\"country\" >\n" +
+    "              <ui-select-match>\n" +
+    "                  {{$select.selected.name}}\n" +
+    "              </ui-select-match>\n" +
+    "              <ui-select-choices repeat=\"item.id as item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                  {{item.name}}\n" +
+    "              </ui-select-choices>\n" +
+    "          </ui-select>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
     "\n" +
+    "      <!-- full name  -->\n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.contactName.$invalid && (addressForm.contactName.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"contactName\">{{'FULL_NAME' | translate}}</label>\n" +
@@ -846,58 +953,55 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\">\n" +
     "      </div>\n" +
     "\n" +
-    "      <div class=\"form-group input-group\"\n" +
-    "        ng-class=\"{'has-error': addressForm.country.$invalid && ( addressForm.country.$dirty || showPristineErrors) }\">\n" +
-    "        <label class=\"input-group-addon control-label\" for=\"country\">{{'COUNTRY' | translate}}</label>\n" +
-    "        <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"country\" name=\"country\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\">\n" +
-    "          <option value=\"\"></option>\n" +
-    "        </select>\n" +
-    "      </div>\n" +
-    "\n" +
+    "      <!-- company name -->\n" +
     "      <div class=\"form-group input-group\">\n" +
     "          <label class=\"input-group-addon control-label\" for=\"companyName\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "          <input type=\"text\" class=\"form-control\" id=\"companyName\" name=\"companyName\" ng-model=\"address.companyName\" autocomplete=\"on\" placeholder=\"(Optional)\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\">\n" +
     "      </div>\n" +
     "\n" +
+    "      <!-- address 1 -->\n" +
     "      <div class=\"form-group input-group\" ng-class=\"{'has-error': addressForm.street.$invalid && (addressForm.street.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"street\">{{'ADDRESS_LINE_1' | translate}}</label>\n" +
-    "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"street\" name=\"street\" ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\"\n" +
+    "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"street\" name=\"street\" required\n" +
     "        ng-model=\"address.street\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\">\n" +
     "      </div>\n" +
     "\n" +
+    "      <!-- address 2 -->\n" +
     "      <div class=\"form-group input-group\" ng-class=\"{'has-error': addressForm.streetAppendix.$invalid && (addressForm.streetAppendix.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"streetAppendix\">{{'ADDRESS_LINE_2' | translate}}</label>\n" +
     "        <input type=\"text\" inline-error-input class=\"form-control\" id=\"streetAppendix\" name=\"streetAppendix\" placeholder=\"(Optional)\"\n" +
     "        ng-model=\"address.streetAppendix\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\">\n" +
     "      </div>\n" +
-    "\n" +
+    "      \n" +
+    "      <!-- city -->\n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.city.$invalid && (addressForm.city.$dirty || showPristineErrors) }\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"city\">{{'CITY' | translate}}</label>\n" +
     "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
     "        class=\"form-control\" id=\"city\" name=\"city\" autocomplete=\"on\"\n" +
     "        ng-model=\"address.city\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
-    "        ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\">\n" +
+    "        required>\n" +
     "      </div>\n" +
     "\n" +
+    "      <!-- state -->\n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.state.$invalid && (addressForm.state.$dirty || showPristineErrors) }\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"state\">{{'STATE' | translate}}</label>\n" +
-    "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "        class=\"form-control\" id=\"city\" name=\"city\" autocomplete=\"on\"\n" +
-    "        ng-model=\"address.state\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
-    "        ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\">\n" +
+    "        <input type=\"text\" class=\"form-control\" id=\"state\" name=\"state\" autocomplete=\"on\"\n" +
+    "        ng-model=\"address.state\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\">\n" +
     "      </div>\n" +
     "\n" +
+    "      <!-- zip code  -->\n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.zipCodeUS.$invalid && (addressForm.zipCodeUS.$dirty || showPristineErrors) }\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"zipCode\">{{'ZIP' | translate}}</label>\n" +
     "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
     "        class=\"form-control\" id=\"zipCode\" name=\"zipCodeUS\" autocomplete=\"on\"\n" +
     "        ng-model=\"address.zipCode\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
-    "        ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\">\n" +
+    "        required>\n" +
     "      </div>\n" +
     "\n" +
+    "      <!-- contact phone  -->\n" +
     "      <div class=\"form-group input-group\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"contactPhone\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "        <input type=\"text\" class=\"form-control\" id=\"contactPhone\" name=\"contactPhone\" ng-model=\"address.contactPhone\" autocomplete=\"on\" placeholder=\"(Optional)\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\">\n" +
@@ -909,17 +1013,23 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/addresses/templates/addAddressGB.html',
     "<div>\n" +
     "\n" +
+    "      <div class=\"form-group input-group custom-select-container\">\n" +
+    "          <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
+    "          <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\">\n" +
+    "              <ui-select-match>\n" +
+    "                  {{$select.selected.name}}\n" +
+    "              </ui-select-match>\n" +
+    "              <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                  {{item.name}}\n" +
+    "              </ui-select-choices>\n" +
+    "          </ui-select>\n" +
+    "      </div>\n" +
+    "      \n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.contactName.$invalid && (addressForm.contactName.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"contactName\">{{'FULL_NAME' | translate}}</label>\n" +
     "        <input inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" type=\"text\" class=\"form-control ui-autocomplete\" id=\"contactName\" name=\"contactName\" ng-model=\"address.contactName\" required autocomplete=\"on\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
     "        ng-required=\"addressForm.country.$viewValue.id === 'GB'\">\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"form-group input-group\">\n" +
-    "          <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "          <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\" required>\n" +
-    "          </select>\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\">\n" +
@@ -969,17 +1079,23 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/addresses/templates/addAddressJP.html',
     "<div>\n" +
     "\n" +
+    "      <div class=\"form-group input-group custom-select-container\">\n" +
+    "          <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
+    "          <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\">\n" +
+    "              <ui-select-match>\n" +
+    "                  {{$select.selected.name}}\n" +
+    "              </ui-select-match>\n" +
+    "              <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                  {{item.name}}\n" +
+    "              </ui-select-choices>\n" +
+    "          </ui-select>\n" +
+    "      </div>\n" +
+    "\n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.contactName.$invalid && (addressForm.contactName.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"contactName\">{{'FULL_NAME' | translate}}</label>\n" +
     "        <input inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" type=\"text\" class=\"form-control ui-autocomplete\" id=\"contactName\" name=\"contactName\" ng-model=\"address.contactName\" required autocomplete=\"on\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
     "        ng-required=\"addressForm.country.$viewValue.id === 'JP'\">\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"form-group input-group\">\n" +
-    "          <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "          <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\" required>\n" +
-    "          </select>\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\">\n" +
@@ -1037,19 +1153,26 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/addresses/templates/addAddressUS.html',
     "<div>\n" +
     "\n" +
+    "      <div class=\"checkout-selector\">\n" +
+    "        <div class=\"form-group input-group custom-select-container\"\n" +
+    "          ng-class=\"{'has-error': addressForm.country.$invalid && ( addressForm.country.$dirty || showPristineErrors) }\">\n" +
+    "          <label class=\"input-group-addon control-label\" for=\"country\">{{'COUNTRY' | translate}}</label>\n" +
+    "          <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\">\n" +
+    "              <ui-select-match>\n" +
+    "                  {{$select.selected.name}}\n" +
+    "              </ui-select-match>\n" +
+    "              <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                  {{item.name}}\n" +
+    "              </ui-select-choices>\n" +
+    "          </ui-select>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "\n" +
     "      <div class=\"form-group input-group\"\n" +
     "        ng-class=\"{'has-error': addressForm.contactName.$invalid && (addressForm.contactName.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"contactName\">{{'FULL_NAME' | translate}}</label>\n" +
     "        <input inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" type=\"text\" class=\"form-control ui-autocomplete\" id=\"contactName\" name=\"contactName\" ng-model=\"address.contactName\" required autocomplete=\"on\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
     "        ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\">\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"form-group input-group\"\n" +
-    "        ng-class=\"{'has-error': addressForm.country.$invalid && ( addressForm.country.$dirty || showPristineErrors) }\">\n" +
-    "        <label class=\"input-group-addon control-label\" for=\"country\">{{'COUNTRY' | translate}}</label>\n" +
-    "        <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"country\" name=\"country\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\">\n" +
-    "          <option value=\"\"></option>\n" +
-    "        </select>\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\">\n" +
@@ -1059,7 +1182,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "      <div class=\"form-group input-group\" ng-class=\"{'has-error': addressForm.street.$invalid && (addressForm.street.$dirty  || showPristineErrors)}\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"street\">{{'ADDRESS_LINE_1' | translate}}</label>\n" +
-    "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"street\" name=\"street\" ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\"\n" +
+    "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"street\" name=\"street\" ng-required=\"addressForm.country.$viewValue.id === 'US'\"\n" +
     "        ng-model=\"address.street\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\">\n" +
     "      </div>\n" +
     "\n" +
@@ -1075,67 +1198,22 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
     "        class=\"form-control\" id=\"city\" name=\"city\" autocomplete=\"on\"\n" +
     "        ng-model=\"address.city\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
-    "        ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\">\n" +
+    "        ng-required=\"addressForm.country.$viewValue.id === 'US'\">\n" +
     "      </div>\n" +
     "\n" +
-    "      <div class=\"form-group input-group\"\n" +
-    "        ng-class=\"{'has-error': addressForm.stateUS.$invalid && (addressForm.stateUS.$dirty || showPristineErrors) }\">\n" +
-    "        <label class=\"input-group-addon control-label\" for=\"state\">{{'STATE' | translate}}</label>\n" +
-    "        <select class=\"form-control\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-model=\"address.state\" id=\"state\" name=\"stateUS\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
-    "        ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\">\n" +
-    "          <option value=\"\"></option>\n" +
-    "          <option value=\"AL\">Alabama</option>\n" +
-    "          <option value=\"AK\">Alaska</option>\n" +
-    "          <option value=\"AZ\">Arizona</option>\n" +
-    "          <option value=\"AR\">Arkansas</option>\n" +
-    "          <option value=\"CA\">California</option>\n" +
-    "          <option value=\"CO\">Colorado</option>\n" +
-    "          <option value=\"CT\">Connecticut</option>\n" +
-    "          <option value=\"DE\">Delaware</option>\n" +
-    "          <option value=\"DC\">District Of Columbia</option>\n" +
-    "          <option value=\"FL\">Florida</option>\n" +
-    "          <option value=\"GA\">Georgia</option>\n" +
-    "          <option value=\"HI\">Hawaii</option>\n" +
-    "          <option value=\"ID\">Idaho</option>\n" +
-    "          <option value=\"IL\">Illinois</option>\n" +
-    "          <option value=\"IN\">Indiana</option>\n" +
-    "          <option value=\"IA\">Iowa</option>\n" +
-    "          <option value=\"KS\">Kansas</option>\n" +
-    "          <option value=\"KY\">Kentucky</option>\n" +
-    "          <option value=\"LA\">Louisiana</option>\n" +
-    "          <option value=\"ME\">Maine</option>\n" +
-    "          <option value=\"MD\">Maryland</option>\n" +
-    "          <option value=\"MA\">Massachusetts</option>\n" +
-    "          <option value=\"MI\">Michigan</option>\n" +
-    "          <option value=\"MN\">Minnesota</option>\n" +
-    "          <option value=\"MS\">Mississippi</option>\n" +
-    "          <option value=\"MO\">Missouri</option>\n" +
-    "          <option value=\"MT\">Montana</option>\n" +
-    "          <option value=\"NE\">Nebraska</option>\n" +
-    "          <option value=\"NV\">Nevada</option>\n" +
-    "          <option value=\"NH\">New Hampshire</option>\n" +
-    "          <option value=\"NJ\">New Jersey</option>\n" +
-    "          <option value=\"NM\">New Mexico</option>\n" +
-    "          <option value=\"NY\">New York</option>\n" +
-    "          <option value=\"NC\">North Carolina</option>\n" +
-    "          <option value=\"ND\">North Dakota</option>\n" +
-    "          <option value=\"OH\">Ohio</option>\n" +
-    "          <option value=\"OK\">Oklahoma</option>\n" +
-    "          <option value=\"OR\">Oregon</option>\n" +
-    "          <option value=\"PA\">Pennsylvania</option>\n" +
-    "          <option value=\"RI\">Rhode Island</option>\n" +
-    "          <option value=\"SC\">South Carolina</option>\n" +
-    "          <option value=\"SD\">South Dakota</option>\n" +
-    "          <option value=\"TN\">Tennessee</option>\n" +
-    "          <option value=\"TX\">Texas</option>\n" +
-    "          <option value=\"UT\">Utah</option>\n" +
-    "          <option value=\"VT\">Vermont</option>\n" +
-    "          <option value=\"VA\">Virginia</option>\n" +
-    "          <option value=\"WA\">Washington</option>\n" +
-    "          <option value=\"WV\">West Virginia</option>\n" +
-    "          <option value=\"WI\">Wisconsin</option>\n" +
-    "          <option value=\"WY\">Wyoming</option>\n" +
-    "        </select>\n" +
+    "      <div class=\"checkout-selector\">\n" +
+    "        <div class=\"form-group input-group custom-select-container\"\n" +
+    "          ng-class=\"{'has-error': addressForm.state.$invalid && (addressForm.stateUS.$dirty || showPristineErrors) }\">\n" +
+    "          <label class=\"input-group-addon control-label\" for=\"state\">{{'STATE' | translate}}</label>\n" +
+    "          <ui-select ng-model=\"address.state\" id=\"state\" name=\"state\" ng-required=\"addressForm.country.$viewValue.id === 'US'\">\n" +
+    "              <ui-select-match>\n" +
+    "                  {{$select.selected.name}}\n" +
+    "              </ui-select-match>\n" +
+    "              <ui-select-choices repeat=\"item.id as item in (usStates | filter: $select.search)\">\n" +
+    "                  {{item.name}}\n" +
+    "              </ui-select-choices>\n" +
+    "          </ui-select>\n" +
+    "        </div>\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\"\n" +
@@ -1144,7 +1222,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
     "        class=\"form-control\" id=\"zipCode\" name=\"zipCodeUS\" autocomplete=\"on\"\n" +
     "        ng-model=\"address.zipCode\" ng-keydown=\"saveOnEnter($event, address, addressForm.$valid, addressForm.$name)\"\n" +
-    "        ng-required=\"addressForm.country.$invalid || addressForm.country.$viewValue.id === 'US'\">\n" +
+    "        ng-required=\"addressForm.country.$viewValue.id === 'US'\">\n" +
     "      </div>\n" +
     "\n" +
     "      <div class=\"form-group input-group\">\n" +
@@ -1156,849 +1234,865 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/addresses/templates/billingCA.html',
+    "<!-- billing ca -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <span class=\"form-block-headline\">{{'BILLING_ADDRESS' | translate}}</span>\n" +
-    "    </div>\n" +
+    "    <div ng-hide=\"shipToSameAsBillTo\">\n" +
     "\n" +
-    "    <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
-    "        <div class=\"form-group\">\n" +
-    "            <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-1\" ng-click=\"openAddressDialog(order.billTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <div class=\"form-group input-group\"\n" +
-    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'FULL_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                    class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
-    "                   required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- country -->\n" +
+    "    <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.country.$invalid && ( billToForm.country.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"countryBill\">{{'COUNTRY' | translate}}</label>\n" +
-    "            <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" \n" +
-    "                ng-change=\"changeLocale(localeSelection)\" id=\"countryBill\" name=\"country\" \n" +
-    "                inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required>\n" +
-    "            </select>\n" +
+    "            <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" id=\"countryBill\" name=\"country\" ng-required=\"!shipToSameAsBillTo\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- name -->\n" +
+    "    <div class=\"col-md-8\">\n" +
+    "        <div class=\"form-group input-group\"\n" +
+    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'NAME' | translate}}</label>\n" +
+    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
+    "                   class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
+    "                   ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <!-- comany name -->\n" +
+    "    <!-- <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"companyNameBill\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"companyNameBill\" name=\"companyName\" ng-model=\"order.billTo.companyName\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    </div> -->\n" +
+    "\n" +
+    "    <!-- address 1 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.address1.$invalid && (billToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address1Bill\">{{'ADDRESS' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                   class=\"form-control\" name=\"address1\" id=\"address1Bill\" ng-model=\"order.billTo.address1\"\n" +
-    "            required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    class=\"form-control\" name=\"address1\" id=\"address1Bill\" ng-model=\"order.billTo.address1\"\n" +
+    "                    ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- addresss 2 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address2Bill\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "            <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Bill\" name=\"address2\"\n" +
+    "            <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Bill\" name=\"address2\"\n" +
     "            ng-model=\"order.billTo.address2\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- city -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.city.$invalid && (billToForm.city.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"cityBill\">{{'CITY' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"cityBill\" name=\"city\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"cityBill\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.city\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- province -->\n" +
+    "    <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.state.$invalid && (billToForm.state.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"state\">{{'PROVINCE' | translate}}</label>\n" +
-    "            <select class=\"form-control\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"billToForm.country.$viewValue.id === 'CA'\" ng-model=\"order.billTo.state\" id=\"stateBill\" name=\"state\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "                <option value=\"\"></option> \n" +
-    "                <option value=\"AB\">Alberta</option> \n" +
-    "                <option value=\"BC\">British Columbia</option> \n" +
-    "                <option value=\"MB\">Manitoba</option> \n" +
-    "                <option value=\"NB\">New Brunswick</option> \n" +
-    "                <option value=\"NL\">Newfoundland and Labrador</option> \n" +
-    "                <option value=\"NS\">Nova Scotia</option> \n" +
-    "                <option value=\"NT\">Northwest Territories</option> \n" +
-    "                <option value=\"NU\">Nunavut</option> \n" +
-    "                <option value=\"ON\">Ontario</option> \n" +
-    "                <option value=\"PE\">Prince Edward Island</option> \n" +
-    "                <option value=\"QC\">Quebec</option> \n" +
-    "                <option value=\"SK\">Saskatchewan</option> \n" +
-    "                <option value=\"YT\">Yukon</option>\n" +
-    "            </select>\n" +
+    "            <ui-select ng-model=\"order.billTo.state\" id=\"stateBill\" name=\"state\" ng-required=\"billToForm.country.$invalid || (!shipToSameAsBillTo && billToForm.country.$viewValue.id === 'CA')\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item.id as item in (caProvinces | filter: $select.search)\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- postal code -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.postal.$invalid && (billToForm.postal.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"zipCodeBill\">{{'POSTAL_CODE' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- contact phone -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"contactPhoneBill\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"contactPhoneBill\" name=\"contactPhone\" ng-model=\"order.billTo.contactPhone\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>"
   );
 
 
   $templateCache.put('js/app/addresses/templates/billingCN.html',
+    "<!-- billing cn -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <span class=\"form-block-headline\">{{'BILLING_ADDRESS' | translate}}</span>\n" +
-    "    </div>\n" +
+    "    <div ng-hide=\"shipToSameAsBillTo\">\n" +
     "\n" +
-    "    <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
-    "        <div class=\"form-group\">\n" +
-    "            <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-1\" ng-click=\"openAddressDialog(order.billTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- country -->\n" +
+    "    <div class=\"col-md-4 custom-select-container\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.country.$invalid && ( billToForm.country.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"countryBill\">{{'COUNTRY' | translate}}</label>\n" +
-    "            <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" \n" +
-    "                ng-change=\"changeLocale(localeSelection)\" id=\"countryBill\" name=\"country\" \n" +
-    "                inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required>\n" +
-    "            </select>\n" +
+    "            <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" ng-required=\"!shipToSameAsBillTo\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- postal code -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.postal.$invalid && (billToForm.postal.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"zipCodeBill\">{{'POSTAL_CODE' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- province -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.province.$invalid && (billToForm.province.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"provinceBill\">{{'PROVINCE' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"provinceBill\" name=\"province\" ng-required=\"billToForm.country.$viewValue.id === 'CN'\" autocomplete=\"on\" ng-model=\"order.billTo.state\" \n" +
+    "            class=\"form-control\" id=\"provinceBill\" name=\"province\" ng-required=\"billToForm.country.$invalid || (!shipToSameAsBillTo && billToForm.country.$viewValue.id === 'CN')\" autocomplete=\"on\" ng-model=\"order.billTo.state\" \n" +
     "            ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- city -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.city.$invalid && (billToForm.city.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"cityBill\">{{'CITY' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"cityBill\" name=\"city\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"cityBill\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.city\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- street name -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.streetBill.$invalid && (billToForm.streetBill.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address3Bill\">{{'STREET_NAME' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                class=\"form-control\" id=\"address3Bill\" name=\"streetBill\" required autocomplete=\"on\"\n" +
+    "                class=\"form-control\" id=\"address3Bill\" name=\"streetBill\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "                ng-model=\"order.billTo.address1\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- building name -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address2Bill\">{{'BUILDING_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Bill\" name=\"address2\"\n" +
+    "            <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Bill\" name=\"address2\"\n" +
     "            ng-model=\"order.billTo.address2\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- name -->\n" +
+    "    <div class=\"col-md-8\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'FULL_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
-    "                required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'NAME' | translate}}</label>\n" +
+    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
+    "                   class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
+    "                   ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- company name -->\n" +
+    "    <!-- <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"companyNameBill\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"companyNameBill\" name=\"companyName\" ng-model=\"order.billTo.companyName\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
-    "    </div>\n" +
+    "    </div> -->\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- contact phone -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"contactPhoneBill\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"contactPhoneBill\" name=\"contactPhone\" ng-model=\"order.billTo.contactPhone\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>"
   );
 
 
   $templateCache.put('js/app/addresses/templates/billingDE.html',
+    "<!-- billing DE -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <span class=\"form-block-headline\">{{'BILLING_ADDRESS' | translate}}</span>\n" +
-    "    </div>\n" +
+    "    <div ng-hide=\"shipToSameAsBillTo\">\n" +
     "\n" +
-    "    <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
-    "        <div class=\"form-group\">\n" +
-    "            <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-1\" ng-click=\"openAddressDialog(order.billTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <div class=\"form-group input-group\"\n" +
-    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'FULL_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                    class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
-    "                   required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- country -->\n" +
+    "    <div class=\"col-md-4 custom-select-container\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.country.$invalid && ( billToForm.country.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"countryBill\">{{'COUNTRY' | translate}}</label>\n" +
-    "            <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" \n" +
-    "                ng-change=\"changeLocale(localeSelection)\" id=\"countryBill\" name=\"country\" \n" +
-    "                inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required>\n" +
-    "            </select>\n" +
+    "            <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" ng-required=\"!shipToSameAsBillTo\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    \n" +
+    "    <!-- name -->\n" +
+    "    <div class=\"col-md-8\">\n" +
+    "        <div class=\"form-group input-group\"\n" +
+    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'NAME' | translate}}</label>\n" +
+    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
+    "                   class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
+    "                   ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- company name -->\n" +
+    "    <!-- <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"companyNameBill\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"companyNameBill\" name=\"companyName\" ng-model=\"order.billTo.companyName\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    </div> -->\n" +
+    "\n" +
+    "    <!-- address 1 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.address1.$invalid && (billToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address1Bill\">{{'ADDRESS' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "                   class=\"form-control\" name=\"address1\" id=\"address1Bill\" ng-model=\"order.billTo.address1\"\n" +
-    "            required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- address 2 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address2Bill\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "            <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Bill\" name=\"address2\"\n" +
+    "            <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Bill\" name=\"address2\"\n" +
     "            ng-model=\"order.billTo.address2\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- city -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.city.$invalid && (billToForm.city.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"cityBill\">{{'CITY' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"cityBill\" name=\"city\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"cityBill\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.city\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- postal code  -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.postal.$invalid && (billToForm.postal.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"zipCodeBill\">{{'POSTAL_CODE' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- contact phone  -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"contactPhoneBill\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"contactPhoneBill\" name=\"contactPhone\" ng-model=\"order.billTo.contactPhone\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>"
   );
 
 
   $templateCache.put('js/app/addresses/templates/billingDefault.html',
+    "<!-- billing default -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <span class=\"form-block-headline\">{{'BILLING_ADDRESS' | translate}}</span>\n" +
-    "    </div>\n" +
+    "    <div ng-hide=\"shipToSameAsBillTo\">\n" +
     "\n" +
-    "    <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
-    "        <div class=\"form-group\">\n" +
-    "            <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-1\" ng-click=\"openAddressDialog(order.billTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
+    "    <!-- country -->\n" +
+    "    <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
+    "        <div class=\"form-group input-group\"\n" +
+    "            ng-class=\"{'has-error': !billToForm.country.$viewValue.id && ( billToForm.country.$dirty || showPristineErrors) }\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"countryBill\">{{'COUNTRY' | translate}}</label>\n" +
+    "            <ui-select ng-model=\"order.billTo.country\" on-select=\"setLocale($item)\" ng-required=\"!shipToSameAsBillTo\" id=\"countryBill\" name=\"country\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item.id as item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
     "        </div>\n" +
-    "    </div>\n" +
+    "    </div>    \n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- name -->\n" +
+    "    <div class=\"col-md-8\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'FULL_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
-    "            required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'NAME' | translate}}</label>\n" +
+    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
+    "                   class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
+    "                   ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <div class=\"form-group input-group\"\n" +
-    "            ng-class=\"{'has-error': billToForm.country.$invalid && ( billToForm.country.$dirty || showPristineErrors) }\">\n" +
-    "            <label class=\"input-group-addon control-label\" for=\"countryBill\">{{'COUNTRY' | translate}}</label>\n" +
-    "            <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\"\n" +
-    "                ng-change=\"changeLocale(localeSelection)\" id=\"countryBill\" name=\"country\" \n" +
-    "                inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required>\n" +
-    "            </select>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- company -->\n" +
+    "    <!-- <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"companyNameBill\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"companyNameBill\" name=\"companyName\" ng-model=\"order.billTo.companyName\"\n" +
-    "            autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    </div> -->\n" +
+    "\n" +
+    "    <!-- address 1 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.address1.$invalid && (billToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address1Bill\">{{'ADDRESS' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "            class=\"form-control\" name=\"address1\" id=\"address1Bill\" ng-model=\"order.billTo.address1\"\n" +
-    "            required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- address 2 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address2Bill\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "            <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Bill\" name=\"address2\"\n" +
+    "            <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Bill\" name=\"address2\"\n" +
     "            ng-model=\"order.billTo.address2\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- city -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.city.$invalid && (billToForm.city.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"cityBill\">{{'CITY' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"cityBill\" name=\"city\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"cityBill\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.city\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- state -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "    	<div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.state.$invalid && (billToForm.state.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"stateBill\">{{'STATE' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"stateBill\" name=\"state\" autocomplete=\"on\"\n" +
-    "            ng-model=\"order.billTo.state\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            ng-model=\"order.billTo.state\" ng-change=\"$root.closeCartOnCheckout()\" placeholder=\"({{'OPTIONAL' | translate}})\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- zip code  -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.postal.$invalid && (billToForm.postal.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"zipCodeBill\">{{'ZIP' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- contact phone -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"contactPhoneBill\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"contactPhoneBill\" name=\"contactPhone\" ng-model=\"order.billTo.contactPhone\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>"
   );
 
 
   $templateCache.put('js/app/addresses/templates/billingGB.html',
+    "<!-- billing bg -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <span class=\"form-block-headline\">{{'BILLING_ADDRESS' | translate}}</span>\n" +
-    "    </div>\n" +
+    "    <div ng-hide=\"shipToSameAsBillTo\">\n" +
     "\n" +
-    "    <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
-    "        <div class=\"form-group\">\n" +
-    "            <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-1\" ng-click=\"openAddressDialog(order.billTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <div class=\"form-group input-group\"\n" +
-    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'FULL_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                    class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
-    "                   required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- country -->\n" +
+    "    <div class=\"col-md-4 custom-select-container\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.country.$invalid && ( billToForm.country.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"countryBill\">{{'COUNTRY' | translate}}</label>\n" +
-    "            <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" \n" +
-    "                ng-change=\"changeLocale(localeSelection)\" id=\"countryBill\" name=\"country\" \n" +
-    "                inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required>\n" +
-    "            </select>\n" +
+    "            <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" ng-required=\"!shipToSameAsBillTo\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
+    "        </div>\n" +
+    "    </div>    \n" +
+    "\n" +
+    "    <!-- name -->\n" +
+    "    <div class=\"col-md-8\">\n" +
+    "        <div class=\"form-group input-group\"\n" +
+    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'NAME' | translate}}</label>\n" +
+    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
+    "                   class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
+    "                   ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- company name -->\n" +
+    "    <!-- <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"companyNameBill\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"companyNameBill\" name=\"companyName\" ng-model=\"order.billTo.companyName\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
-    "    </div>\n" +
+    "    </div> -->\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- address 1 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.address1.$invalid && (billToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address1Bill\">{{'ADDRESS' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "                   class=\"form-control\" name=\"address1\" id=\"address1Bill\" ng-model=\"order.billTo.address1\"\n" +
-    "            required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- address 2 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address2Bill\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "            <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Bill\" name=\"address2\"\n" +
+    "            <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Bill\" name=\"address2\"\n" +
     "            ng-model=\"order.billTo.address2\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- city -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.city.$invalid && (billToForm.city.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"cityBill\">{{'CITY' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"cityBill\" name=\"city\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"cityBill\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.city\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- postal code -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.postal.$invalid && (billToForm.postal.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"zipCodeBill\">{{'POSTAL_CODE' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- contact phone -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"contactPhoneBill\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"contactPhoneBill\" name=\"contactPhone\" ng-model=\"order.billTo.contactPhone\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>"
   );
 
 
   $templateCache.put('js/app/addresses/templates/billingJP.html',
+    "<!-- billing jp -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <span class=\"form-block-headline\">{{'BILLING_ADDRESS' | translate}}</span>\n" +
-    "    </div>\n" +
+    "    <div ng-hide=\"shipToSameAsBillTo\">\n" +
     "\n" +
-    "    <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
-    "        <div class=\"form-group\">\n" +
-    "            <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-1\" ng-click=\"openAddressDialog(order.billTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <div class=\"form-group input-group\"\n" +
-    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'FULL_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                    class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
-    "                   required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- country -->\n" +
+    "    <div class=\"col-md-4 custom-select-container\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.country.$invalid && ( billToForm.country.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"countryBill\">{{'COUNTRY' | translate}}</label>\n" +
-    "            <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" \n" +
-    "                ng-change=\"changeLocale(localeSelection)\" id=\"countryBill\" name=\"country\" \n" +
-    "                inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required>\n" +
-    "            </select>\n" +
+    "            <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" ng-required=\"!shipToSameAsBillTo\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
+    "        </div>\n" +
+    "    </div>    \n" +
+    "    \n" +
+    "    <!-- name -->\n" +
+    "    <div class=\"col-md-8\">\n" +
+    "        <div class=\"form-group input-group\"\n" +
+    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'NAME' | translate}}</label>\n" +
+    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
+    "                   class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
+    "                   ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- company name -->\n" +
+    "    <!-- <div class=\"col-md-8\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"companyNameBill\">{{'COMPANY_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" class=\"form-control\" id=\"companyNameBill\" name=\"companyName\" ng-model=\"order.billTo.companyName\" autocomplete=\"on\" placeholder=\"(Optional)\" \n" +
+    "            <input type=\"text\" class=\"form-control\" id=\"companyNameBill\" name=\"companyName\" ng-model=\"order.billTo.companyName\" autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" \n" +
     "            ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
-    "    </div>\n" +
+    "    </div> -->\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- postal code  -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.postal.$invalid && (billToForm.postal.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"zipCodeBill\">{{'POSTAL_CODE' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- prefecture -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.province.$invalid && (billToForm.province.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"provinceBill\">{{'PREFECTURE' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"provinceBill\" name=\"province\" ng-required=\"billToForm.country.$viewValue.id === 'JP'\" autocomplete=\"on\" ng-model=\"order.billTo.state\" \n" +
+    "            class=\"form-control\" id=\"provinceBill\" name=\"province\" ng-required=\"billToForm.country.$invalid || (!shipToSameAsBillTo && billToForm.country.$viewValue.id === 'JP')\" autocomplete=\"on\" ng-model=\"order.billTo.state\" \n" +
     "            ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- city village -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.city.$invalid && (billToForm.city.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"cityBill\">{{'CITY_VILLAGE' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"cityBill\" name=\"city\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"cityBill\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.city\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\"\n" +
+    "    <!-- subarea -->\n" +
+    "    <div class=\"col-md-4\"\n" +
     "        ng-class=\"{'has-error': billToForm.address2.$invalid && (billToForm.address2.$dirty || showPristineErrors) }\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address2Bill\">{{'SUBAREA' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "            class=\"form-control\" id=\"address2Bill\" name=\"address2\"\n" +
-    "            ng-model=\"order.billTo.address2\" required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            ng-model=\"order.billTo.address2\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- further subarea -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.address1.$invalid && (billToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address1Bill\">{{'FURTHER_SUBAREA' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "            class=\"form-control\" name=\"address1\" id=\"address1Bill\" ng-model=\"order.billTo.address1\"\n" +
-    "            required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- contact phone -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"contactPhoneBill\">{{'CONTACT_PHONE' | translate}}</label>\n" +
-    "            <input type=\"text\" class=\"form-control\" id=\"contactPhoneBill\" name=\"contactPhone\" ng-model=\"order.billTo.contactPhone\" autocomplete=\"on\" placeholder=\"(Optional)\" \n" +
+    "            <input type=\"text\" class=\"form-control\" id=\"contactPhoneBill\" name=\"contactPhone\" ng-model=\"order.billTo.contactPhone\" autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" \n" +
     "            ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>"
   );
 
 
   $templateCache.put('js/app/addresses/templates/billingUS.html',
+    "<!-- billing us -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <span class=\"form-block-headline\">{{'BILLING_ADDRESS' | translate}}</span>\n" +
-    "    </div>\n" +
+    "    <div ng-hide=\"shipToSameAsBillTo\">\n" +
     "\n" +
-    "    <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
-    "        <div class=\"form-group\">\n" +
-    "            <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-1\" ng-click=\"openAddressDialog(order.billTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
-    "        <div class=\"form-group input-group\"\n" +
-    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'FULL_NAME' | translate}}</label>\n" +
-    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
-    "            required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- country -->\n" +
+    "    <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.country.$invalid && ( billToForm.country.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"countryBill\">{{'COUNTRY' | translate}}</label>\n" +
-    "            <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\"\n" +
-    "                ng-change=\"changeLocale(localeSelection)\" id=\"countryBill\" name=\"country\" \n" +
-    "                inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" required>\n" +
-    "            </select>\n" +
+    "            <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" id=\"countryBill\" name=\"country\" ng-required=\"!shipToSameAsBillTo\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-12\">\n" +
+    "    <!-- name -->\n" +
+    "    <div class=\"col-md-8\">\n" +
+    "        <div class=\"form-group input-group\"\n" +
+    "             ng-class=\"{'has-error': billToForm.contactName.$invalid && (billToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "            <label class=\"input-group-addon control-label\" for=\"contactNameBill\">{{'NAME' | translate}}</label>\n" +
+    "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
+    "                   class=\"form-control\" id=\"contactNameBill\" name=\"contactName\" ng-model=\"order.billTo.contactName\"\n" +
+    "                   ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "        </div>\n" +
+    "    </div>    \n" +
+    "\n" +
+    "    <!-- company name -->\n" +
+    "    <!-- <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"companyNameBill\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"companyNameBill\" name=\"companyName\" ng-model=\"order.billTo.companyName\"\n" +
-    "            autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    </div> -->\n" +
+    "\n" +
+    "    <!-- addrss 1 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.address1.$invalid && (billToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address1Bill\">{{'ADDRESS' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "            class=\"form-control\" name=\"address1\" id=\"address1Bill\" ng-model=\"order.billTo.address1\"\n" +
-    "            required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- address 2 -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"address2Bill\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "            <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Bill\" name=\"address2\"\n" +
+    "            <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Bill\" name=\"address2\"\n" +
     "            ng-model=\"order.billTo.address2\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- city -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.city.$invalid && (billToForm.city.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"cityBill\">{{'CITY' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"cityBill\" name=\"city\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"cityBill\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.city\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- state -->\n" +
+    "    <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.state.$invalid && (billToForm.state.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"stateBill\">{{'STATE' | translate}}</label>\n" +
-    "            <select class=\"form-control\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "             ng-required=\"billToForm.country.$invalid || billToForm.country.$viewValue.id === 'US'\" ng-model=\"order.billTo.state\" id=\"stateBill\" name=\"state\" \n" +
-    "             ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "                <option value=\"\"></option>\n" +
-    "                <option value=\"AL\">Alabama</option>\n" +
-    "                <option value=\"AK\">Alaska</option>\n" +
-    "                <option value=\"AZ\">Arizona</option>\n" +
-    "                <option value=\"AR\">Arkansas</option>\n" +
-    "                <option value=\"CA\">California</option>\n" +
-    "                <option value=\"CO\">Colorado</option>\n" +
-    "                <option value=\"CT\">Connecticut</option>\n" +
-    "                <option value=\"DE\">Delaware</option>\n" +
-    "                <option value=\"DC\">District Of Columbia</option>\n" +
-    "                <option value=\"FL\">Florida</option>\n" +
-    "                <option value=\"GA\">Georgia</option>\n" +
-    "                <option value=\"HI\">Hawaii</option>\n" +
-    "                <option value=\"ID\">Idaho</option>\n" +
-    "                <option value=\"IL\">Illinois</option>\n" +
-    "                <option value=\"IN\">Indiana</option>\n" +
-    "                <option value=\"IA\">Iowa</option>\n" +
-    "                <option value=\"KS\">Kansas</option>\n" +
-    "                <option value=\"KY\">Kentucky</option>\n" +
-    "                <option value=\"LA\">Louisiana</option>\n" +
-    "                <option value=\"ME\">Maine</option>\n" +
-    "                <option value=\"MD\">Maryland</option>\n" +
-    "                <option value=\"MA\">Massachusetts</option>\n" +
-    "                <option value=\"MI\">Michigan</option>\n" +
-    "                <option value=\"MN\">Minnesota</option>\n" +
-    "                <option value=\"MS\">Mississippi</option>\n" +
-    "                <option value=\"MO\">Missouri</option>\n" +
-    "                <option value=\"MT\">Montana</option>\n" +
-    "                <option value=\"NE\">Nebraska</option>\n" +
-    "                <option value=\"NV\">Nevada</option>\n" +
-    "                <option value=\"NH\">New Hampshire</option>\n" +
-    "                <option value=\"NJ\">New Jersey</option>\n" +
-    "                <option value=\"NM\">New Mexico</option>\n" +
-    "                <option value=\"NY\">New York</option>\n" +
-    "                <option value=\"NC\">North Carolina</option>\n" +
-    "                <option value=\"ND\">North Dakota</option>\n" +
-    "                <option value=\"OH\">Ohio</option>\n" +
-    "                <option value=\"OK\">Oklahoma</option>\n" +
-    "                <option value=\"OR\">Oregon</option>\n" +
-    "                <option value=\"PA\">Pennsylvania</option>\n" +
-    "                <option value=\"RI\">Rhode Island</option>\n" +
-    "                <option value=\"SC\">South Carolina</option>\n" +
-    "                <option value=\"SD\">South Dakota</option>\n" +
-    "                <option value=\"TN\">Tennessee</option>\n" +
-    "                <option value=\"TX\">Texas</option>\n" +
-    "                <option value=\"UT\">Utah</option>\n" +
-    "                <option value=\"VT\">Vermont</option>\n" +
-    "                <option value=\"VA\">Virginia</option>\n" +
-    "                <option value=\"WA\">Washington</option>\n" +
-    "                <option value=\"WV\">West Virginia</option>\n" +
-    "                <option value=\"WI\">Wisconsin</option>\n" +
-    "                <option value=\"WY\">Wyoming</option>\n" +
-    "            </select>\n" +
+    "            <ui-select ng-model=\"order.billTo.state\" id=\"stateBill\" name=\"state\" ng-required=\"billToForm.country.$invalid || (!shipToSameAsBillTo && billToForm.country.$viewValue.id === 'US')\">\n" +
+    "                <ui-select-match>\n" +
+    "                    {{$select.selected.name}}\n" +
+    "                </ui-select-match>\n" +
+    "                <ui-select-choices repeat=\"item.id as item in (usStates | filter: $select.search)\">\n" +
+    "                    {{item.name}}\n" +
+    "                </ui-select-choices>\n" +
+    "            </ui-select>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- zip code  -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\"\n" +
     "            ng-class=\"{'has-error': billToForm.postal.$invalid && (billToForm.postal.$dirty || showPristineErrors) }\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"zipCodeBill\">{{'ZIP' | translate}}</label>\n" +
     "            <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" required autocomplete=\"on\"\n" +
+    "            class=\"form-control\" id=\"zipCodeBill\" name=\"postal\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
     "            ng-model=\"order.billTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"col-lg-6\">\n" +
+    "    <!-- contact phone -->\n" +
+    "    <div class=\"col-md-4\">\n" +
     "        <div class=\"form-group input-group\">\n" +
     "            <label class=\"input-group-addon control-label\" for=\"contactPhoneBill\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "            <input type=\"text\" class=\"form-control\" id=\"contactPhoneBill\" name=\"contactPhone\" ng-model=\"order.billTo.contactPhone\"\n" +
-    "                   autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                   autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>"
   );
 
 
   $templateCache.put('js/app/addresses/templates/shippingCA.html',
+    "<!-- shipping ca -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div id=\"ship-to-fields\" ng-hide=\"shipToSameAsBillTo\">\n" +
+    "    <div id=\"ship-to-fields\">\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
-    "            <div class=\"form-group input-group\"\n" +
-    "                 ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'NAME' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                       class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
-    "                       ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- country -->\n" +
+    "        <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "                <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\">\n" +
-    "                    <option value=\"\" ng-selected=\"true\" ng-if=\"!localeSelection.id\"></option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"true\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- full name  -->\n" +
+    "        <div class=\"col-md-8\">\n" +
+    "            <div class=\"form-group input-group\"\n" +
+    "                 ng-class=\"{'has-error': shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'FULL_NAME' | translate}}</label>\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
+    "                ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            </div>\n" +
+    "        </div>        \n" +
+    "\n" +
+    "        <!-- company name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"companyNameShip\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" id=\"companyNameShip\" name=\"companyName\" ng-model=\"order.shipTo.companyName\"\n" +
-    "                       autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                       autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 1 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.address1.$invalid && (shipToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address1Ship\">{{'ADDRESS' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
     "                    class=\"form-control\" name=\"address1\" id=\"address1Ship\" ng-model=\"order.shipTo.address1\"\n" +
-    "                    ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 2 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address2Ship\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Ship\" name=\"address2\"\n" +
+    "                <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Ship\" name=\"address2\"\n" +
     "                ng-model=\"order.shipTo.address2\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- city -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.city.$invalid && (shipToForm.city.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"cityShip\">{{'CITY' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"true\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- province -->\n" +
+    "        <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.state.$invalid && (shipToForm.state.$dirty || showPristineErrors) }\">\n" +
+    "                ng-class=\"{'has-error': shipToForm.state.$invalid && (shipToForm.state.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"stateShip\">{{'PROVINCE' | translate}}</label>\n" +
-    "                <select class=\"form-control\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"!shipToSameAsBillTo && shipToForm.country.$viewValue.id === 'CA'\" ng-model=\"order.shipTo.state\" id=\"stateShip\" name=\"state\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "                    <option value=\"\"></option> \n" +
-    "                    <option value=\"AB\">Alberta</option> \n" +
-    "                    <option value=\"BC\">British Columbia</option> \n" +
-    "                    <option value=\"MB\">Manitoba</option> \n" +
-    "                    <option value=\"NB\">New Brunswick</option> \n" +
-    "                    <option value=\"NL\">Newfoundland and Labrador</option> \n" +
-    "                    <option value=\"NS\">Nova Scotia</option> \n" +
-    "                    <option value=\"NT\">Northwest Territories</option> \n" +
-    "                    <option value=\"NU\">Nunavut</option> \n" +
-    "                    <option value=\"ON\">Ontario</option> \n" +
-    "                    <option value=\"PE\">Prince Edward Island</option> \n" +
-    "                    <option value=\"QC\">Quebec</option> \n" +
-    "                    <option value=\"SK\">Saskatchewan</option> \n" +
-    "                    <option value=\"YT\">Yukon</option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"order.shipTo.state\" id=\"stateShip\" name=\"state\" ng-required=\"shipToForm.country.$viewValue.id === 'CA'\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item.id as item in (caProvinces | filter: $select.search)\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- postal code -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.zip.$invalid && ( shipToForm.zip.$dirty || showPristineErrors) }\">\n" +
+    "                ng-class=\"{'has-error': shipToForm.zip.$invalid && ( shipToForm.zip.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"zipCodeShip\">{{'POSTAL_CODE' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" ng-model=\"order.shipTo.zipCode\" name=\"zip\" id=\"zipCodeShip\" autocomplete=\"on\" ng-required=\"!shipToSameAsBillTo\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" ng-model=\"order.shipTo.zipCode\" name=\"zip\" id=\"zipCodeShip\" autocomplete=\"on\" ng-required=\"true\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- contact phone -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"contactPhoneShip\">{{'CONTACT_PHONE' | translate}}</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
@@ -2008,85 +2102,101 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/addresses/templates/shippingCN.html',
+    "<!-- shipping cn -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div id=\"ship-to-fields\" ng-hide=\"shipToSameAsBillTo\">\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "    <div id=\"ship-to-fields\">\n" +
+    "\n" +
+    "        <!-- country -->\n" +
+    "        <div class=\"col-md-4 custom-select-container\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "                <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\">\n" +
-    "                    <option value=\"\" ng-selected=\"true\" ng-if=\"!localeSelection.id\"></option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"true\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- postal code -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.zip.$invalid && ( shipToForm.zip.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"zipCodeShip\">{{'POSTAL_CODE' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" ng-model=\"order.shipTo.zipCode\" name=\"zip\" id=\"zipCodeShip\" autocomplete=\"on\" ng-required=\"!shipToSameAsBillTo\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" ng-model=\"order.shipTo.zipCode\" name=\"zip\" id=\"zipCodeShip\" autocomplete=\"on\" ng-required=\"true\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        \n" +
+    "        <!-- province -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.state.$invalid && (shipToForm.state.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"stateShip\">{{'PROVINCE' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\"\n" +
-    "                        id=\"stateShip\" name=\"state\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.state\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                        id=\"stateShip\" name=\"state\" ng-required=\"true\" ng-model=\"order.shipTo.state\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- city -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.city.$invalid && (shipToForm.city.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"cityShip\">{{'CITY' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\"\n" +
-    "                        id=\"cityShip\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                        id=\"cityShip\" name=\"city\" ng-required=\"true\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- street name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.streetShip.$invalid && (shipToForm.streetShip$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address3Ship\">{{'STREET_NAME' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                    class=\"form-control\" id=\"address3Ship\" name=\"streetShip\" required  autocomplete=\"on\" \n" +
-    "                    ng-model=\"order.shipTo.address1\" ng-required=\"!shipToSameAsBillTo\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    class=\"form-control\" id=\"address3Ship\" name=\"streetShip\" autocomplete=\"on\" \n" +
+    "                    ng-model=\"order.shipTo.address1\" ng-required=\"true\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- building name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address2Ship\">{{'BUILDING_NAME' | translate}}</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Ship\" name=\"address2\"\n" +
+    "                <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Ship\" name=\"address2\"\n" +
     "                ng-model=\"order.shipTo.address2\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- full name  -->\n" +
+    "        <div class=\"col-md-8\">\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                 ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'NAME' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                       class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
-    "                       ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                 ng-class=\"{'has-error': shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'FULL_NAME' | translate}}</label>\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
+    "                ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- company name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"companyNameShip\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" id=\"companyNameShip\" name=\"companyName\" ng-model=\"order.shipTo.companyName\"\n" +
-    "                       autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                       autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- contact phone -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"contactPhoneShip\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\"\n" +
-    "                        placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                        placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
@@ -2096,75 +2206,89 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/addresses/templates/shippingDE.html',
+    "<!-- shipping de -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div id=\"ship-to-fields\" ng-hide=\"shipToSameAsBillTo\">\n" +
+    "    <div id=\"ship-to-fields\">\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
-    "            <div class=\"form-group input-group\"\n" +
-    "                 ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'NAME' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                       class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
-    "                       ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- country -->\n" +
+    "        <div class=\"col-md-4 custom-select-container\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "                <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\">\n" +
-    "                    <option value=\"\" ng-selected=\"true\" ng-if=\"!localeSelection.id\"></option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"true\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        \n" +
+    "        <!-- full name  -->\n" +
+    "        <div class=\"col-md-8\">\n" +
+    "            <div class=\"form-group input-group\"\n" +
+    "                 ng-class=\"{'has-error': shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'FULL_NAME' | translate}}</label>\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
+    "                ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- company name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"companyNameShip\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" id=\"companyNameShip\" name=\"companyName\" ng-model=\"order.shipTo.companyName\"\n" +
-    "                       autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                       autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 1 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.address1.$invalid && (shipToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address1Ship\">{{'ADDRESS' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
     "                    class=\"form-control\" name=\"address1\" id=\"address1Ship\" ng-model=\"order.shipTo.address1\"\n" +
-    "                    ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 2 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address2Ship\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Ship\" name=\"address2\"\n" +
+    "                <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Ship\" name=\"address2\"\n" +
     "                ng-model=\"order.shipTo.address2\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- city -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.city.$invalid && (shipToForm.city.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"cityShip\">{{'CITY' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"true\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- postal code -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.zip.$invalid && ( shipToForm.zip.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"zipCodeShip\">{{'POSTAL_CODE' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" ng-model=\"order.shipTo.zipCode\" name=\"zip\" id=\"zipCodeShip\" autocomplete=\"on\" ng-required=\"!shipToSameAsBillTo\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" ng-model=\"order.shipTo.zipCode\" name=\"zip\" id=\"zipCodeShip\" autocomplete=\"on\" ng-required=\"true\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- contact phone  -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"contactPhoneShip\">{{'CONTACT_PHONE' | translate}}</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"(Optional)\" \n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\"\n" +
     "                ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -2175,87 +2299,100 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/addresses/templates/shippingDefault.html',
+    "<!-- shipping default -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div id=\"ship-to-fields\" ng-hide=\"shipToSameAsBillTo\">\n" +
+    "    <div id=\"ship-to-fields\">\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- country -->\n" +
+    "        <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                 ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'NAME' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                       class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
-    "                       ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                ng-class=\"{'has-error': !shipToForm.country.$viewValue.id && ( shipToForm.country.$dirty || showPristineErrors) }\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"countryShip\">{{'COUNTRY' | translate}}</label>\n" +
+    "                <ui-select ng-model=\"order.shipTo.country\" on-select=\"setLocale($item)\" ng-required=\"true\" id=\"countryShip\" name=\"country\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item.id as item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- full name  -->\n" +
+    "        <div class=\"col-md-8\">\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                ng-class=\"{'has-error': shipToForm.country.$invalid && ( shipToForm.country.$dirty || showPristineErrors) }\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "                <select class=\"form-control\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                     ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"countryShip\" name=\"country\" ng-required=\"!shipToSameAsBillTo\">\n" +
-    "                        <option value=\"\" ng-selected=\"true\" ng-if=\"!localeSelection.id\"></option>\n" +
-    "                </select>\n" +
+    "                 ng-class=\"{'has-error': shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'FULL_NAME' | translate}}</label>\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
+    "                ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- company name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"companyNameShip\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" id=\"companyNameShip\" name=\"companyName\" ng-model=\"order.shipTo.companyName\"\n" +
-    "                       autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                       autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 1 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.address1.$invalid && (shipToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address1Ship\">{{'ADDRESS' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "                    class=\"form-control\" name=\"address1\" id=\"address1Ship\" ng-model=\"order.shipTo.address1\"\n" +
-    "                    ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 2 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address2Ship\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Ship\" name=\"address2\"\n" +
+    "                <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Ship\" name=\"address2\"\n" +
     "                    ng-model=\"order.shipTo.address2\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- city -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.city.$invalid && (shipToForm.city.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"cityShip\">{{'CITY' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"true\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
-    "            <div class=\"form-group input-group\"\n" +
-    "                ng-class=\"{'has-error': shipToForm.state.$invalid && (shipToForm.state.$dirty || showPristineErrors) }\">\n" +
+    "        <!-- state -->\n" +
+    "        <div class=\"col-md-4\">\n" +
+    "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"stateShip\">{{'STATE' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"stateShip\" name=\"state\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.state\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" class=\"form-control\" id=\"stateShip\" name=\"state\" ng-model=\"order.shipTo.state\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\" placeholder=\"({{'OPTIONAL' | translate}})\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- zip code  -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.zip.$invalid && ( shipToForm.zip.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"zipCodeShip\">{{'ZIP' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                class=\"form-control\" id=\"zipCodeShip\" name=\"zip\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
+    "                class=\"form-control\" id=\"zipCodeShip\" name=\"zip\" ng-required=\"true\" autocomplete=\"on\"\n" +
     "                ng-model=\"order.shipTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- contact phone -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"contactPhoneShip\">{{'CONTACT_PHONE' | translate}}</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"(Optional)\" \n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" \n" +
     "                ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -2266,79 +2403,93 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/addresses/templates/shippingGB.html',
+    "<!-- shipping gb -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div id=\"ship-to-fields\" ng-hide=\"shipToSameAsBillTo\">\n" +
-    "\n" +
-    "        <div class=\"col-lg-12\">\n" +
-    "            <div class=\"form-group input-group\"\n" +
-    "                 ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'NAME' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                       class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
-    "                       ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "    <div id=\"ship-to-fields\">\n" +
+    "        \n" +
+    "        <!-- country -->\n" +
+    "        <div class=\"col-md-4 custom-select-container\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "                <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\">\n" +
-    "                    <option value=\"\" ng-selected=\"true\" ng-if=\"!localeSelection.id\"></option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"true\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- full name  -->\n" +
+    "        <div class=\"col-md-8\">\n" +
+    "            <div class=\"form-group input-group\"\n" +
+    "                 ng-class=\"{'has-error': shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'FULL_NAME' | translate}}</label>\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
+    "                ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            </div>\n" +
+    "        </div>        \n" +
+    "\n" +
+    "        <!-- comapny name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"companyNameShip\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" id=\"companyNameShip\" name=\"companyName\" ng-model=\"order.shipTo.companyName\"\n" +
-    "                       autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                       autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 1 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.address1.$invalid && (shipToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address1Ship\">{{'ADDRESS' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "                       class=\"form-control\" name=\"address1\" id=\"address1Ship\" ng-model=\"order.shipTo.address1\"\n" +
-    "                ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 2 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address2Ship\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Ship\" name=\"address2\"\n" +
+    "                <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Ship\" name=\"address2\"\n" +
     "                ng-model=\"order.shipTo.address2\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- city -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.city.$invalid && (shipToForm.city.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"cityShip\">{{'CITY' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\"\n" +
-    "                        id=\"cityShip\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                        id=\"cityShip\" name=\"city\" ng-required=\"true\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- postal code -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.zip.$invalid && (shipToForm.zip.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"zipCodeShip\">{{'POSTAL_CODE' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                class=\"form-control\" id=\"zipCodeShip\" name=\"zip\" required autocomplete=\"on\"\n" +
+    "                class=\"form-control\" id=\"zipCodeShip\" name=\"zip\" ng-required=\"true\" autocomplete=\"on\"\n" +
     "                ng-model=\"order.shipTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- contact phone  -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"contactPhoneShip\">{{'CONTACT_PHONE' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\"\n" +
-    "                        placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                        placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
@@ -2348,85 +2499,100 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/addresses/templates/shippingJP.html',
+    "<!-- shipping jp -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div id=\"ship-to-fields\" ng-hide=\"shipToSameAsBillTo\">\n" +
+    "    <div id=\"ship-to-fields\">\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
-    "            <div class=\"form-group input-group\"\n" +
-    "                 ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'NAME' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                       class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
-    "                       ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "                <!-- country -->\n" +
+    "        <div class=\"col-md-4 custom-select-container\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "                <select class=\"form-control\" ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"addressLocale\">\n" +
-    "                    <option value=\"\" ng-selected=\"true\" ng-if=\"!localeSelection.id\"></option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"true\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- full name  -->\n" +
+    "        <div class=\"col-md-8\">\n" +
+    "            <div class=\"form-group input-group\"\n" +
+    "                 ng-class=\"{'has-error': shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'FULL_NAME' | translate}}</label>\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
+    "                ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <!-- company name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"companyNameShip\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" id=\"companyNameShip\" name=\"companyName\" ng-model=\"order.shipTo.companyName\"\n" +
-    "                    autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- postal code -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.zip.$invalid && ( shipToForm.zip.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"zipCodeShip\">{{'POSTAL_CODE' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" ng-model=\"order.shipTo.zipCode\" name=\"zip\" id=\"zipCodeShip\" autocomplete=\"on\" ng-required=\"!shipToSameAsBillTo\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" ng-model=\"order.shipTo.zipCode\" name=\"zip\" id=\"zipCodeShip\" autocomplete=\"on\" ng-required=\"true\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- prefecture -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.state.$invalid && (shipToForm.state.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"stateShip\">{{'PREFECTURE' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"stateShip\" name=\"state\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.state\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"stateShip\" name=\"state\" ng-required=\"true\" ng-model=\"order.shipTo.state\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- city village -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.city.$invalid && (shipToForm.city.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"cityShip\">{{'CITY_VILLAGE' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"true\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\"\n" +
+    "        <!-- subarea -->\n" +
+    "        <div class=\"col-md-4\"\n" +
     "            ng-class=\"{'has-error': shipToForm.address2.$invalid && (shipToForm.address2.$dirty || showPristineErrors) }\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address2Ship\">{{'SUBAREA' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "                    class=\"form-control\" id=\"address2Ship\" name=\"address2\"\n" +
-    "                    ng-model=\"order.shipTo.address2\" required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    ng-model=\"order.shipTo.address2\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- further subarea -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.address1.$invalid && (shipToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address1Ship\">{{'FURTHER_SUBAREA' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "                    class=\"form-control\" name=\"address1\" id=\"address1Ship\" ng-model=\"order.shipTo.address1\"\n" +
-    "                    required autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- contact phone  -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"contactPhoneShip\">{{'CONTACT_PHONE' | translate}}</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"phoneShip\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"(Optional)\" \n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"phoneShip\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" \n" +
     "                ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -2437,141 +2603,108 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/addresses/templates/shippingUS.html',
+    "<!-- shipping us -->\n" +
     "<div>\n" +
     "\n" +
-    "    <div id=\"ship-to-fields\" ng-hide=\"shipToSameAsBillTo\">\n" +
+    "    <div id=\"ship-to-fields\">\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
-    "            <div class=\"form-group input-group\"\n" +
-    "                 ng-class=\"{'has-error': !shipToSameAsBillTo && shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'NAME' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                       class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
-    "                       ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- country -->\n" +
+    "        <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.country.$invalid && ( shipToForm.country.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"addressLocale\">{{'COUNTRY' | translate}}</label>\n" +
-    "                <select class=\"form-control\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                     ng-model=\"localeSelection\" ng-options=\"item as item.name for item in localeSelections\" ng-change=\"changeLocale(localeSelection)\" id=\"countryShip\" name=\"country\" ng-required=\"!shipToSameAsBillTo\">\n" +
-    "                        <option value=\"\" ng-selected=\"true\" ng-if=\"!localeSelection.id\"></option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"localeSelection.selected\" on-select=\"changeLocale($item)\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" ng-required=\"true\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item in (localeSelections | filter: $select.search) track by item.id\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <!-- full name  -->\n" +
+    "        <div class=\"col-md-8\">\n" +
+    "            <div class=\"form-group input-group\"\n" +
+    "                 ng-class=\"{'has-error': shipToForm.contactName.$invalid && (shipToForm.contactName.$dirty || showPristineErrors) }\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"contactNameShip\">{{'FULL_NAME' | translate}}</label>\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
+    "                class=\"form-control\" id=\"contactNameShip\" name=\"contactName\" ng-model=\"order.shipTo.contactName\"\n" +
+    "                ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <!-- company name -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"companyNameShip\">{{'COMPANY_NAME' | translate}}</label>\n" +
     "                <input type=\"text\" class=\"form-control\" id=\"companyNameShip\" name=\"companyName\" ng-model=\"order.shipTo.companyName\"\n" +
-    "                       autocomplete=\"on\" placeholder=\"(Optional)\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                       autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 1 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.address1.$invalid && (shipToForm.address1.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address1Ship\">{{'ADDRESS' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "                    class=\"form-control\" name=\"address1\" id=\"address1Ship\" ng-model=\"order.shipTo.address1\"\n" +
-    "                    ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                    ng-required=\"true\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- address 2 -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"address2Ship\">{{'ADDRESS' | translate}} 2</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" placeholder=\"(Optional)\" id=\"address2Ship\" name=\"address2\"\n" +
+    "                <input type=\"text\" class=\"form-control\" placeholder=\"({{'OPTIONAL' | translate}})\" id=\"address2Ship\" name=\"address2\"\n" +
     "                    ng-model=\"order.shipTo.address2\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- city -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.city.$invalid && (shipToForm.city.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"cityShip\">{{'CITY' | translate}}</label>\n" +
-    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"!shipToSameAsBillTo\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
+    "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"cityShip\" name=\"city\" ng-required=\"true\" ng-model=\"order.shipTo.city\" autocomplete=\"on\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- state -->\n" +
+    "        <div class=\"col-md-4 custom-select-container checkout-selector\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.state.$invalid && (shipToForm.state.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"stateShip\">{{'STATE' | translate}}</label>\n" +
-    "                <select class=\"form-control\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                 ng-required=\"shipToForm.country.$invalid || (!shipToSameAsBillTo && shipToForm.country.$viewValue.id === 'US')\" ng-model=\"order.shipTo.state\" id=\"stateShip\" name=\"state\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
-    "                    <option value=\"\"></option>\n" +
-    "                    <option value=\"AL\">Alabama</option>\n" +
-    "                    <option value=\"AK\">Alaska</option>\n" +
-    "                    <option value=\"AZ\">Arizona</option>\n" +
-    "                    <option value=\"AR\">Arkansas</option>\n" +
-    "                    <option value=\"CA\">California</option>\n" +
-    "                    <option value=\"CO\">Colorado</option>\n" +
-    "                    <option value=\"CT\">Connecticut</option>\n" +
-    "                    <option value=\"DE\">Delaware</option>\n" +
-    "                    <option value=\"DC\">District Of Columbia</option>\n" +
-    "                    <option value=\"FL\">Florida</option>\n" +
-    "                    <option value=\"GA\">Georgia</option>\n" +
-    "                    <option value=\"HI\">Hawaii</option>\n" +
-    "                    <option value=\"ID\">Idaho</option>\n" +
-    "                    <option value=\"IL\">Illinois</option>\n" +
-    "                    <option value=\"IN\">Indiana</option>\n" +
-    "                    <option value=\"IA\">Iowa</option>\n" +
-    "                    <option value=\"KS\">Kansas</option>\n" +
-    "                    <option value=\"KY\">Kentucky</option>\n" +
-    "                    <option value=\"LA\">Louisiana</option>\n" +
-    "                    <option value=\"ME\">Maine</option>\n" +
-    "                    <option value=\"MD\">Maryland</option>\n" +
-    "                    <option value=\"MA\">Massachusetts</option>\n" +
-    "                    <option value=\"MI\">Michigan</option>\n" +
-    "                    <option value=\"MN\">Minnesota</option>\n" +
-    "                    <option value=\"MS\">Mississippi</option>\n" +
-    "                    <option value=\"MO\">Missouri</option>\n" +
-    "                    <option value=\"MT\">Montana</option>\n" +
-    "                    <option value=\"NE\">Nebraska</option>\n" +
-    "                    <option value=\"NV\">Nevada</option>\n" +
-    "                    <option value=\"NH\">New Hampshire</option>\n" +
-    "                    <option value=\"NJ\">New Jersey</option>\n" +
-    "                    <option value=\"NM\">New Mexico</option>\n" +
-    "                    <option value=\"NY\">New York</option>\n" +
-    "                    <option value=\"NC\">North Carolina</option>\n" +
-    "                    <option value=\"ND\">North Dakota</option>\n" +
-    "                    <option value=\"OH\">Ohio</option>\n" +
-    "                    <option value=\"OK\">Oklahoma</option>\n" +
-    "                    <option value=\"OR\">Oregon</option>\n" +
-    "                    <option value=\"PA\">Pennsylvania</option>\n" +
-    "                    <option value=\"RI\">Rhode Island</option>\n" +
-    "                    <option value=\"SC\">South Carolina</option>\n" +
-    "                    <option value=\"SD\">South Dakota</option>\n" +
-    "                    <option value=\"TN\">Tennessee</option>\n" +
-    "                    <option value=\"TX\">Texas</option>\n" +
-    "                    <option value=\"UT\">Utah</option>\n" +
-    "                    <option value=\"VT\">Vermont</option>\n" +
-    "                    <option value=\"VA\">Virginia</option>\n" +
-    "                    <option value=\"WA\">Washington</option>\n" +
-    "                    <option value=\"WV\">West Virginia</option>\n" +
-    "                    <option value=\"WI\">Wisconsin</option>\n" +
-    "                    <option value=\"WY\">Wyoming</option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"order.shipTo.state\" id=\"stateShip\" name=\"state\" ng-required=\"shipToForm.country.$invalid || shipToForm.country.$viewValue.id === 'US'\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"item.id as item in (usStates | filter: $select.search)\">\n" +
+    "                        {{item.name}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- zip code -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                ng-class=\"{'has-error': shipToForm.zip.$invalid && ( shipToForm.zip.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"zipCodeShip\">{{'ZIP' | translate}}</label>\n" +
     "                <input type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
-    "                class=\"form-control\" id=\"zipCodeShip\" name=\"zip\" ng-required=\"!shipToSameAsBillTo\" autocomplete=\"on\"\n" +
+    "                class=\"form-control\" id=\"zipCodeShip\" name=\"zip\" ng-required=\"true\" autocomplete=\"on\"\n" +
     "                ng-model=\"order.shipTo.zipCode\" ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <!-- contact phone -->\n" +
+    "        <div class=\"col-md-4\">\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"contactPhoneShip\">{{'CONTACT_PHONE' | translate}}</label>\n" +
-    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"(Optional)\" \n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"order.shipTo.contactPhone\" name=\"postal\" id=\"contactPhoneShip\" autocomplete=\"on\" placeholder=\"({{'OPTIONAL' | translate}})\" \n" +
     "                ng-change=\"$root.closeCartOnCheckout()\">\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -2582,53 +2715,84 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/auth/templates/auth.html',
+    "<!-- close modal -->\n" +
     "<div class=\"closeModalButton\">\n" +
     "    <div class=\"glyphicon glyphicon-remove popoverCloseBtn pull-right\" aria-hidden=\"true\" ng-click=\"closeDialog()\"></div>\n" +
     "</div>\n" +
-    "<section>\n" +
+    "\n" +
+    "<section stop-event=\"touchend\">\n" +
+    "\n" +
     "    <!-- Nav tabs -->\n" +
     "    <ul class=\"nav nav-tabs signInTabs text-center\" role=\"tablist\">\n" +
     "      <li class=\"active signInButton\"><a href=\"#signin\" role=\"tab\" data-toggle=\"tab\">{{'SIGN_IN' | translate}}</a></li>\n" +
     "      <li><a href=\"#signup\" role=\"tab\" data-toggle=\"tab\">{{'CREATE_ACCOUNT' | translate}}</a></li>\n" +
     "    </ul>\n" +
+    "\n" +
+    "    <!-- clear row -->\n" +
     "    <div class=\"clr\"><!-- --></div>\n" +
     "\n" +
+    "    <!-- tab content -->\n" +
     "    <div class=\"tab-content\">\n" +
+    "\n" +
     "      <div class=\"tab-pane active\" id=\"signin\" >\n" +
+    "\n" +
+    "        <p class=\"error\" ng-show=\"!cookiesEnabled\">{{'COOKIES_ENABLED_ERROR' | translate}}</p>\n" +
+    "\n" +
+    "        <!-- sign in form -->\n" +
     "        <div ng-include=\"'js/app/auth/templates/signin.html'\" ></div>\n" +
     "\n" +
-    "        <div ng-if=\"fbAppId || googleClientId\">\n" +
-    "          <div class=\"seperatorLine\">\n" +
-    "            <p class=\"subtitle lineContainer\"><span>Or</span></p>\n" +
-    "          </div>\n" +
-    "          \n" +
-    "          <div class=\"socialMediaSigninContainer \">\n" +
-    "            <div ng-if=\"fbAppId\" class=\"fbLogin\" ng-click=\"fbLogin()\">\n" +
-    "                <div class=\"fbLoginButton\">\n" +
-    "                    <div class=\"fbsignInLabel\">{{'SIGN_IN_WITH_FACEBOOK' | translate}}</div>\n" +
+    "        <!-- fb and google login opions -->\n" +
+    "        <div ng-if=\"(fbAppId || googleClientId) && cookiesEnabled\">\n" +
+    "\n" +
+    "          <div class=\"row\">\n" +
+    "\n" +
+    "            <!-- fb login button -->\n" +
+    "            <div class=\"col-md-6 col-xs-6\">\n" +
+    "              <div class=\"socialMediaSigninContainer \">\n" +
+    "                <div ng-if=\"fbAppId\" ng-click=\"fbLogin()\">\n" +
+    "                    <div class=\"fbLogin\">\n" +
+    "                      <div class=\"fbsignInLabel\">{{'SIGN_IN_WITH_FACEBOOK' | translate}}</div>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
+    "              </div>              \n" +
     "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"socialMediaSigninContainer\">\n" +
-    "            <div ng-if=\"googleClientId\"  class=\"googlePlusLogin\">\n" +
-    "                <div class=\"googleSignIn\">\n" +
-    "                    <div class=\"googleSignInLabel\">{{'LOG_IN_WITH_GOOGLE_PLUS' | translate}}</div>\n" +
-    "                    <google-plus-signin clientid=\"{{googleClientId}}\" approvalprompt=\"force\"></google-plus-signin>\n" +
+    "\n" +
+    "            <!-- google login button -->\n" +
+    "            <div class=\"col-md-6 col-xs-6\">\n" +
+    "              <div class=\"socialMediaSigninContainer\">\n" +
+    "                <div ng-if=\"googleClientId\"  class=\"googlePlusLogin\">\n" +
+    "                  <div class=\"googleSignIn\" ng-click=\"googleLogin()\">\n" +
+    "                    <div class=\"googleSignInLabel\">{{'LOG_IN_WITH_GOOGLE' | translate}}</div>\n" +
+    "                  </div>\n" +
     "                </div>\n" +
+    "              </div>\n" +
     "            </div>\n" +
+    "\n" +
     "          </div>\n" +
+    "\n" +
     "        </div>\n" +
+    "\n" +
     "      </div>\n" +
+    "      \n" +
+    "      <!-- sign up form -->\n" +
     "      <div class=\"tab-pane\" id=\"signup\" >\n" +
+    "        <p class=\"error\" ng-show=\"showCreateAccountErrMsg\">{{'CREATE_ACCOUNT_ERROR' | translate}}</p>\n" +
     "        <div ng-include=\"'js/app/auth/templates/signup.html'\"></div>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "\n" +
+    "    <!-- checkout as guest -->\n" +
     "    <div class=\"continue-as-guest-section\" ng-if=\"showAsGuest\">\n" +
-    "        <hr>\n" +
-    "        <a href=\"\" ng-click=\"continueAsGuest()\" class=\"btn btn-primary btn-lg btn-block\">{{'CONTINUE_AS_GUEST' | translate}}</a>\n" +
-    "    </div>\n" +
     "\n" +
+    "      <!-- seperator -->\n" +
+    "      <div class=\"seperatorLine\">\n" +
+    "        <p class=\"subtitle lineContainer\"><span>Or</span></p>\n" +
+    "      </div>\n" +
+    "\n" +
+    "      <!-- button -->\n" +
+    "      <a href=\"\" ng-click=\"continueAsGuest()\" class=\"btn btn-primary btn-lg btn-block\">{{'CONTINUE_AS_GUEST' | translate}}</a>\n" +
+    "\n" +
+    "    </div>\n" +
     "\n" +
     "</section>\n"
   );
@@ -2690,7 +2854,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/auth/templates/password-request-reset.html',
-    "<section class=\"resetPasswordModal\">\n" +
+    "<section class=\"resetPasswordModal\" stop-event=\"touchend\">\n" +
     "	<div class=\"page-header\">\n" +
     "        <div class=\"glyphicon glyphicon-remove pull-right hidden-lg hidden-md\" aria-hidden=\"true\" ng-click=\"closeDialog()\"></div>\n" +
     "        <h3>{{ title | translate}}</h3>\n" +
@@ -2785,7 +2949,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <a class=\"close\" ng-click=\"close()\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></a>\n" +
     "        <h4 class=\"modal-title\" id=\"myModalLabel\">{{'UPDATE_PASSWORD' | translate}}</h4>\n" +
     "    </div>\n" +
-    "    <div class=\"modal-body\">\n" +
+    "    <div class=\"modal-body\" stop-event=\"touchend\">\n" +
     "        <!-- Errors -->\n" +
     "        <ul ng-if=\"errors && errors.length\" class=\"list-unstyled text-danger\">\n" +
     "            <li ng-repeat=\"error in errors\">{{error.message | translate}}</li>\n" +
@@ -2850,23 +3014,35 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/auth/templates/signin.html',
+    "<!-- signin form -->\n" +
     "<form name=\"singinForm\" ng-submit=\"signin(user.signin, singinForm)\">\n" +
+    "    \n" +
+    "    <!-- email address -->\n" +
     "    <div class=\"form-group input-group\" ng-class=\"{ 'has-error': singinForm.username.$invalid && singinForm.username.$dirty }\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"usernameInput\">{{'EMAIL' | translate}}</label>\n" +
     "        <input builder-input=\"email\" type=\"email\" class=\"form-control\" id=\"usernameInput\" name=\"username\"\n" +
     "               ng-model=\"user.signin.email\" required ng-focus=\"clearErrors()\">\n" +
     "    </div>\n" +
+    "\n" +
+    "    <!-- password -->\n" +
     "    <div class=\"form-group input-group\" ng-class=\"{ 'has-error': singinForm.password.$invalid && singinForm.password.$dirty }\">\n" +
     "        <label class=\"input-group-addon control-label\" for=\"passwordInput\">{{'PASSWORD' | translate}}</label>\n" +
     "        <input builder-input=\"password\" type=\"password\" class=\"form-control\" id=\"passwordInput\" name=\"password\"\n" +
     "               ng-model=\"user.signin.password\" required ng-focus=\"clearErrors()\">\n" +
     "    </div>\n" +
+    "\n" +
+    "    <!-- error message -->\n" +
     "    <ul ng-if=\"errors && errors.signin.length\" class=\"list-unstyled text-danger\">\n" +
     "        <li ng-repeat=\"error in errors.signin\">{{error.message | translate}}</li>\n" +
     "    </ul>\n" +
-    "    <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block\" id=\"sign-in-button\">{{'SIGN_IN' | translate}}</button>\n" +
+    "\n" +
+    "    <!-- sign in button -->\n" +
+    "    <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block\" id=\"sign-in-button\" ng-disabled=\"!cookiesEnabled\">{{'SIGN_IN' | translate}}</button>\n" +
     "    <a ng-click=\"showResetPassword()\" class=\"forgot-password-btn pull-right\">{{'FORGOT_PASSWORD' | translate }}</a>\n" +
+    "\n" +
+    "    <!-- clear row -->\n" +
     "    <div class=\"clr\"><!-- --></div>\n" +
+    "\n" +
     "</form>\n"
   );
 
@@ -2897,14 +3073,22 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/cart/templates/cart-costs.html',
     "<table class=\"table\">\n" +
     "    <thead>\n" +
-    "\n" +
-    "        <tr>\n" +
+    "        <!-- cart header -->\n" +
+    "        <tr class=\"cart-header\">\n" +
     "            <th>{{'EST_ORDER_TOTAL' | translate}}</th>\n" +
     "            <th class=\"text-right\">{{cart.totalPrice.amount | currency: currencySymbol}}</th>\n" +
     "        <tr>\n" +
     "    </thead>\n" +
-    "    <tbody>\n" +
+    "    <tbody class=\"cart-cost\">\n" +
+    "        <!-- cart costs -->\n" +
     "        <tr>\n" +
+    "            <td colspan=\"2\">\n" +
+    "                <!-- empty row for padding -->\n" +
+    "            </td>\n" +
+    "        </tr>\n" +
+    "\n" +
+    "        <!-- sub total -->\n" +
+    "        <tr >\n" +
     "            <td>\n" +
     "                {{'SUBTOTAL' | translate}} ( {{cart.totalUnitsCount || 0}} {{'ITEM' | translate}}{{cart.totalUnitsCount == 1 ? '' :'s'}} )\n" +
     "            </td>\n" +
@@ -2912,31 +3096,70 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                {{cart.subTotalPrice.amount | currency: currencySymbol}}\n" +
     "            </td>\n" +
     "        </tr>\n" +
-    "        <tr ng-if=\"cart.discounts.length\">\n" +
+    "        \n" +
+    "        <!-- discount -->\n" +
+    "        <tr ng-if=\"cart.discounts.length\" >\n" +
     "            <td>{{'DISCOUNT' | translate}}</td>\n" +
     "            <td class=\"text-right\">\n" +
     "                <span class=\"error\">-{{cart.totalDiscount.amount | currency: currencySymbol}}</span>\n" +
     "            </td>\n" +
     "        </tr>\n" +
-    "        <tr>\n" +
+    "\n" +
+    "        <!-- shipping -->\n" +
+    "        <tr >\n" +
     "            <td>{{'SHIPPING' | translate}}</td>\n" +
     "            <td class=\"text-right\">{{ cart.shipping.fee.amount | currency: currencySymbol }}</td>\n" +
     "        </tr>\n" +
     "\n" +
-    "        <tr>\n" +
-    "            <td class=\"additionalshipinfo\">{{'ADDITIONAL_SHIPPING_OPTIONS' | translate}}</td>\n" +
+    "        <!-- additional shipping -->\n" +
+    "        <tr >\n" +
+    "            <td class=\"additionalshipinfo\" colspan=\"2\">{{'ADDITIONAL_SHIPPING_OPTIONS' | translate}}</td>\n" +
     "        </tr>\n" +
     "\n" +
-    "        <tr ng-show=\"!!taxType && taxType !== 'FLATRATE'\">\n" +
-    "            <td class=\"estimate-tax-link\">\n" +
+    "        <!-- tax estimator -->\n" +
+    "        <tr ng-show=\"!!taxType && taxType !== 'FLATRATE'\" >\n" +
+    "            <td class=\"estimate-tax-link\" colspan=\"2\">\n" +
     "                <a href=\"\" ng-click=\"showTaxEstimation=!showTaxEstimation\">\n" +
     "                    {{'ESTIMATE_TAX'|translate}}\n" +
     "                    <span ng-show=\"!showTaxEstimation\" class=\"glyphicon glyphicon-chevron-down\" aria-hidden=\"true\"></span>\n" +
     "                    <span ng-show=\"showTaxEstimation\" class=\"glyphicon glyphicon-chevron-up\" aria-hidden=\"true\"></span>\n" +
     "                </a>\n" +
+    "\n" +
+    "                <!-- tax estimator -->\n" +
+    "                <div class=\"row cartTaxConfiguration\" ng-show=\"!!taxType && taxType !== 'FLATRATE' && showTaxEstimation\">\n" +
+    "                    <div class=\"col-xs-5\">\n" +
+    "                        <input id=\"zipCode\" type=\"text\" class=\"zip-input form-control\" ng-model=\"calculateTax.zipCode\" placeholder=\"Zip/Postal Code\" />\n" +
+    "                    </div>\n" +
+    "                    <div class=\"col-xs-5 custom-select-container\">\n" +
+    "                        <!--<select id=\"country\" class=\"zip-input form-control\" ng-model=\"calculateTax.countryCode\" ng-options=\"countryCodeOption.text for countryCodeOption in countryCodeOptions track by countryCodeOption.value\"></select>-->\n" +
+    "                        <!--<p>{{calculateTax.countryCode}}</p>-->\n" +
+    "                        <ui-select ng-model=\"calculateTax.countryCode\">\n" +
+    "                            <ui-select-match>\n" +
+    "                                {{$select.selected.name}}\n" +
+    "                            </ui-select-match>\n" +
+    "                            <ui-select-choices repeat=\"taxCountry.id as taxCountry in (taxableCountries | filter: $select.search)\">\n" +
+    "                                {{taxCountry.name}}\n" +
+    "                            </ui-select-choices>\n" +
+    "                        </ui-select>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"col-xs-2\">\n" +
+    "                        <button id=\"apply-btn\" class=\"apply-tax btn btn-link\" ng-click=\"applyTax()\">{{'APPLY'|translate}}</button>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                \n" +
+    "                <!-- tax error -->\n" +
+    "                <div class=\"row\" ng-show=\"!!taxType && taxType !== 'FLATRATE' && taxEstimationError\">\n" +
+    "                    <div class=\"col-xs-12\">\n" +
+    "                        {{'ESTIMATE_TAX_ERROR'|translate}}\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                \n" +
+    "                <!-- /tax estimator -->\n" +
     "            </td>\n" +
     "        </tr>\n" +
-    "        <tr ng-repeat=\"taxLine in cart.taxAggregate.lines\" ng-show=\"!!taxConfiguration && !taxConfiguration.included && !!cart.totalTax && taxType === 'FLATRATE'\">\n" +
+    "\n" +
+    "        <!-- tax display -->\n" +
+    "        <tr ng-repeat=\"taxLine in cart.taxAggregate.lines\" ng-show=\"!!taxConfiguration && !taxConfiguration.included && !!cart.totalTax && taxType === 'FLATRATE'\" >\n" +
     "            <td ng-if=\"taxLine.name\">{{taxLine.name}}</td>\n" +
     "            <td ng-if=\"!taxLine.name\">{{'TAX' | translate}}</td>\n" +
     "            <td class=\"text-right\">\n" +
@@ -2944,39 +3167,22 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            </td>\n" +
     "        </tr>\n" +
     "        \n" +
-    "        <tr ng-show=\"calculateTax.taxCalculationApplied && taxType !== 'FLATRATE'\">\n" +
+    "\n" +
+    "        <tr ng-show=\"calculateTax.taxCalculationApplied && taxType !== 'FLATRATE'\" >\n" +
     "            <td>{{'TAX' | translate}}</td>\n" +
     "            <td class=\"text-right\">\n" +
     "                {{cart.totalTax.amount | currency: currencySymbol}}\n" +
     "            </td>\n" +
     "        </tr>\n" +
-    "\n" +
+    "        <tr>\n" +
+    "            <td colspan=\"2\">\n" +
+    "                <!-- empty row for padding -->\n" +
+    "            </td>\n" +
+    "        </tr>\n" +
     "    </tbody>\n" +
     "</table>\n" +
     "        \n" +
-    "<div class=\"row cartTaxConfiguration\" ng-show=\"!!taxType && taxType !== 'FLATRATE' && showTaxEstimation\">\n" +
-    "    <div class=\"col-xs-12\">\n" +
-    "        <input id=\"zipCode\" type=\"text\" class=\"zip-input form-control\" ng-model=\"calculateTax.zipCode\" placeholder=\"Zip/Postal Code\" />\n" +
-    "    </div>\n" +
-    "    <div class=\"col-xs-12\">\n" +
-    "        <!--<select id=\"country\" class=\"zip-input form-control\" ng-model=\"calculateTax.countryCode\" ng-options=\"countryCodeOption.text for countryCodeOption in countryCodeOptions track by countryCodeOption.value\"></select>-->\n" +
-    "        <!--<p>{{calculateTax.countryCode}}</p>-->\n" +
-    "        <select id=\"country\" class=\"zip-input form-control\" ng-init=\"calculateTax.countryCode = 'US'\" ng-model=\"calculateTax.countryCode\">\n" +
-    "            <option value=\"-1\">{{'SELECT_A_COUNTRY' | translate}}</option>\n" +
-    "            <option value=\"US\">{{'USA'|translate}}</option>\n" +
-    "            <option value=\"CA\">{{'CANADA'|translate}}</option>\n" +
-    "        </select>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-xs-12\">\n" +
-    "        <button id=\"apply-btn\" class=\"apply-tax btn btn-primary\" ng-click=\"applyTax()\">{{'APPLY'|translate}}</button>\n" +
-    "    </div>\n" +
-    "    \n" +
-    "</div>\n" +
-    "<div class=\"row\" ng-show=\"!!taxType && taxType !== 'FLATRATE' && taxEstimationError\">\n" +
-    "    <div class=\"col-xs-12\">\n" +
-    "        {{'ESTIMATE_TAX_ERROR'|translate}}\n" +
-    "    </div>\n" +
-    "</div>"
+    "\n"
   );
 
 
@@ -2993,81 +3199,157 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "  ~ license agreement you entered into with hybris.\n" +
     "  -->\n" +
     "<div cart-auto-toggle class=\"cartContainer\" ng-mouseenter=\"cartHover()\" ng-mouseleave=\"cartUnHover()\">\n" +
+    "\n" +
+    "    <!-- shop or checkout -->\n" +
     "    <div class=\"btn-group btn-group-justified\">\n" +
+    "\n" +
+    "        <!-- continue shopping button -->\n" +
     "        <div class=\"btn-group continue\">\n" +
     "            <button id=\"continue-shopping\" ng-click=\"toggleCart()\" class=\"btn  btn-default continue\">\n" +
     "                <span class=\"hyicon hyicon-chevron-thin-left\"></span>\n" +
     "                <span class=\"hidden-xs\">{{'CONTINUE_SHOPPING' | translate}}</span>\n" +
     "                <span class=\"hidden-sm hidden-md hidden-lg\">{{'SHOP' | translate}}</span>\n" +
-    "\n" +
     "            </button>\n" +
     "        </div>\n" +
+    "\n" +
+    "        <!-- checkout button -->\n" +
     "        <div class=\"btn-group checkout\">\n" +
     "            <button ng-if=\"cart.items.length\" ng-click=\"toCheckoutDetails()\" class=\"btn  btn-primary \">{{'CHECKOUT' | translate}} <span class=\"hyicon hyicon-chevron-thin-right\"></span>\n" +
     "            </button>\n" +
     "            <button ng-if=\"!cart.items.length\" ng-class=\"{ disabled: !cart.items.length }\" class=\"btn\">{{'CHECKOUT' | translate}}\n" +
     "            </button>\n" +
     "        </div>\n" +
+    "\n" +
     "    </div>\n" +
+    "\n" +
+    "    <!-- empty cart message -->\n" +
     "    <div ng-if=\"!cart.error && !cart.items.length\" class=\"empty-cart-text text-center\">\n" +
     "        {{'CART_EMPTY' | translate}}\n" +
     "    </div>\n" +
+    "\n" +
+    "    <!-- cart unavialable message  -->\n" +
     "    <div ng-if=\"cart.error\" class=\"error text-center\">\n" +
     "        {{'CART_UNAVAILABLE' | translate}}\n" +
     "    </div>\n" +
-    "	<div ng-if=\"cart.items.length\">\n" +
-    "			<section class=\"summary\">\n" +
     "\n" +
-    "				<!-- Apply Coupon -->\n" +
-    "				<div ng-include=\"'js/app/cart/templates/cart-costs.html'\"></div>\n" +
-    "				<div ng-include=\"'js/app/coupons/templates/coupon-apply.html'\" ng-controller=\"CouponCtrl\"></div>\n" +
+    "    <div ng-if=\"cart.items.length\">\n" +
     "\n" +
-    "			</section>\n" +
+    "        <section class=\"summary\">\n" +
+    "\n" +
+    "            <!-- cart cost -->\n" +
+    "            <div ng-include=\"'js/app/cart/templates/cart-costs.html'\"></div>\n" +
+    "\n" +
+    "            <!-- Apply Coupon -->\n" +
+    "            <div ng-include=\"'js/app/coupons/templates/coupon-apply.html'\" ng-controller=\"CouponCtrl\" class=\"couponWrapper\"></div>\n" +
     "\n" +
     "      <section class=\"reward-points-earned\" >\n" +
     "        <div class=\"reward-on-cart\" ng-include src=\"'js/app/loyalty/templates/cart_details.html'\"></div>  \n" +
-    "      </section>\n" +
+    "        </section>\n" +
     "\n" +
-    "      \n" +
-    "			<section>\n" +
-    "				<!-- Cart Item -->\n" +
-    "				<div ng-repeat=\"item in cart.items\">\n" +
-    "                    <div ng-if=\"item.error\" class=\"error col-xs-12 col-md-12\">\n" +
-    "                        <span class=\"error\">{{'CART_ITEM_UPDATE_ERROR' | translate}}</span>\n" +
+    "        <section>\n" +
+    "\n" +
+    "            <!-- Cart Item -->\n" +
+    "            <div \n" +
+    "            ng-repeat=\"item in cart.items\"\n" +
+    "            ng-controller=\"CartNoteMixinCtrl\">\n" +
+    "\n" +
+    "                <!-- error message -->\n" +
+    "                <div ng-if=\"item.error\" class=\"error col-xs-12 col-md-12\">\n" +
+    "                    <span class=\"error\">{{'CART_ITEM_UPDATE_ERROR' | translate}}</span>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div class=\"cart-item row\">\n" +
+    "\n" +
+    "                    <!-- product img -->\n" +
+    "                    <div class=\"col-xs-3 col-md-4 text-center img-col\">\n" +
+    "                        <img ng-src=\"{{ item && item.product.images[0].url || ''}}\" class=\"img-responsive\" />\n" +
     "                    </div>\n" +
-    "					<div class=\"cart-item row\">\n" +
-    "						<div class=\"col-xs-4 col-md-4 text-center img-col\">\n" +
-    "							<img ng-src=\"{{ item && item.product.images[0].url || ''}}\" class=\"img-responsive\"/>\n" +
-    "                        </div>\n" +
-    "						<div class=\"col-xs-8 col-md-8  detail-col\">\n" +
-    "                            <div class=\"row\">\n" +
-    "							    <div class=\"col-xs-10\">\n" +
-    "                                    <div class=\"name\">{{item.product.name}}</div>\n" +
-    "                                    <div class=\"price item-attr\">{{'ITEM_PRICE' | translate}}: <span> {{item.price.effectiveAmount | currency: currencySymbol}}</span> </div>\n" +
-    "                                    <div class=\"clearfix\">\n" +
-    "                                        <div class=\"input-group pull-left\" ng-class=\"{error: item.error}\">\n" +
-    "                                            <label class=\"input-group-addon\" for=\"qtyCart\">{{'QTY' | translate}}:</label>\n" +
-    "                                            <form ng-submit=\"updateCartItemQty(item, item.quantity,{opencartAfterEdit: false})\">\n" +
-    "                                                <input quantity-input type=\"number\" min=\"0\" step=\"1\" pattern=\"\\d*\" class=\"form-control\" id=\"qtyCart\" ng-model=\"item.quantity\"\n" +
-    "                                                       ng-blur=\"updateCartItemQty(item, item.quantity,{opencartAfterEdit: false})\"/>\n" +
-    "                                            </form>\n" +
-    "                                        </div>\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"price-total item-attr\">{{'TOTAL_PRICE' | translate}}: <span>{{ item.itemPrice.amount || 0 | currency: currencySymbol}}</span></div>\n" +
-    "                                    \n" +
-    "							    </div>\n" +
-    "                                <div class=\"col-xs-2 text-right\">\n" +
-    "                                    <button id=\"remove-product\" ng-click=\"removeProductFromCart(item.id)\" class=\"btn delete btn-link    \"><span class=\"hyicon hyicon-remove\"></span></button>\n" +
+    "\n" +
+    "\n" +
+    "                    <div class=\"col-xs-8 col-md-8  detail-col\">\n" +
+    "                        <div class=\"row\">\n" +
+    "                            <div class=\"col-xs-10\">\n" +
+    "\n" +
+    "                                <!-- product name -->\n" +
+    "                                <div class=\"name\">{{item.product.name}}</div>\n" +
+    "\n" +
+    "                                <!-- product price -->\n" +
+    "                                <div class=\"price item-attr\">\n" +
+    "                                    {{'ITEM_PRICE' | translate}}: <span> {{item.price.effectiveAmount | currency: currencySymbol}}</span>\n" +
     "                                </div>\n" +
-    "							\n" +
+    "\n" +
+    "                                <!-- product quantity -->\n" +
+    "                                <div class=\"clearfix\">\n" +
+    "                                    <div class=\"input-group pull-left\" ng-class=\"{error: item.error}\">\n" +
+    "                                        <label class=\"input-group-addon\" for=\"qtyCart\">{{'QTY' | translate}}:</label>\n" +
+    "                                        <form ng-submit=\"updateCartItemQty(item, item.quantity,{opencartAfterEdit: false})\">\n" +
+    "                                            <input quantity-input type=\"number\" min=\"0\" step=\"1\" pattern=\"\\d*\" class=\"form-control\" id=\"qtyCart\" ng-model=\"item.quantity\"\n" +
+    "                                            ng-blur=\"updateCartItemQty(item, item.quantity,{opencartAfterEdit: false})\" />\n" +
+    "                                        </form>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "\n" +
+    "                                <!-- total price -->\n" +
+    "                                <div class=\"price-total item-attr\">{{'TOTAL_PRICE' | translate}}: <span>{{ item.itemPrice.amount || 0 | currency: currencySymbol}}</span></div>\n" +
+    "                                \n" +
+    "                                <!-- note display -->\n" +
+    "                                <div id=\"noteMixin_area\" class=\"noteMixin\"> \n" +
+    "                                    \n" +
+    "                                    <!-- display the note -->\n" +
+    "                                    <div class=\"note-display\">\n" +
+    "                                        {{item.mixins.note.comment}}\n" +
+    "                                    </div>\n" +
+    "                                    \n" +
+    "                                    <!-- note edit button -->\n" +
+    "                                    <a id=\"addEditNote\" ng-show=\"note.noteCollapsed\" ng-click=\"note.expandNote(item.mixins.note.comment)\" class=\"modify-note text-uppercase\" href=\"#\">{{item.mixins.note.comment ? (\"EDIT_NOTE\" | translate) : (\"ADD_NOTE\" | translate)}}</a>\n" +
+    "                                    \n" +
+    "                                    <!-- note delete button -->\n" +
+    "                                    <span ng-if=\"item.mixins.note.comment\" ng-show=\"note.noteCollapsed\">\n" +
+    "                                        &nbsp; | &nbsp;\n" +
+    "                                        <a href=\"#\"  ng-click=\"note.removeNote(item)\" title=\"Delete Note\" class=\"modify-note text-uppercase\">{{'DELETE_NOTE' | translate}}</a>\n" +
+    "                                    </span>\n" +
+    "                                    \n" +
+    "                                </div>\n" +
+    "\n" +
     "                            </div>\n" +
-    "						</div>\n" +
-    "					</div>\n" +
-    "				</div>\n" +
-    "				<!-- /Cart Item -->\n" +
-    "			</section>\n" +
-    "	</div>\n" +
-    "</div>\n"
+    "\n" +
+    "                            <!-- delete button -->\n" +
+    "                            <div class=\"col-xs-2 text-right\">\n" +
+    "                                <button id=\"remove-product\" ng-click=\"removeProductFromCart(item.id)\" class=\"btn btn-link removeCartItem\"><span class=\"hyicon hyicon-remove\"></span></button>\n" +
+    "                            </div>\n" +
+    "                            \n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "\n" +
+    "                    <div class=\"clearfix\"></div>\n" +
+    "\n" +
+    "                    <!-- Note Mixin -->\n" +
+    "                    <div ng-show=\"!note.noteCollapsed\" class=\"cart-item-note\">\n" +
+    "                        <div class=\"col-md-12\">\n" +
+    "                            <form ng-submit=\"note.submit(item)\">\n" +
+    "\n" +
+    "                                <label>{{'NOTE' | translate}}</label>\n" +
+    "\n" +
+    "                                <textarea id=\"cartItemNote\" ng-model=\"note.content\" class=\"form-control\" rows=\"3\"></textarea>\n" +
+    "\n" +
+    "                                <p class=\"error\" ng-show=\"note.saveFailed\">{{'UNABLE_TO_SAVE_NOTE' | translate}}</p>\n" +
+    "                                \n" +
+    "                                <button ng-if=\"!note.noteCollapsed\" type=\"button\" ng-click=\"note.collapseNote()\" class=\"btn btn-link btn-lg pull-left text-uppercase\" href=\"#\">{{'CANCEL' | translate}}</button>\n" +
+    "                                \n" +
+    "                                <button id=\"saveCartItemNote\" class=\"btn btn-primary btn-lg pull-right text-uppercase\" type=\"submit\">{{'SAVE' | translate}}</button>\n" +
+    "                            </form>\n" +
+    "                        </div>\n" +
+    "\n" +
+    "                        <div class=\"clearfix\"></div>\n" +
+    "\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </section>\n" +
+    "    </div>\n" +
+    "    <!-- /Cart Item -->\n" +
+    "</div>\n" +
+    "\n"
   );
 
 
@@ -3077,82 +3359,114 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    <h2>{{'ORDER_DETAILS' | translate}}\n" +
     "        <!--<span id=\"checkout-cart-btn\"  class=\"glyphicon glyphicon-pencil\"  ng-click=\"showEditCart()\"  ng-if=\"cart.items.length\"></span>-->\n" +
     "    </h2>\n" +
-    "    <section class=\"excerpt\" ng-cloak>\n" +
-    "        <div class=\"pull-left\" ng-if=\"cart.totalUnitsCount > 1\">{{cart.totalUnitsCount}} {{'ITEMS' | translate}}</div>\n" +
-    "        <div class=\"pull-left\" ng-if=\"cart.totalUnitsCount <= 1\">{{cart.totalUnitsCount}} {{'ITEM' | translate}}</div>\n" +
-    "        <div class=\"pull-right\">{{'TOTAL' | translate}}: {{cart.totalPrice.amount | currency: currencySymbol}}</div>\n" +
-    "    </section>\n" +
+    "    \n" +
+    "    <!-- cart items -->\n" +
     "    <section class=\"cartItems\" ng-cloak>\n" +
-    "        <div ng-repeat=\"item in cart.items track by $index\">\n" +
-    "            <div class=\"cart-item row\">\n" +
-    "                <div class=\"col-xs-4 col-md-4 text-center img-col\">\n" +
-    "                    <a ui-sref=\"base.product.detail( {productId: item.product.id} )\">\n" +
-    "                        <img ng-src=\"{{ item && item.product.images[0].url || ''}}\" class=\"img-responsive\"/>\n" +
-    "                    </a>\n" +
-    "                </div>\n" +
-    "                <div class=\"col-xs-8 col-md-8  detail-col\">\n" +
-    "                    <div class=\"name\">{{item.product.name}}</div>\n" +
-    "                    <div class=\"price item-attr\">{{'ITEM_PRICE' | translate}}: <span> {{item.price.effectiveAmount | currency: currencySymbol}}</span></div>\n" +
-    "                    <div class=\"variants row item-attr\">\n" +
-    "                        <div class=\"variant col-md-6 \">{{'QTY' | translate}}: <span>{{ item.quantity }}</span></div>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"price-total item-attr\">{{'TOTAL_PRICE' | translate}}: <span>{{ (item.itemPrice.amount) | currency: currencySymbol}}</span>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </section>\n" +
-    "    <section class=\"summary\" ng-cloak>\n" +
-    "        <!-- CHECKOUT-CART -->\n" +
-    "        <table class=\"table\">\n" +
-    "            <tbody>\n" +
+    "        \n" +
+    "        <table class=\"table table-striped cart-items-table\">\n" +
+    "\n" +
+    "            <!-- desktop view -->\n" +
+    "            <tbody class=\"hidden-sm hidden-xs\">\n" +
     "                <tr>\n" +
-    "                    <td>{{'SUBTOTAL' | translate}}</td>\n" +
-    "                    <td class=\"text-right\">{{cart.subTotalPrice.amount | currency: currencySymbol}}</td>\n" +
+    "                    <th colspan=\"2\">\n" +
+    "                        <div ng-cloak>\n" +
+    "                            <span ng-if=\"cart.totalUnitsCount > 1\">{{'TOTAL' | translate}} ({{cart.totalUnitsCount}} {{'ITEMS' | translate}}) </span>\n" +
+    "                            <span ng-if=\"cart.totalUnitsCount <= 1\">{{'TOTAL' | translate}} ({{cart.totalUnitsCount}} {{'ITEM' | translate}}) </span>\n" +
+    "                            <span>{{cart.totalPrice.amount | currency: currencySymbol}}</span>\n" +
+    "                        </div>\n" +
+    "                    </th>\n" +
+    "                    <th class=\"text-right item-price-col\">{{'ITEM_PRICE' | translate}}:</th>\n" +
+    "                    <th class=\"text-center qty-col\">{{'QTY' | translate}}:</th>\n" +
+    "                    <th class=\"text-right total-col\">{{'TOTAL_PRICE' | translate}}: </th>\n" +
+    "                    <th></th>\n" +
     "                </tr>\n" +
-    "                <tr ng-if=\"cart.totalDiscount.amount > 0\">\n" +
-    "                    <td>{{'DISCOUNT' | translate}}</td>\n" +
-    "                    <td class=\"text-right\">\n" +
-    "                        <span class=\"error\">-{{cart.totalDiscount.amount | currency: currencySymbol}}</span>\n" +
+    "\n" +
+    "                <tr ng-repeat=\"item in cart.items track by $index\">\n" +
+    "                    <td class=\"img-col\">\n" +
+    "                        <a ui-sref=\"base.product.detail( {productId: item.product.id} )\">\n" +
+    "                            <img ng-src=\"{{ item && item.product.images[0].url || ''}}\" class=\"product-img\" />\n" +
+    "                        </a>\n" +
     "                    </td>\n" +
+    "                    <td>{{item.product.name}}</td>\n" +
+    "                    <td class=\"text-right\">{{item.price.effectiveAmount | currency: currencySymbol}}</td>\n" +
+    "                    <td class=\"text-center\">{{ item.quantity }}</td>\n" +
+    "                    <td class=\"text-right\"><strong>{{ (item.itemPrice.amount) | currency: currencySymbol}}</strong></td>\n" +
+    "                    <td></td>\n" +
     "                </tr>\n" +
-    "                <tr>\n" +
-    "                    <td>{{'SHIPPING' | translate}}</td>\n" +
-    "                    <td class=\"text-right\">{{ cart.shipping.fee.amount | currency: currencySymbol }}</td>\n" +
-    "                </tr>\n" +
-    "                <tr ng-repeat=\"taxLine in cart.taxAggregate.lines\" ng-show=\"!!taxConfiguration && !taxConfiguration.included && !!cart.totalTax && taxType === 'FLATRATE'\">\n" +
-    "                    <td ng-if=\"taxLine.name\">{{taxLine.name}}</td>\n" +
-    "                    <td ng-if=\"!taxLine.name\">{{'TAX' | translate}}</td>\n" +
-    "                    <td class=\"text-right\">\n" +
-    "                        {{taxLine.amount | currency: currencySymbol}}\n" +
+    "            </tbody>\n" +
+    "\n" +
+    "            <!-- mobile view -->\n" +
+    "            <tbody class=\"visible-sm visible-xs checkout-item-mobile\">\n" +
+    "                <tr ng-repeat=\"item in cart.items track by $index\">\n" +
+    "                    <td class=\"img-col\">\n" +
+    "                        <a ui-sref=\"base.product.detail( {productId: item.product.id} )\">\n" +
+    "                            <img ng-src=\"{{ item && item.product.images[0].url || ''}}\" class=\"product-img img-responsive\" />\n" +
+    "                        </a>\n" +
     "                    </td>\n" +
-    "                </tr>\n" +
-    "                <tr ng-show=\"calculateTax.taxCalculationApplied && taxType !== 'FLATRATE'\">\n" +
-    "                    <td>{{'TAX' | translate}}</td>\n" +
-    "                    <td class=\"text-right\">\n" +
-    "                        {{cart.totalTax.amount | currency: currencySymbol}}\n" +
+    "                    <td class=\"text-left mobile-cart-item-details\">\n" +
+    "                        {{item.product.name}} <br>\n" +
+    "                        {{'ITEM_PRICE' | translate}}: {{item.price.effectiveAmount | currency: currencySymbol}} <br>\n" +
+    "                        {{'QTY' | translate}}:{{ item.quantity }} <br>\n" +
+    "                        <strong>{{'TOTAL_PRICE' | translate}}: {{ (item.itemPrice.amount) | currency: currencySymbol}}</strong>\n" +
     "                    </td>\n" +
     "                </tr>\n" +
     "            </tbody>\n" +
-    "            <tfoot>\n" +
-    "                <tr>\n" +
-    "                    <td>{{'ORDER_TOTAL' | translate}}</td>\n" +
-    "                    <!-- <td class=\"text-right\">{{((cart.subTotalPrice.amount-coupon.amounts.discountAmount>0)?cart.subTotalPrice.amount-coupon.amounts.discountAmount : 0) + shippingCost | currency: currencySymbol}}</td> -->\n" +
-    "                    <!-- <td class=\"text-right\">{{cart.totalPrice.amount | currency: currencySymbol}}</td> -->\n" +
-    "                    <!-- <td class=\"text-right\" id=\"checkout-loyalty-newAmount\">\n" +
-    "                        {{loyaltyAmounts.newAmount-coupon.amounts.discountAmount | currency: currencySymbol}}\n" +
-    "                    </td> -->\n" +
-    "                    \n" +
-    "                    <td class=\"text-right\">{{cart.totalPrice.amount | currency: currencySymbol}}</td>\n" +
-    "                    \n" +
-    "                <tr>\n" +
     "\n" +
-    "            </tfoot>\n" +
     "        </table>\n" +
     "\n" +
-    "      <div ng-include src=\"'js/app/loyalty/templates/checkout_cart.html'\"></div>\n" +
+    "    </section>\n" +
     "\n" +
-    "      \n" +
+    "    <section class=\"summary\" ng-cloak>\n" +
+    "        <!-- CHECKOUT-CART -->\n" +
+    "        <div class=\"col-md-4\">\n" +
+    "            <table class=\"table\">\n" +
+    "                <tbody>\n" +
+    "                    <tr>\n" +
+    "                        <td class=\"text-left\">{{'SUBTOTAL' | translate}}</td>\n" +
+    "                        <td class=\"text-right\">{{cart.subTotalPrice.amount | currency: currencySymbol}}</td>\n" +
+    "                    </tr>\n" +
+    "                    <tr ng-if=\"cart.totalDiscount.amount > 0\">\n" +
+    "                        <td class=\"text-left\">{{'DISCOUNT' | translate}}</td>\n" +
+    "                        <td class=\"text-right\">\n" +
+    "                            <span class=\"error\">-{{cart.totalDiscount.amount | currency: currencySymbol}}</span>\n" +
+    "                        </td>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td class=\"text-left\">{{'SHIPPING' | translate}}</td>\n" +
+    "                        <td class=\"text-right\">{{ cart.shipping.fee.amount | currency: currencySymbol }}</td>\n" +
+    "                    </tr>\n" +
+    "                    <tr ng-repeat=\"taxLine in cart.taxAggregate.lines\" ng-show=\"!!taxConfiguration && !taxConfiguration.included && !!cart.totalTax && taxType === 'FLATRATE'\">\n" +
+    "                        <td ng-if=\"taxLine.name\" class=\"text-left\">{{taxLine.name}}</td>\n" +
+    "                        <td ng-if=\"!taxLine.name\" class=\"text-left\">{{'TAX' | translate}}</td>\n" +
+    "                        <td class=\"text-right\">\n" +
+    "                            {{taxLine.amount | currency: currencySymbol}}\n" +
+    "                        </td>\n" +
+    "                    </tr>\n" +
+    "                    <tr ng-show=\"calculateTax.taxCalculationApplied && taxType !== 'FLATRATE'\">\n" +
+    "                        <td class=\"text-left\">{{'TAX' | translate}}</td>\n" +
+    "                        <td class=\"text-right\">\n" +
+    "                            {{cart.totalTax.amount | currency: currencySymbol}}\n" +
+    "                        </td>\n" +
+    "                    </tr>\n" +
+    "                </tbody>\n" +
+    "                <tfoot class=\"order-total-details\">\n" +
+    "                    <tr>\n" +
+    "                        <td class=\"text-left\">{{'ORDER_TOTAL' | translate}}</td>\r" +
+    "\n" +
+    "                        <!-- <td class=\"text-right\">{{((cart.subTotalPrice.amount-coupon.amounts.discountAmount>0)?cart.subTotalPrice.amount-coupon.amounts.discountAmount : 0) + shippingCost | currency: currencySymbol}}</td> -->\r" +
+    "\n" +
+    "                        <!-- <td class=\"text-right\">{{cart.totalPrice.amount | currency: currencySymbol}}</td> -->\n" +
+    "                        <!-- <td class=\"text-right\" id=\"checkout-loyalty-newAmount\">\n" +
+    "                        {{loyaltyAmounts.newAmount-coupon.amounts.discountAmount | currency: currencySymbol}}\n" +
+    "                        </td> -->\n" +
+    "                        <td class=\"text-right\">{{cart.totalPrice.amount | currency: currencySymbol}}</td>\n" +
+    "                    <tr>\n" +
+    "                </tfoot>\n" +
+    "            </table>\r" +
+    "\n" +
+    "            <div ng-include src=\"'js/app/loyalty/templates/checkout_cart.html'\"></div>\n" +
+    "        </div>\n" +
+    "        \n" +
     "    </section>\n" +
     "    <div ui-view=\"editCart\"></div>\n" +
     "</div>\n"
@@ -3273,25 +3587,32 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "<h1>\n" +
     "<small class=\"visible-lg visible-md\">{{'SIMPLE_3_STEP_CHECKOUT' | translate}}</small>\n" +
     "<small class=\"visible-xs visible-sm\">{{'SIMPLE_4_STEP_CHECKOUT' | translate}}</small>\n" +
-    "{{'SECURE_CHECKOUT' | translate}}\n" +
+    "{{'SECURE_CHECKOUT' | translate}} \n" +
     "</h1>\n" +
     "<ng-form name=\"checkoutForm\" mobile-checkout-wizard novalidate autocomplete=\"on\">\n" +
-    "<ng-form name=\"billToForm\" novalidate autocomplete=\"on\" ng-cloak>\n" +
+    "<ng-form name=\"shipToForm\" novalidate autocomplete=\"on\" ng-cloak>\n" +
     "<div class=\"step step-1\" ng-class=\"{'done': wiz.step1Done}\">\n" +
     "    <h2> {{'STEP_1_MY_DETAILS' | translate}} <span ng-show=\"wiz.step1Done\" class=\"glyphicon glyphicon-pencil\"\n" +
     "    ng-click=\"editBillTo()\"></span></h2>\n" +
     "\n" +
     "    <div class=\"row step-detail\">\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <div class=\"col-lg-6 custom-select-container checkout-selector\">\n" +
     "            <div class=\"form-group input-group\"\n" +
     "                 ng-class=\"{'has-error': billToForm.titleAccount.$invalid && ( billToForm.titleAccount.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"titleAccount\">{{'TITLE' | translate}}</label>\n" +
-    "                <select class=\"form-control\" ng-model=\"order.account.title\" id=\"titleAccount\" name=\"title\" ng-options=\"title | translate for title in titles\"></select>\n" +
+    "                <ui-select ng-model=\"order.account.title\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"title in titles | filter: $select.search\">\n" +
+    "                        {{title}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "           </div>\n" +
     "        </div>\n" +
     "        <div class=\"col-lg-6 col\">\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                ng-class=\"{'has-error': billToForm.firstNameAccount.$invalid && (billToForm.firstNameAccount.$dirty  || showPristineErrors)}\">\n" +
+    "                ng-class=\"{'has-error': shipToForm.firstNameAccount.$invalid && (shipToForm.firstNameAccount.$dirty  || showPristineErrors)}\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"firstNameAccount\">{{'FIRST_NAME' | translate}}</label>\n" +
     "                <input ng-change=\"updateAddressName()\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" \n" +
     "                       type=\"text\" class=\"form-control ui-autocomplete\" id=\"firstNameAccount\" name=\"firstNameAccount\"\n" +
@@ -3300,7 +3621,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "        <div class=\"col-lg-6 col\">\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                 ng-class=\"{'has-error': billToForm.middleNameAccount.$invalid && (billToForm.middleNameAccount.$dirty  || showPristineErrors)}\">\n" +
+    "                 ng-class=\"{'has-error': shipToForm.middleNameAccount.$invalid && (shipToForm.middleNameAccount.$dirty  || showPristineErrors)}\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"middleNameAccount\">{{'MIDDLE_NAME' | translate}}</label>\n" +
     "                <input ng-change=\"updateAddressName()\" type=\"text\" class=\"form-control ui-autocomplete\" id=\"middleNameAccount\" name=\"middleNameAccount\"\n" +
     "                       ng-model=\"order.account.middleName\" autocomplete=\"on\" placeholder=\"(Optional)\">\n" +
@@ -3308,7 +3629,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "        <div class=\"col-lg-6\">\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                ng-class=\"{'has-error': billToForm.lastNameAccount.$invalid && (billToForm.lastNameAccount.$dirty || showPristineErrors) }\">\n" +
+    "                ng-class=\"{'has-error': shipToForm.lastNameAccount.$invalid && (shipToForm.lastNameAccount.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"lastNameAccount\">{{'LAST_NAME' | translate}}</label>\n" +
     "                <input ng-change=\"updateAddressName()\" type=\"text\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
     "                        class=\"form-control\" id=\"lastNameAccount\" name=\"lastNameAccount\" ng-model=\"order.account.lastName\"\n" +
@@ -3316,90 +3637,106 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"col-lg-12\">\n" +
-    "            <div class=\"error\" ng-show=\"!billToForm.email.focused && billToForm.email.$invalid && billToForm.email.$dirty\" style=\"color:red\">\n" +
+    "            <div class=\"error\" ng-show=\"!shipToForm.email.focused && shipToForm.email.$invalid && shipToForm.email.$dirty\" style=\"color:red\">\n" +
     "                <small class=\"help-inline has-error\">\n" +
     "                <span class=\"error\">{{'PLEASE_ENTER_VALID_EMAIL' | translate}}</span>\n" +
     "                </small>\n" +
     "            </div>\n" +
     "            <div class=\"form-group input-group\"\n" +
-    "                ng-class=\"{ 'has-error': !billToForm.email.focused && billToForm.email.$invalid &&  ( billToForm.email.$dirty || showPristineErrors) }\">\n" +
+    "                ng-class=\"{ 'has-error': !shipToForm.email.focused && shipToForm.email.$invalid &&  ( shipToForm.email.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"email\">{{'EMAIL' | translate}}</label>\n" +
-    "                <input type=\"email\" inline-error-input builder-input=\"email\"\n" +
-    "                       inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" class=\"form-control\" id=\"email\"\n" +
+    "                <input type=\"email\" builder-input=\"email\"\n" +
+    "                    class=\"form-control\" id=\"email\"\n" +
     "                       name=\"email\" ng-model=\"order.account.email\"\n" +
     "                       required autocomplete=\"on\"\n" +
-    "                       ng-focus=\"billToForm.email.focused=true\"\n" +
-    "                       ng-blur=\"billToForm.email.focused=false\">\n" +
+    "                       ng-focus=\"shipToForm.email.focused=true\"\n" +
+    "                       ng-blur=\"shipToForm.email.focused=false\">\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <localized-addresses type=\"billing\"></localized-addresses>\n" +
+    "        <!-- section heading -->\n" +
+    "        <div class=\"col-md-12\">\n" +
+    "            <span class=\"form-block-headline\">{{'SHIPPING_ADDRESS' | translate}}</span>\n" +
+    "        </div>\n" +
     "\n" +
+    "        <!-- select from address book -->\n" +
+    "        <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-1\" ng-click=\"openAddressDialog(order.shipTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <!-- clear the row -->\n" +
+    "        <div class=\"clearfix\"></div>\n" +
+    "        \n" +
+    "        <localized-addresses type=\"shipping\"></localized-addresses>\n" +
     "        <div class=\"col-lg-12\">\n" +
     "            <button class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\"\n" +
-    "            ng-click=\"billToDone(billToForm.$valid, billToForm.$name)\">{{'CONTINUE' | translate}} <span\n" +
+    "            ng-click=\"shipToDone(shipToForm.$valid, shipToForm.$name, shipToForm.country.$viewValue.id)\">{{'CONTINUE' | translate}} <span\n" +
     "            class=\"hyicon hyicon-chevron-thin-right\"></span></button>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "</ng-form>\n" +
-    "<ng-form name=\"shipToForm\" novalidate autocomplete=\"on\" ng-cloak>\n" +
+    "<ng-form name=\"billToForm\" novalidate autocomplete=\"on\" ng-cloak>\n" +
     "<div class=\"step step-2\" ng-class=\"{'disabled' : !wiz.step1Done, 'done': wiz.step2Done}\">\n" +
     "    <a id=\"step2\">\n" +
-    "        <h2> {{'STEP_2_SHIPPING_INFORMATION' | translate}} <span ng-show=\"wiz.step2Done\" class=\"glyphicon glyphicon-pencil\" ng-click=\"editShipTo()\"></span></h2>\n" +
+    "        <h2> {{'STEP_2_BILLING_INFORMATION' | translate}} <span ng-show=\"wiz.step2Done\" class=\"glyphicon glyphicon-pencil\" ng-click=\"editShipTo()\"></span></h2>\n" +
     "    </a>\n" +
     "    <div class=\"row step-detail\">\n" +
     "        <div class=\"col-lg-12\">\n" +
-    "            <span class=\"form-block-headline\">{{'SHIPPING_ADDRESS' | translate}}</span>\n" +
+    "            <span class=\"form-block-headline\">{{'BILLING_ADDRESS' | translate}}</span>\n" +
     "        </div>\n" +
     "        <div class=\"col-lg-12\" ng-if=\"user.isAuthenticated && (addresses.length > 1)\">\n" +
     "            <div class=\"form-group\">\n" +
-    "                <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-2\" ng-click=\"openAddressDialog(order.shipTo)\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
+    "                <button class=\"btn btn-default btn-lg btn-block\" id=\"select-address-btn-2\" ng-click=\"openAddressDialog(order.billTo, 'billing')\">{{'SELECT_FROM_ADDRESS_BOOK' | translate}}</button>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
     "        <div class=\"col-lg-12\">\n" +
     "            <div class=\"checkbox\">\n" +
     "                <label>\n" +
-    "                    <input type=\"checkbox\" id=\"shipTo\" ng-model=\"shipToSameAsBillTo\" ng-change=\"toggleShipToSameAsBillTo()\">\n" +
-    "                    <span class=\"option\">{{'SAME_AS_BILLING_ADDRESS' | translate}}</span>\n" +
-    "                    <span class=\"adress\" ng-show=\"shipToSameAsBillTo\">{{ order.billTo.address1 }}</span>\n" +
+    "                    <input type=\"checkbox\" id=\"shipTo\" ng-model=\"shipToSameAsBillTo\" ng-change=\"toggleBillToSameAsShipTo()\">\n" +
+    "                    <span class=\"option\">{{'SAME_AS_SHIPPING_ADDRESS' | translate}}</span>\n" +
+    "                    <span class=\"adress\" ng-show=\"shipToSameAsBillTo\">{{ order.shipTo.address1 }}</span>\n" +
     "                </label>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        \n" +
-    "        <localized-addresses type=\"shipping\"></localized-addresses>\n" +
+    "        <localized-addresses type=\"billing\"></localized-addresses>\n" +
     "\n" +
-    "        <div class=\"col-lg-12\">\n" +
-    "            <span class=\"form-block-headline\">{{'DELIVERY_METHOD' | translate}}</span>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <div class=\"col-lg-12\">\n" +
+    "        <div class=\"col-lg-12 custom-select-container checkout-selector\" ng-show=\"shippingConfigured\">\n" +
+    "            <div class=\"col-lg-12 col-md-12\">\n" +
+    "                <span class=\"form-block-headline\">{{'DELIVERY_METHOD' | translate}}</span>\n" +
+    "            </div>\n" +
     "            <div class=\"form-group input-group\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"shipMethod\">{{'METHOD' | translate}}</label>\n" +
-    "                <select class=\"form-control\" name=\"shipMethod\" id=\"shipMethod\" ng-change=\"closeCartOnCheckout()\" ng-model=\"shippingCost\" ng-disabled=\"!shippingCosts.length\">\n" +
-    "                    <option ng-if=\"order.shippingCost <= 0\">{{'FREE_STANDARD_SHIPPING' | translate}} - {{order.shippingCost | currency : order.shippingCurrencySymbol + ' '}}</option>\n" +
-    "                    <!--<option ng-if=\"order.shippingCost > 0\">{{'FLAT_RATE_SHPPING' | translate}} - {{order.shippingCost | currency : order.shippingCurrencySymbol + ' '}}</option>-->\n" +
-    "                    <option ng-repeat=\"cost in shippingCosts\" ng-selected=\"cost.preselect\" value=\"{{cost}}\">{{cost.name}} - Cost: {{cost.fee.amount | currency : order.shippingCurrencySymbol}}</option>\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"$parent.shippingCost\" on-select=\"closeCartOnCheckout()\" ng-disabled=\"!shippingCosts.length\">\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected.name}} - {{'COST' | translate}}: {{$select.selected.fee.amount | currency : currencySymbol}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"cost in (shippingCosts | filter: $select.search) track by cost.id\">\n" +
+    "                        {{cost.name}} - {{'COST' | translate}}: {{cost.fee.amount | currency : currencySymbol}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    <div class=\"col-lg-12\">\n" +
-    "        <button class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\" ng-click=\"shipToDone(shipToForm.$valid, shipToForm.$name)\">{{'CONTINUE' | translate}} <span\n" +
+    "        <button class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\" ng-click=\"billToDone(billToForm.$valid, billToForm.$name)\">{{'CONTINUE' | translate}} <span\n" +
     "        class=\"hyicon hyicon-chevron-thin-right\"></span></button>\n" +
     "    </div>\n" +
     "</div>\n" +
     "</div>\n" +
     "</ng-form>\n" +
     "\n" +
-    "<div class=\" hidden-xs hidden-sm\">\n" +
+    "<div id=\"preview-order\" class=\" hidden-xs hidden-sm\">\n" +
     "    <div class=\"error text-center\" ng-if=\"messagePreviewOrder\" >\n" +
     "        <small class=\"help-inline has-error\">\n" +
     "        <span class=\"error text-center\">{{messagePreviewOrder | translate}}</span>\n" +
     "        </small>\n" +
     "    </div>\n" +
     "    <button class=\"btn btn-primary btn-lg btn-block\"\n" +
-    "            id=\"preview-order-btn\" ng-click=\"previewOrder(shipToForm.$valid, billToForm.$valid)\">{{'PREVIEW_ORDER' | translate}}\n" +
+    "            id=\"preview-order-btn\" ng-click=\"previewOrderDesktop(shipToForm.$valid, billToForm.$valid)\">{{'PREVIEW_ORDER' | translate}}\n" +
     "    </button>\n" +
     "    <div class=\"col-md-12 col-sm-12 checkout-cart\" ng-show=\"displayCart\" ui-view=\"checkoutcart\"></div>\n" +
     "</div>\n" +
@@ -3415,14 +3752,13 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "    <!-- Apply Coupon -->\n" +
     "    <div class=\"couponWrap\">\n" +
-    "        <!-- Apply Coupon -->\n" +
+    "        \n" +
     "        <div ng-include=\"'js/app/coupons/templates/coupon-apply.html'\" ng-controller=\"CouponCtrl\"></div>\n" +
     "    </div>\n" +
-    "        \n" +
     "\n" +
-    "    <!--<div class=\"col-lg-12\">\n" +
+    "    <!-- <div class=\"col-lg-12\">\n" +
     "        <span class=\"form-block-headline\">{{'PAYMENT' | translate}}</span>\n" +
-    "    </div>-->\n" +
+    "    </div> -->\n" +
     "    \n" +
     "<div ng-include src=\"'js/app/loyalty/templates/checkout_redeem_discount.html'\"></div>\n" +
     "\n" +
@@ -3458,22 +3794,30 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                </small>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <div class=\"col-lg-6 custom-select-container checkout-selector\">\n" +
     "            <div class=\"form-group input-group\" ng-class=\"{'has-error': paymentForm.expMonth.$invalid && ( paymentForm.expMonth.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"expMonth\">{{'MONTH' | translate}}</label>\n" +
-    "                <select class=\"form-control\" ng-required=\"order.paymentMethod === 'creditCard'\" name=\"expMonth\" id=\"expMonth\"\n" +
-    "                    ng-model=\"order.creditCard.expMonth\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\"\n" +
-    "                    ng-options=\"month for month in wiz.months\" ng-change=\"paymentForm.expDateMsg && resetExpDateErrors()\">\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"order.creditCard.expMonth\" on-select=\"paymentForm.expDateMsg && resetExpDateErrors()\" id=\"expMonth\" name=\"expMonth\" required>\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"month in wiz.months | filter: $select.search\">\n" +
+    "                        {{month}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"col-lg-6\">\n" +
+    "        <div class=\"col-lg-6 custom-select-container checkout-selector\">\n" +
     "            <div class=\"form-group input-group\" ng-class=\"{'has-error': paymentForm.expYear.$invalid && ( paymentForm.expYear.$dirty || showPristineErrors) }\">\n" +
     "                <label class=\"input-group-addon control-label\" for=\"expYear\">{{'YEAR' | translate}}</label>\n" +
-    "                <select class=\"form-control\" ng-required=\"order.paymentMethod === 'creditCard'\"  name=\"expYear\" id=\"expYear\"\n" +
-    "                    ng-model=\"order.creditCard.expYear\" inline-error-input inline-error-input-required-message=\"{{'REQUIRED' | translate}}\" data-stripe=\"expYear\"\n" +
-    "                    ng-options=\"year for year in wiz.years\" ng-change=\"paymentForm.expDateMsg && resetExpDateErrors()\">\n" +
-    "                </select>\n" +
+    "                <ui-select ng-model=\"order.creditCard.expYear\" on-select=\"paymentForm.expDateMsg && resetExpDateErrors()\" id=\"expYear\" name=\"expYear\" required>\n" +
+    "                    <ui-select-match>\n" +
+    "                        {{$select.selected}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"year in wiz.years | filter: $select.search\">\n" +
+    "                        {{year}}\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"col-xs-9\">\n" +
@@ -3535,7 +3879,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/checkout/templates/checkout-frame.html',
     "<div class=\"checkout\">\n" +
     "	<div class=\"row section\">\n" +
-    "		<div class=\"col-sm-7 col-md-7 steps checkoutForm\" ui-view=\"checkoutform\"></div>\n" +
+    "		<div class=\"col-md-12 col-lg-12 steps checkoutForm\" ui-view=\"checkoutform\"></div>\n" +
     "\n" +
     "        \n" +
     "		<!--<div class=\"col-md-5 col-sm-5 checkout-cart  hidden-md hidden-sm hidden-xs\" ui-view=\"checkoutcart\"></div>-->\n" +
@@ -3559,9 +3903,12 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('js/app/confirmation/templates/confirmation.html',
     "<div class=\"confirm\">\n" +
+    "    \n" +
+    "    <!-- order success -->\n" +
     "    <div class=\"row section success-box\" ng-if=\"accountSuccess\">\n" +
     "        {{'ACCOUNT_SUCCESS' | translate}}\n" +
     "    </div>\n" +
+    "    \n" +
     "    <div class=\"row text-center header-block\">\n" +
     "        <div class=\"col-xs-12 col-sm-6 col-sm-offset-3\">\n" +
     "            <h1>\n" +
@@ -3569,28 +3916,34 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            </h1>\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    <!-- order details -->\n" +
     "    <div class=\"text-center order-details\" ng-if=\"entity === 'order'\">\n" +
     "        <div class=\"row\">\n" +
     "            <div class=\"col-xs-12 col-sm-6 col-sm-offset-3\">\n" +
-    "                <h2 ng-if=\"isAuthenticated\" class=\"orderNumber\">{{'ORDER' | translate}} # <a ui-sref=\"base.orderDetail({orderId: orderInfo.orderId})\" class=\"highlight\">{{ orderInfo.orderId }}</a></h2>\n" +
+    "\n" +
+    "                <h2 ng-if=\"isAuthenticated\" class=\"orderNumber\">{{'ORDER' | translate}} # <a ui-sref=\"base.orderDetail({orderId: orderInfo.orderId})\">{{ orderInfo.orderId }}</a></h2>\n" +
+    "                \n" +
     "                <h2 ng-if=\"!isAuthenticated\" class=\"orderNumber\">{{'ORDER' | translate}}# {{ orderInfo.orderId }}</h2>\n" +
     "\n" +
-    "                 <div translate=\"A_COPY_OF_YOUR_ORDER_DETAILS_HAS_BEEN_SENT_TO\" translate-compile translate-values=\"{emailAddress: '{{confirmationDetails.emailAddress}}'}\" class=\"orderEmailedTo\"></div>\n" +
+    "                <div translate=\"A_COPY_OF_YOUR_ORDER_DETAILS_HAS_BEEN_SENT_TO\" translate-compile translate-values=\"{emailAddress: '{{confirmationDetails.emailAddress}}'}\" class=\"orderEmailedTo\"></div>\n" +
     "\n" +
     "                <div>\n" +
     "                    <p>{{'THE_SHIPMENT_IS_SCHEDULED_TO_ARRIVE_AT_THE_FOLLOWING_LOCATION' | translate}}:</p>\n" +
     "                    <address>\n" +
     "                        <span ng-cloak>{{confirmationDetails.shippingAddressName}}<br></span>\n" +
     "                        <span ng-if=\"confirmationDetails.shippingAddressCompanyName\" ng-cloak>{{confirmationDetails.shippingAddressCompanyName}}<br></span>\n" +
-    "                        <span ng-cloak>{{confirmationDetails.shippingAddressStreetLine1}}<br></span>\n" +
+    "                        <span ng-cloak>{{confirmationDetails.shippingAddressStreetLine1}}</span>\n" +
     "                        <span ng-cloak ng-if=\"confirmationDetails.shippingAddressStreetLine2\">{{confirmationDetails.shippingAddressStreetLine2}}<br></span>\n" +
-    "                        <span ng-cloak>{{confirmationDetails.shippingAddressCityStateZip}}<br></span>\n" +
+    "                        <span ng-cloak>{{confirmationDetails.shippingAddressCityStateZip}}</span>\n" +
     "                        <span ng-cloak>{{confirmationDetails.shippingAddressCountry}}<br></span>\n" +
     "                    </address>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\n" +
+    "    <!-- order messaging -->\n" +
     "    <div class=\"text-center order-details\" ng-if=\"entity === 'checkout'\">\n" +
     "        <div class=\"row\">\n" +
     "            <div class=\"col-xs-12 col-sm-6 col-sm-offset-3\">\n" +
@@ -3602,128 +3955,226 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div create-account class=\"create-account\" ng-if=\"!isAuthenticated\">\n" +
-    "        <div class=\"text-center centered-content\">\n" +
-    "            <h2 class=\"creatAccountHeader\">Create An Account</h2>\n" +
-    "            <p class=\"createAccountTagLine\"><span ng-bind-html=\"'ONE_MORE_STEP' | translate\"/></p>\n" +
+    "    \n" +
+    "    <!-- create account panel -->\n" +
+    "    <div create-account class=\"create-account text-center\" ng-if=\"!isAuthenticated\">\n" +
     "\n" +
-    "            <div ng-if=\"fbAppId || googleClientId\" class=\"socialMediaSigninContainer centered-content row\">\n" +
-    "                <div ng-if=\"fbAppId\" class=\"fbLogin col-sm-6 col-xs-12\" ng-click=\"fbLogin()\">\n" +
-    "                    <div class=\"fbLoginButton\">\n" +
-    "                        <div class=\"fbsignInLabel\">{{'SIGN_IN_WITH_FACEBOOK' | translate}}</div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "                <div ng-if=\"googleClientId\"  class=\"googlePlusLogin col-sm-6 col-xs-12\">\n" +
-    "                    <div class=\"googleSignIn\">\n" +
-    "                        <div class=\"googleSignInLabel\">{{'LOG_IN_WITH_GOOGLE_PLUS' | translate}}</div>\n" +
-    "                        <google-plus-signin clientid=\"{{googleClientId}}\" approvalprompt=\"force\"></google-plus-signin>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "\n" +
-    "            <div class=\"tab-pane centered-content\" id=\"signup\">\n" +
-    "                <form name=\"signupForm\" ng-submit=\"signup(user.signup.password, confirmationDetails.emailAddress, signupForm)\">\n" +
-    "                    <div class=\"row\">\n" +
-    "                        <div class=\"col-xs-12 col-sm-6\">\n" +
-    "                            <div class=\"form-group input-group\">\n" +
-    "                                <span class=\"input-group-addon\"><label class=\"control-label\" for=\"emailInput\">{{'EMAIL' | translate}}</label></span>\n" +
-    "                                <input builder-input=\"email\" type=\"email\" class=\"form-control\" id=\"emailInput\" name=\"email\"\n" +
-    "                                       ng-model=\"confirmationDetails.emailAddress\" required ng-focus=\"clearErrors()\">\n" +
-    "                            </div>\n" +
+    "        <h2 class=\"creatAccountHeader\">Create An Account</h2>\n" +
+    "        \n" +
+    "        <p class=\"createAccountTagLine\"><span ng-bind-html=\"'ONE_MORE_STEP' | translate\"/></p>\n" +
+    "        \n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2\">\n" +
+    "                <div id=\"signup\">\n" +
+    "                    <form name=\"signupForm\" ng-submit=\"signup(user.signup.password, confirmationDetails.emailAddress, signupForm)\">\n" +
+    "        \n" +
+    "                        <!-- email address -->\n" +
+    "                        <div class=\"form-group input-group\">\n" +
+    "                        \n" +
+    "                            <span class=\"input-group-addon\">\n" +
+    "                                <label class=\"control-label\" for=\"emailInput\">{{'EMAIL' | translate}}</label>\n" +
+    "                            </span>\n" +
+    "                        \n" +
+    "                            <input builder-input=\"email\" type=\"email\" class=\"form-control\" id=\"emailInput\" name=\"email\"\n" +
+    "                                   ng-model=\"confirmationDetails.emailAddress\" required ng-focus=\"clearErrors()\">\n" +
+    "                        \n" +
     "                        </div>\n" +
-    "                        <div class=\"col-xs-12 col-sm-6\">\n" +
-    "                            <div class=\"form-group input-group\">\n" +
-    "                                <span class=\"input-group-addon\"><label class=\"control-label\" for=\"newPasswordInput\">{{'PASSWORD' | translate}}</label></span>\n" +
-    "                                <input builder-input=\"password\" type=\"password\" class=\"form-control\" id=\"newPasswordInput\" placeholder=\"{{'PASSWORD_MINCHAR'| translate}}\" name=\"password\"\n" +
-    "                                       ng-model=\"user.signup.password\" required ng-focus=\"clearErrors()\">\n" +
-    "                            </div>\n" +
+    "                        \n" +
+    "                        <!-- password -->\n" +
+    "                        <div class=\"form-group input-group\">\n" +
+    "                            \n" +
+    "                            <span class=\"input-group-addon\">\n" +
+    "                                <label class=\"control-label\" for=\"newPasswordInput\">{{'PASSWORD' | translate}}</label>\n" +
+    "                            </span>\n" +
+    "                            \n" +
+    "                            <input builder-input=\"password\" type=\"password\" class=\"form-control\" id=\"newPasswordInput\" placeholder=\"{{'PASSWORD_MINCHAR'| translate}}\" name=\"password\"\n" +
+    "                               ng-model=\"user.signup.password\" required ng-focus=\"clearErrors()\">\n" +
+    "                        \n" +
     "                        </div>\n" +
     "                        <div ng-include src=\"'js/app/loyalty/templates/signup_for_loyalty_program.html'\"></div>\n" +
+    "                        <!-- error message -->\n" +
     "                        <ul ng-if=\"errors && errors.signup.length\" class=\"text-danger list-unstyled\">\n" +
     "                            <li ng-repeat=\"error in errors.signup\">{{error.message | translate}}</li>\n" +
     "                        </ul>\n" +
-    "                        <button type=\"submit\" id=\"create-acct-btn\" class=\"btn btn-primary btn-lg btn-block\">{{'CREATE_ACCOUNT' | translate}}</button>\n" +
-    "                    </div>\n" +
-    "                    \n" +
-    "                </form>\n" +
-    "            </div>\n" +
-    "\n" +
-    "        </div>\n" +
     "        \n" +
+    "                        <!-- create account button -->\n" +
+    "                        <button type=\"submit\" id=\"create-acct-btn\" class=\"btn btn-primary btn-lg btn-block\">{{'CREATE_ACCOUNT' | translate}}</button>\n" +
+    "                            \n" +
+    "                    </form>\n" +
+    "\n" +
+    "                    <div class=\"row\">\n" +
+    "                    \n" +
+    "                        <!-- social login -->\n" +
+    "                        <div ng-if=\"fbAppId || googleClientId\" class=\"socialMediaSigninContainer centered-content\">\n" +
+    "                    \n" +
+    "                            <!-- fb login -->\n" +
+    "                            <div class=\"col-md-6 col-sm-6\">\n" +
+    "                                <div ng-if=\"fbAppId\" class=\"fbLogin\" ng-click=\"fbLogin()\">\n" +
+    "                                    <div class=\"fbLoginButton\">\n" +
+    "                                        <div class=\"fbsignInLabel\">{{'SIGN_IN_WITH_FACEBOOK' | translate}}</div>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        \n" +
+    "                            <br class=\"visible-xs\">\n" +
+    "        \n" +
+    "                            <!-- g+ login -->\n" +
+    "                            <div class=\"col-md-6 col-sm-6\">\n" +
+    "                                <div ng-if=\"googleClientId\"  class=\"googlePlusLogin \">\n" +
+    "                                    <div class=\"googleSignIn\">\n" +
+    "                                        <div class=\"googleSignInLabel\">{{'LOG_IN_WITH_GOOGLE_PLUS' | translate}}</div>\n" +
+    "                                        <google-plus-signin clientid=\"{{googleClientId}}\" approvalprompt=\"force\"></google-plus-signin>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                    \n" +
+    "                        </div> \n" +
+    "                        \n" +
+    "                    </div>\n" +
+    "        \n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "\n" +
     "    <div class=\"order-items\" ng-if=\"entity === 'order'\">\n" +
+    "\n" +
     "        <!-- only 1 product in the order -->\n" +
     "        <div class=\"row\">\n" +
-    "            \n" +
-    "            <div class=\"cart-item\" \n" +
-    "                ng-class=\"(confirmationDetails.entries.length === 1)? 'col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12' : 'col-xs-12 col-sm-6 col-md-4'\"\n" +
-    "                    ng-repeat=\"entry in confirmationDetails.entries\">\n" +
-    "                <div class=\"row\">\n" +
-    "                    <div class=\"col-xs-4 col-md-4 text-center img-col\">\n" +
-    "                        <a ui-sref=\"base.product.detail( {productId: product.id} )\">\n" +
-    "                            <img ng-src=\"{{ entry.product.images && entry.product.images[0].url || ''}}\" class=\"img-responsive\"/>\n" +
-    "                        </a>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"col-xs-8 col-md-8  detail-col text-left text-uppercase\">\n" +
     "\n" +
-    "                        <div class=\"name\">{{entry.product.name}}</div>\n" +
-    "                        <div class=\"sku item-attr\">{{'SKU' | translate}}: <span> {{entry.product.sku}}</span></div>\n" +
-    "                        <div class=\"price item-attr\">{{'ITEM_PRICE' | translate}}: <span> {{entry.unitPrice | currency: currencySymbol}}</span></div>\n" +
-    "                        <div class=\"variants row item-attr\">\n" +
-    "                            <div class=\"variant col-md-6 \">{{'QTY' | translate}}: <span>{{entry.amount}}</span></div>\n" +
-    "                        </div>\n" +
-    "                        <div class=\"price-total item-attr\">{{'TOTAL_PRICE' | translate}}: <span>{{entry.totalPrice |currency: currencySymbol}}</span>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            \n" +
-    "            \n" +
-    "        </div>\n" +
-    "        <div class=\"summary row\" ng-cloak>\n" +
-    "            <div summary-align productcount=\"{{confirmationDetails.entries.length}}\">\n" +
-    "                <table class=\"table\">\n" +
-    "                    <tbody>\n" +
-    "                    <tr>\n" +
-    "                        <td>{{'SUBTOTAL' | translate}}</td>\n" +
+    "            <div class=\"item-list col-md-12\">\n" +
+    "                <table class=\"table table-responsive\">\n" +
+    "                    <tr class=\"hidden-sm hidden-xs\">\n" +
+    "                        <th></th>\n" +
+    "                        <th></th>\n" +
+    "                        <th></th>\n" +
+    "                        <th></th>\n" +
+    "                        <th class=\"text-right\">{{'ITEM_PRICE' | translate}}</th>\n" +
+    "                        <th class=\"text-center\">{{'QTY' | translate}}</th>\n" +
+    "                        <th class=\"text-right\">{{'TOTAL_PRICE' | translate}}</th>\n" +
+    "                        <th></th>\n" +
+    "                    </tr>\n" +
     "\n" +
-    "                        <td class=\"text-right\">{{ confirmationDetails.totalPrice - confirmationDetails.shipping.total.amount + confirmationDetails.discountAmount - confirmationDetails.tax.total.amount | currency: currencySymbol}}</td>\n" +
+    "                    <!-- desktop tablet view -->\n" +
+    "                    <tr ng-repeat=\"entry in confirmationDetails.entries\" class=\"hidden-sm hidden-xs\">\n" +
+    "                        <td class=\"margin-cell\"></td>\n" +
+    "                        <td><a ui-sref=\"base.product.detail( {productId: entry.product.id} )\">\n" +
+    "                            <img ng-src=\"{{ entry.product.images && entry.product.images[0].url || ''}}\" class=\"\" width=\"90\" />\n" +
+    "                        </a></td>\n" +
+    "                        <td>{{entry.product.name}}</td>\n" +
+    "                        <td>{{entry.product.sku}}</td>\n" +
+    "                        <td class=\"text-right\">{{entry.unitPrice | currency: currencySymbol}}</td>\n" +
+    "                        <td class=\"text-center\">{{entry.amount}}</td>\n" +
+    "                        <td class=\"text-right\"><strong>{{entry.totalPrice |currency: currencySymbol}}</strong></td>\n" +
+    "                        <td class=\"margin-cell\"></td>\n" +
     "                    </tr>\n" +
-    "                    <tr>\n" +
-    "                        <td>{{'SHIPPING' | translate}}</td>\n" +
-    "                        <td class=\"text-right\">{{ confirmationDetails.shipping.total.amount | currency: currencySymbol }}</td>\n" +
+    "\n" +
+    "                    <tr class=\"summary-row hidden-sm hidden-xs\">\n" +
+    "                        <td colspan=\"5\"></td>\n" +
+    "                        <td colspan=\"2\">\n" +
+    "                            <table class=\"table\">\n" +
+    "                                <tbody>\n" +
+    "                                <tr>\n" +
+    "                                    <td class=\"text-left\">{{'SUBTOTAL' | translate}}</td>\n" +
+    "                                                        \n" +
+    "                                    <td class=\"text-right\">{{ confirmationDetails.subTotalPrice | currency: currencySymbol}}</td>\n" +
+    "                                </tr>\n" +
+    "                                <tr>\n" +
+    "                                    <td class=\"text-left\">{{'SHIPPING' | translate}}</td>\n" +
+    "                                    <td class=\"text-right\">{{ confirmationDetails.shipping.total.amount | currency: currencySymbol }}</td>\n" +
+    "                                </tr>\n" +
+    "                                <tr ng-if=\"confirmationDetails.discountAmount != 0\">\n" +
+    "                                    <td class=\"text-left\">{{'DISCOUNT' | translate}}</td>\n" +
+    "                                    <td class=\"text-right\">\n" +
+    "                                        <span class=\"error\">-{{confirmationDetails.discountAmount | currency: currencySymbol}}</span>\n" +
+    "                                    </td>\n" +
+    "                                </tr>\n" +
+    "                                <tr ng-repeat=\"taxLine in confirmationDetails.tax.lines\" ng-show=\"confirmationDetails.tax.lines.length && !confirmationDetails.tax.total.inclusive\">\n" +
+    "                                    <td ng-if=\"taxLine.name\">{{taxLine.name}}</td>\n" +
+    "                                    <td ng-if=\"!taxLine.name\" class=\"text-left\">{{'TAX' | translate}}</td>\n" +
+    "                                    <td class=\"text-right\">\n" +
+    "                                        {{taxLine.amount | currency: currencySymbol}}\n" +
+    "                                    </td>\n" +
+    "                                </tr>\n" +
+    "                                </tbody>\n" +
+    "                                <tfoot>\n" +
+    "                                <tr class=\"order-total\">\n" +
+    "                                    <td class=\"text-left\">{{'ORDER_TOTAL' | translate}}</td>\n" +
+    "                                    <td class=\"text-right\">{{ confirmationDetails.totalPrice | currency: currencySymbol}}</td>\n" +
+    "                                <tr>\n" +
+    "                                                        \n" +
+    "                                </tfoot>\n" +
+    "                            </table>\n" +
+    "                        </td>\n" +
+    "                        <td class=\"margin-cell\"></td>\n" +
     "                    </tr>\n" +
-    "                    <tr ng-if=\"confirmationDetails.discountAmount != 0\">\n" +
-    "                        <td>{{'DISCOUNT' | translate}}</td>\n" +
+    "\n" +
+    "                    <!-- mobile view -->\n" +
+    "                    <tr ng-repeat=\"entry in confirmationDetails.entries\" class=\"visible-sm visible-xs\">\n" +
     "                        <td class=\"text-right\">\n" +
-    "                            <span class=\"error\">-{{confirmationDetails.discountAmount | currency: currencySymbol}}</span>\n" +
+    "                            <a ui-sref=\"base.product.detail( {productId: entry.product.id} )\">\n" +
+    "                            <img ng-src=\"{{ entry.product.images && entry.product.images[0].url || ''}}\" class=\"\" width=\"90\" />\n" +
+    "                            </a>\n" +
+    "                        </td>\n" +
+    "                        <td colspan=\"7\" class=\"text-left product-details-mobile\">\n" +
+    "                            {{entry.product.name}} <br>\n" +
+    "                            {{'SKU' | translate}}: {{entry.product.sku}} <br>\n" +
+    "                            {{'ITEM_PRICE' | translate}}: {{entry.unitPrice | currency: currencySymbol}} <br>\n" +
+    "                            {{'QTY' | translate}}: {{entry.amount}} <br>\n" +
+    "                            <strong>{{'TOTAL_PRICE' | translate}}: {{entry.totalPrice |currency: currencySymbol}}</strong>\n" +
     "                        </td>\n" +
     "                    </tr>\n" +
-    "                    <tr ng-repeat=\"taxLine in confirmationDetails.tax.lines\" ng-show=\"confirmationDetails.tax.lines.length && !confirmationDetails.tax.total.inclusive\">\n" +
-    "                        <td ng-if=\"taxLine.name\">{{taxLine.name}}</td>\n" +
-    "                        <td ng-if=\"!taxLine.name\">{{'TAX' | translate}}</td>\n" +
-    "                        <td class=\"text-right\">\n" +
-    "                            {{taxLine.amount | currency: currencySymbol}}\n" +
+    "                    <tr class=\"summary-row visible-sm visible-xs\">\n" +
+    "                        <td colspan=\"8\">\n" +
+    "                            <table class=\"table\">\n" +
+    "                                <tbody>\n" +
+    "                                <tr>\n" +
+    "                                    <td class=\"text-left\">{{'SUBTOTAL' | translate}}</td>\n" +
+    "                                                        \n" +
+    "                                    <td class=\"text-right\">{{ confirmationDetails.totalPrice - confirmationDetails.shipping.total.amount + confirmationDetails.discountAmount - confirmationDetails.tax.total.amount | currency: currencySymbol}}</td>\n" +
+    "                                </tr>\n" +
+    "                                <tr>\n" +
+    "                                    <td class=\"text-left\">{{'SHIPPING' | translate}}</td>\n" +
+    "                                    <td class=\"text-right\">{{ confirmationDetails.shipping.total.amount | currency: currencySymbol }}</td>\n" +
+    "                                </tr>\n" +
+    "                                <tr ng-if=\"confirmationDetails.discountAmount != 0\">\n" +
+    "                                    <td class=\"text-left\">{{'DISCOUNT' | translate}}</td>\n" +
+    "                                    <td class=\"text-right\">\n" +
+    "                                        <span class=\"error\">-{{confirmationDetails.discountAmount | currency: currencySymbol}}</span>\n" +
+    "                                    </td>\n" +
+    "                                </tr>\n" +
+    "                                <tr ng-repeat=\"taxLine in confirmationDetails.tax.lines\" ng-show=\"confirmationDetails.tax.lines.length && !confirmationDetails.tax.total.inclusive\">\n" +
+    "                                    <td ng-if=\"taxLine.name\">{{taxLine.name}}</td>\n" +
+    "                                    <td ng-if=\"!taxLine.name\" class=\"text-left\">{{'TAX' | translate}}</td>\n" +
+    "                                    <td class=\"text-right\">\n" +
+    "                                        {{taxLine.amount | currency: currencySymbol}}\n" +
+    "                                    </td>\n" +
+    "                                </tr>\n" +
+    "                                </tbody>\n" +
+    "                                <tfoot>\n" +
+    "                                <tr class=\"order-total\">\n" +
+    "                                    <td class=\"text-left\">{{'ORDER_TOTAL' | translate}}</td>\n" +
+    "                                    <td class=\"text-right\">{{ confirmationDetails.totalPrice | currency: currencySymbol}}</td>\n" +
+    "                                <tr>\n" +
+    "                                                        \n" +
+    "                                </tfoot>\n" +
+    "                            </table>\n" +
+    "\n" +
     "                        </td>\n" +
     "                    </tr>\n" +
-    "                    </tbody>\n" +
-    "                    <tfoot>\n" +
-    "                    <tr>\n" +
-    "                        <td>{{'ORDER_TOTAL' | translate}}</td>\n" +
-    "                        <td class=\"text-right\">{{ confirmationDetails.totalPrice | currency: currencySymbol}}</td>\n" +
-    "                    <tr>\n" +
     "\n" +
-    "                    </tfoot>\n" +
-    "                </table>\n" +
-    "       <div ng-include src=\"'js/app/loyalty/templates/confirmation.html'\"></div>\n" +
+    "                </table>\r" +
+    "\n" +
+    "                <div ng-include src=\"'js/app/loyalty/templates/confirmation.html'\"></div>\n" +
+    "                <div ng-include src=\"'js/app/loyalty/templates/checkout_signup_loyalty.html'\">\n" +
     "            </div>\n" +
+    "\n" +
     "        </div>\n" +
-    "        \n" +
-    "        \n" +
-    "        \n" +
+    "        <!-- mobile view -->\n" +
+    "\n" +
     "    </div>\n" +
     "    \n" +
+    "    <!-- order details -->\n" +
     "    <div class=\"order-success\"  ng-cloak>\n" +
     "        <div class=\"row\">\n" +
     "            <div class=\"col-xs-12 col-sm-6 col-sm-offset-3\">\n" +
@@ -3746,28 +4197,65 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/coupons/templates/coupon-apply.html',
     "<div class=\"couponApplyContainer\">\n" +
     "\n" +
-    "    <a class=\"highlight\" ng-click=\"couponCollapsed = !couponCollapsed\" ng-show=\"!cart.discounts.length\">{{'COUPON_CODE' | translate}}</a>\n" +
+    "	<!-- coupon wrapper -->\n" +
+    "	<div class=\"couponContainer\">\n" +
     "\n" +
-    "    <div ng-show=\"!couponCollapsed && !cart.discounts.length\" class=\"couponContainer\">\n" +
-    "        <div ng-if=\"coupon.restrictions.minOrderValue.amount > cart.totalPrice.amount\" class=\"error\">\n" +
-    "            {{'COUPON_MINIMUM_NOT_MET' | translate}}\n" +
-    "        </div>\n" +
-    "        <div ng-if=\"couponErrorMessage\" class=\"error\">\n" +
-    "            {{couponErrorMessage}}\n" +
-    "        </div>\n" +
-    "        <input id=\"coupon-code\" type=\"text\" class=\"form-control pull-left couponInput\" ng-model='couponCode' ng-disabled=\"cart.discounts.length\">\n" +
-    "        <button id=\"apply-coupon\" class=\"btn btn-primary btn-sm pull-left couponInputBtn\" ng-click=\"applyCoupon(couponCode); couponCode = null\" ng-disabled=\"cart.discounts.length || !couponCode.length\">\n" +
-    "        {{'COUPON_APPLY' | translate}}\n" +
-    "        </button>\n" +
-    "    </div>\n" +
+    "		<!-- apply coupon bar -->\n" +
+    "		<div class=\"coupon-bar\">\n" +
     "\n" +
-    "    <div ng-if=\"cart.discounts.length\" class=\"row\">\n" +
-    "        <div ng-repeat=\"discount in cart.discounts\" class=\"col-xs-8 col-md-8 img-col\">\n" +
-    "            {{discount.code}}\n" +
-    "            <button id=\"remove-coupon\" ng-click=\"removeAllCoupons()\" class=\"btn delete btn-link\"><span class=\"hyicon hyicon-remove\"></span></button>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
+    "			<!-- minimum amount not met error message -->\n" +
+    "			<div ng-if=\"coupon.restrictions.minOrderValue.amount > cart.totalPrice.amount\" class=\"error\">\n" +
+    "				{{'COUPON_MINIMUM_NOT_MET' | translate}}\n" +
+    "			</div>\n" +
+    "	\n" +
+    "			<!-- coupon error message -->\n" +
+    "			<div id=\"coupon-error-message\" ng-if=\"couponErrorMessage\" class=\"error\">\n" +
+    "				{{couponErrorMessage}}\n" +
+    "			</div>\n" +
     "\n" +
+    "			<div class=\"input-group\" ng-class=\"{ 'has-error': couponErrorMessage }\">\n" +
+    "				\n" +
+    "				<!-- coupon input -->\n" +
+    "				<input id=\"coupon-code\" type=\"text\" class=\"form-control couponInput\" ng-model='couponCode' placeholder=\"ADD COUPON CODE\"  >\n" +
+    "\n" +
+    "				<!-- coupon apply btn -->\n" +
+    "				<span class=\"input-group-btn\">\n" +
+    "					<button id=\"apply-coupon\" class=\"btn btn-default\" ng-click=\"applyCoupon(couponCode); couponCode = null\">\n" +
+    "						{{'COUPON_APPLY' | translate}}\n" +
+    "					</button>\n" +
+    "				</span>\n" +
+    "		\n" +
+    "			</div>\n" +
+    "			\n" +
+    "		</div>\n" +
+    "\n" +
+    "\n" +
+    "	</div>\n" +
+    "\n" +
+    "	<!-- show applied  coupons -->\n" +
+    "	<div ng-if=\"cart.discounts.length\">\n" +
+    "		<table class=\"table table-striped coupon-list-table\">\n" +
+    "			<tbody>\n" +
+    "			<tr ng-repeat=\"discount in cart.discounts\" class=\"techne-table-xs-right techne-table-xs-left\">\n" +
+    "				<td class=\"dicsount-code\">\n" +
+    "					{{discount.code}}\n" +
+    "				</td>\n" +
+    "				<td>\n" +
+    "					<!-- coupon applied -->\n" +
+    "					<span ng-if=\"!discount.discountValidationDetails\">{{'COUPON_APPLIED' | translate}}</span>\n" +
+    "					\n" +
+    "					<!-- coupon not applied -->\n" +
+    "					<span ng-if=\"discount.discountValidationDetails\" class=\"error\">{{'COUPON_NOT_APPLIED' | translate}} <br><small>{{discount.discountValidationDetails.details[0]}} </small></span>\n" +
+    "\n" +
+    "				</td>\n" +
+    "				<td class=\"remove-coupon\">\n" +
+    "					<button id=\"remove-coupon\" ng-click=\"removeCoupon(discount.id)\" class=\"btn delete btn-link\" title=\"Remove Coupon\"><span class=\"hyicon hyicon-remove\"></span></button>\n" +
+    "				</td>\n" +
+    "			</tr>\n" +
+    "\n" +
+    "			<tbody>\n" +
+    "		</table>\n" +
+    "	</div>\n" +
     "</div>\n"
   );
 
@@ -3850,7 +4338,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/loyalty/templates/cart_details.html',
     "\n" +
     "	\n" +
-    "<div ng-controller=\"LoyaltyCartCtrl\">\n" +
+    "<div ng-controller=\"LoyaltyCartCtrl\" ng-if=\"isConfigMaintained\">\n" +
     "	<div class=\"\" ng-show=\"thisUser.isMember && loyaltyConfig.showReward\">\n" +
     "		<div class=\"form-group\">\n" +
     "			<div ng-show=\"dummyFireProcessing\">\n" +
@@ -3898,7 +4386,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/loyalty/templates/checkout_cart.html',
     "\n" +
     "    \n" +
-    "<div ng-controller=\"LoyaltyCheckoutCartCtrl\">\n" +
+    "<div ng-controller=\"LoyaltyCheckoutCartCtrl\" ng-if=\"isConfigMaintained\">\n" +
     "    <div class=\"\" ng-show=\"thisUser.isMember && loyaltyConfig.showReward\">\n" +
     "        <div class=\"form-group\">\n" +
     "            <div ng-show=\"dummyFireProcessing\">\n" +
@@ -3947,7 +4435,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   $templateCache.put('js/app/loyalty/templates/checkout_redeem_discount.html',
     "    \n" +
     "\n" +
-    "    <div ng-controller=\"LoyaltyCheckoutCtrl\">\n" +
+    "    <div ng-controller=\"LoyaltyCheckoutCtrl\"  ng-if=\"isConfigMaintained\">\n" +
     "        <div class=\"col-lg-12\" ng-if=\"thisUser.isMember && loyaltyConfig.showReward && (userMaxPoints>0)\">\n" +
     "            <span class=\"form-block-headline\" id=\"checkout-spend-text\">{{'SPEND_YOUR_REWARDS_PNTS' | translate}}</span>\n" +
     "        </div>\n" +
@@ -4010,8 +4498,8 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                                    </div>\n" +
     "                                </div>\n" +
     "                                <div class=\"col-lg-2\">\n" +
-    "                                    <button id=\"apply-points-button\" ng-if=\"showApplyPoints\" ng-click=\"applyLoyaltyPoints()\" class=\" btn btn-success points-slider-wrapper\" ng-disabled=\"isSliderDisabled\"> Apply  </button>\n" +
-    "                                    <button id=\"remove-points-button\" ng-if=\"!showApplyPoints\" ng-click=\"removeLoyaltyPoints()\" class=\" btn btn-danger points-slider-wrapper\"> Remove  </button>\n" +
+    "                                    <button id=\"apply-points-button\" ng-if=\"showApplyPoints\" ng-click=\"applyLoyaltyPoints()\" class=\" btn btn-success points-slider-wrapper\" ng-disabled=\"isSliderDisabled\"> {{'APPLY' | translate}}  </button>\n" +
+    "                                    <button id=\"remove-points-button\" ng-if=\"!showApplyPoints\" ng-click=\"removeLoyaltyPoints()\" class=\" btn btn-danger points-slider-wrapper\"> {{'REMOVE' | translate}}  </button>\n" +
     "\n" +
     "                                </div>\n" +
     "                            </div>\n" +
@@ -4025,7 +4513,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/loyalty/templates/checkout_signup_loyalty.html',
-    " <div ng-controller=\"SignupCheckoutCtrl\" >\n" +
+    " <div ng-controller=\"SignupCheckoutCtrl\"  ng-if=\"isConfigMaintained\">\n" +
     "    <div class=\"wrapperRewards\" ng-hide=\"thisUser.isMember || !thisUser.isUser\">\n" +
     "        <!-- <div class=\"checkbox loyalty\" ng-show=\"loyaltyConfig.showReward\">\n" +
     "			<input type=\"checkbox\" ng-model=\"wantLoyaltyProgram\" id=\"want-loyalty-program\" />\n" +
@@ -4041,7 +4529,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('js/app/loyalty/templates/confirmation.html',
     "\n" +
-    "        <div class=\"amountSection\" ng-controller=\"LoyaltyConfirmationCtrl\">\n" +
+    "        <div class=\"amountSection\" ng-controller=\"LoyaltyConfirmationCtrl\"  ng-if=\"isConfigMaintained\">\n" +
     "\n" +
     "            <div ng-if=\"thisUser.isMember && loyaltyConfig.showReward\">\n" +
     "\n" +
@@ -4093,7 +4581,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('js/app/loyalty/templates/order-detail.html',
     "\n" +
-    "        <div class=\"amountSection\" ng-controller=\"OrderDetailCtrl\">\n" +
+    "        <div class=\"amountSection\" ng-controller=\"OrderDetailCtrl\"  ng-if=\"isConfigMaintained\">\n" +
     "\n" +
     "            <div ng-if=\"thisUser.isMember && loyaltyConfig.showReward\">\n" +
     "\n" +
@@ -4102,19 +4590,19 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                        \n" +
     "                        <tr>\n" +
     "                            <td>\n" +
-    "                                <span id=\"confirmation-cash-redeemed-text\"> {{ 'REWARD_CASH_SPENT_TEXT' | translate}} </span> \n" +
+    "                                <span id=\"confirmation-cash-redeemed-text\"> {{ 'REWARD_POINTS_SPENT_TEXT' | translate}} </span> \n" +
     "                            </td>\n" +
     "                            <td class=\"text-right\">\n" +
-    "                                <span class=\"error\" id=\"confirmation-cash-redeemed\" >-{{amounts.redeemed | currency: currencySymbol}} </span>\n" +
+    "                                <span class=\"error\" id=\"confirmation-cash-redeemed\" >-{{points.redeemed}} </span>\n" +
     "                            </td>\n" +
     "                        </tr>\n" +
     "\n" +
     "                        <tr>\n" +
     "                            <td>\n" +
-    "                                <span id=\"confirmation-cash-earned-text\"> {{ 'LOYALTY_CASH_EARNED_TEXT' | translate}} </span> \n" +
+    "                                <span id=\"confirmation-cash-earned-text\"> {{ 'REWARD_POINTS_EARNED_TEXT' | translate}} </span> \n" +
     "                            </td>\n" +
     "                            <td class=\"text-right\">\n" +
-    "                                <span class=\"text-green\" id=\"confirmation-cash-earned\" >{{amounts.earned | currency: currencySymbol}} </span>\n" +
+    "                                <span class=\"text-green\" id=\"confirmation-cash-earned\" >{{points.earned}} </span>\n" +
     "                            </td>\n" +
     "                        </tr>\n" +
     "                    \n" +
@@ -4126,7 +4614,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/loyalty/templates/preferred_language_modal.html',
-    "\r" +
+    "<div  ng-if=\"isConfigMaintained\">\r" +
     "\n" +
     "	<div class=\"modal-header\">\r" +
     "\n" +
@@ -4208,19 +4696,21 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "	    </form>\r" +
     "\n" +
-    "	</div>"
+    "	</div>\r" +
+    "\n" +
+    "</div>"
   );
 
 
   $templateCache.put('js/app/loyalty/templates/product_rating.html',
-    "<div class=\"product-rating-review\" ng-controller=\"RatingReviewCtrl\">\n" +
+    "<div class=\"product-rating-review\" ng-controller=\"RatingReviewCtrl\"  ng-if=\"isConfigMaintained\">\n" +
     "    <div class=\"rating-review-row\">\n" +
     "        <!-- <span>\n" +
     "			<rating class=\"product-rating\" id=\"rating-average\" ng-model=\"avgRating\" max=\"5\" readonly=\"true\"></rating>\n" +
     "		</span> -->\n" +
     "        <span class=\"product-rating\" id=\"rating-average\">\n" +
     "            <i ng-repeat=\"rateStar in [1, 2, 3, 4, 5] track by $index\" class=\"glyphicon\" data-width=\"{{avgRatingView}}\" ng-class=\"{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }\"></i>\n" +
-    "            </span>\n" +
+    "        </span>\n" +
     "        <span>\n" +
     "			<span><a ng-click=\"getProductReviews()\" id=\"reviews-link\" translate=\"{{ 'USER_REVIEW' }}\" translate-values=\"{ totalRatingReviews: totalRatingReviews}\"></a>\n" +
     "        </span>\n" +
@@ -4233,7 +4723,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/loyalty/templates/product_reviews.html',
-    "<div class=\"product-reviews\">\n" +
+    "<div class=\"product-reviews\"  ng-if=\"isConfigMaintained\">\n" +
     "    <section class=\"product-review\">\n" +
     "        <div class=\"form-group row\">\n" +
     "            <div class=\"col-md-12\">\n" +
@@ -4325,7 +4815,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/loyalty/templates/referral_modal.html',
-    "\n" +
+    "<div  ng-if=\"isConfigMaintained\">\n" +
     "	<div class=\"modal-header\">\n" +
     "		<button type=\"button\" class=\"close\" ng-click=\"closeModal()\" data-dismiss=\"modal\">\n" +
     "			<span aria-hidden=\"true\" id=\"referral-close\">×</span><span id=\"referral-close-label\" class=\"sr-only\">{{'CLOSE' | translate }}</span>\n" +
@@ -4339,25 +4829,24 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "  			\n" +
     "  			<div class=\"row\">            \n" +
     "	          	<div class=\"col-sm-12 \">\n" +
+    "	          		<div class=\"\">\n" +
+    "		          		<span class=\"control-label referralText\" id=\"referral-description\">{{'REF_MOD_DESC' | translate }}</span>  \n" +
+    "		           	</div> \n" +
     "	          		<div class=\"form-group\" ng-class=\"{ 'has-error': referralForm.emailList.$invalid && referralForm.emailList.$dirty || !disableInvitation}\">\n" +
     "					\n" +
     "					<!-- <tags-input id=\"referral-email-input\" name=\"emailList\" ng-model=\"referral.emailList\" placeholder=\"{{'EMAIL_ADDRESS' | translate }}\" allowed-tags-pattern=\"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$\" max-tags=5 min-tags=0 add-on-space='true' add-on-comma = 'true'></tags-input> -->\n" +
-    "					<input\n" +
-    "						type=\"text\"\n" +
-    "						ui-select2=\"select2Options\"\n" +
-    "						id=\"referral-email-input\"\n" +
-    "						ng-model=\"referral.emailList\"\n" +
-    "						placeholder=\"{{'EMAIL_ADDRESS' | translate }}\"\n" +
-    "						ng-change=\"checkEmailValidity(referral.emailList)\"\n" +
-    "						style=\"width: 100%;\"\n" +
-    "						name = \"emailList\"\n" +
-    "					/>\n" +
+    "						<input\n" +
+    "							type=\"text\"\n" +
+    "							ui-select2=\"select2Options\"\n" +
+    "							id=\"referral-email-input\"\n" +
+    "							ng-model=\"referral.emailList\"\n" +
+    "							placeholder=\"{{'EMAIL_ADDRESS' | translate }}\"\n" +
+    "							ng-change=\"checkEmailValidity(referral.emailList)\"\n" +
+    "							style=\"width: 100%;\"\n" +
+    "							name = \"emailList\"\n" +
+    "						/>\n" +
+    "						<span class=\"referralText\" id=\"referral-description\">{{'REF_FRND_INFO' | translate }}</span>\n" +
     "					</div>\n" +
-    "	           	</div> \n" +
-    "	        </div>\n" +
-    "	        <div class=\"form-group row\">            \n" +
-    "	          	<div class=\"col-sm-12\">\n" +
-    "	          		<span class=\"control-label referralText\" id=\"referral-description\">{{'REF_MOD_DESC' | translate }}</span>  \n" +
     "	           	</div> \n" +
     "	        </div>\n" +
     "  			<div class=\"form-group row\">            \n" +
@@ -4368,14 +4857,14 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "	    </form>\n" +
     "	</div>\n" +
     "\n" +
-    "	"
+    "</div>"
   );
 
 
   $templateCache.put('js/app/loyalty/templates/reward_history.html',
     "\n" +
     "\n" +
-    "	<div ng-controller=\"RewardHistoryCtrl\">\n" +
+    "	<div ng-controller=\"RewardHistoryCtrl\"  ng-if=\"isConfigMaintained\">\n" +
     "\n" +
     "		<div ng-show=\"thisUser.isMember && loyaltyConfig.showReward\">\n" +
     "\n" +
@@ -4407,7 +4896,10 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "									<tbody>\n" +
     "										<tr  ng-repeat=\"activity in memberActivities| limitTo: showHistoryFilter\">\n" +
     "											<td class=\"reward-table-padding\" id=\"{{ 'rewards-date-' + $index }}\"> {{activity.metadata.createdAt | date: 'medium'}} </td>\n" +
-    "											<td id=\"{{ 'rewards-activity-' + $index }}\">{{activity.activityType | translate}}</td>\n" +
+    "											\n" +
+    "											<td ng-if=\"activity.activityType !== 'ORDER'\" id=\"{{ 'rewards-activity-' + $index }}\">{{activity.activityType | translate}}</td>\n" +
+    "											<td ng-if=\"activity.activityType === 'ORDER'\" id=\"{{ 'rewards-activity-' + $index }}\"> <a ui-sref=\"base.orderDetail({orderId: activity.refId})\"> {{activity.activityType | translate}} </a> </td>\n" +
+    "\n" +
     "											<td>\n" +
     "												<strong class=\"point\" style=\"padding-right: 25px;\" ng-class= \"{'redeemRed':activity.activityType=='REDEEM' ||activity.activityType=='DEDUCT' ||activity.activityType=='EXPIRATION', 'orderGreen':activity.activityType=='ORDER' || activity.activityType=='REGISTRATION' || activity.activityType=='AWARD' || activity.activityType=='RATING' || activity.activityType=='REVIEW' ||activity.activityType=='ACCRUAL' || activity.activityType=='REFERRAL'}\">\n" +
     "													<div class=\"text-right\" id=\"{{ 'rewards-points-' + $index }}\">\n" +
@@ -4478,7 +4970,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/loyalty/templates/reward_points_product_details.html',
-    "<div ng-controller=\"RewardsPointCtrl\">\n" +
+    "<div ng-controller=\"RewardsPointCtrl\"  ng-if=\"isConfigMaintained\">\n" +
     "	<div ng-if=\"thisUser.isMember && loyaltyConfig.showReward\">\n" +
     "	  	<section class=\"gray points-calc\">\n" +
     "			<div class=\"row-group\">\n" +
@@ -4504,7 +4996,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/loyalty/templates/signup_for_loyalty_program.html',
-    "<div class=\"col-xs-12 col-sm-12 text-left \">\n" +
+    "<div class=\"col-xs-12 col-sm-12 text-left \"  ng-if=\"isConfigMaintained\">\n" +
     "    <div class=\"\" ng-controller=\"LoyaltyProgramCtrl\">\n" +
     "        <div class=\"form-group\" ng-controller=\"registrationController\">\n" +
     "            <div ng-show=\"loyaltyConfig.showReward\">\n" +
@@ -4533,39 +5025,41 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/loyalty/templates/signup_for_loyalty_program_modal.html',
-    "<div class=\"modal-header\">\n" +
-    "    <h4 class=\"modal-title\" id=\"signup-program-title\" translate=\"{{ 'SIGN_UP_TITLE_PROGRAM_NAME' }}\" translate-values=\"{ programName: userProgramName}\"></h4>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body\">\n" +
-    "    <div class=\"form-group \" ng-if=\"wrongReferral\">\n" +
-    "        <span translate=\"{{ 'WRONG_REFER_A_FRIEND_INFO_TEXT1' }}\" translate-values=\"{ programName: userProgramName}\"></span>\n" +
+    "<div  ng-if=\"isConfigMaintained\">\n" +
+    "    <div class=\"modal-header\">\n" +
+    "        <h4 class=\"modal-title\" id=\"signup-program-title\" translate=\"{{ 'SIGN_UP_TITLE_PROGRAM_NAME' }}\" translate-values=\"{ programName: userProgramName}\"></h4>\n" +
     "    </div>\n" +
-    "    <div class=\"userBottomMargin earnPointText\" ng-if=\"wrongReferral\">{{'WRONG_REFER_A_FRIEND_INFO_TEXT2' | translate}}</div>\n" +
-    "    <div class=\"earnPointText userBottomMargin\" ng-if=\"!wrongReferral\"><span>{{'REFER_A_FRIEND_INFO_TEXT' | translate}}</span></div>\n" +
-    "    <div class=\"form-group input-group\" ng-if=\"configData.enableTellAFriend || loyaltyConfig.enableTellAFriend\">\n" +
-    "        <span class=\"input-group-addon\"><label class=\"control-label\" id=\"signup-referralcode-text\">{{'REFERRALCODE' | translate}}</label></span>\n" +
-    "        <input type=\"text\" id=\"signup-referralcode\" class=\"form-control\" name=\"\" ng-model=\"myUser.referraledCode\" ng-focus=\"clearErrors()\" />\n" +
-    "    </div>\n" +
-    "<!-- \n" +
-    "    <div class=\"form-group input-group\">\n" +
-    "        <label class=\"input-group-addon control-label\" id=\"preferred-language-label\" for=\"language\">{{'PREFERRED_LANGUAGE' | translate}}</label>\n" +
-    "        <select type=\"text\" class=\"form-control\" id=\"language\" name=\"language\" ng-model=\"myUser.preferredLanguage\">\n" +
-    "            <option  ng-repeat=\"language in site.languages\" ng-selected=\"{{languageCode == language}}\" value=\"{{language}}\"> \n" +
-    "                {{language | translate}}\n" +
-    "            </option>\n" +
-    "        </select>\n" +
-    "    </div> -->\n" +
+    "    <div class=\"modal-body\">\n" +
+    "        <div class=\"form-group \" ng-if=\"wrongReferral\">\n" +
+    "            <span translate=\"{{ 'WRONG_REFER_A_FRIEND_INFO_TEXT1' }}\" translate-values=\"{ programName: userProgramName}\"></span>\n" +
+    "        </div>\n" +
+    "        <div class=\"userBottomMargin earnPointText\" ng-if=\"wrongReferral\">{{'WRONG_REFER_A_FRIEND_INFO_TEXT2' | translate}}</div>\n" +
+    "        <div class=\"earnPointText userBottomMargin\" ng-if=\"!wrongReferral\"><span>{{'REFER_A_FRIEND_INFO_TEXT' | translate}}</span></div>\n" +
+    "        <div class=\"form-group input-group\" ng-if=\"configData.enableTellAFriend || loyaltyConfig.enableTellAFriend\">\n" +
+    "            <span class=\"input-group-addon\"><label class=\"control-label\" id=\"signup-referralcode-text\">{{'REFERRALCODE' | translate}}</label></span>\n" +
+    "            <input type=\"text\" id=\"signup-referralcode\" class=\"form-control\" name=\"\" ng-model=\"myUser.referraledCode\" ng-focus=\"clearErrors()\" />\n" +
+    "        </div>\n" +
+    "    <!-- \n" +
+    "        <div class=\"form-group input-group\">\n" +
+    "            <label class=\"input-group-addon control-label\" id=\"preferred-language-label\" for=\"language\">{{'PREFERRED_LANGUAGE' | translate}}</label>\n" +
+    "            <select type=\"text\" class=\"form-control\" id=\"language\" name=\"language\" ng-model=\"myUser.preferredLanguage\">\n" +
+    "                <option  ng-repeat=\"language in site.languages\" ng-selected=\"{{languageCode == language}}\" value=\"{{language}}\"> \n" +
+    "                    {{language | translate}}\n" +
+    "                </option>\n" +
+    "            </select>\n" +
+    "        </div> -->\n" +
     "\n" +
-    "</div>\n" +
-    "<div class=\"modal-footer\">\n" +
-    "    <button type=\"button\" id=\"signup-close-button\" class=\"btn btn-default\" ng-click=\"closeModal()\">{{'CLOSE' | translate }}</button>\n" +
-    "    <button type=\"submit\" class=\"btn btn-primary\" id=\"signup-button\" ng-disabled=\"disableSave\" ng-click=\"registerCustomerForProgram()\">{{'SIGN_UP' | translate}}</button>\n" +
-    "</div>\n"
+    "    </div>\n" +
+    "    <div class=\"modal-footer\">\n" +
+    "        <button type=\"button\" id=\"signup-close-button\" class=\"btn btn-default\" ng-click=\"closeModal()\">{{'CLOSE' | translate }}</button>\n" +
+    "        <button type=\"submit\" class=\"btn btn-primary\" id=\"signup-button\" ng-disabled=\"disableSave\" ng-click=\"registerCustomerForProgram()\">{{'SIGN_UP' | translate}}</button>\n" +
+    "    </div>\n" +
+    "</div>"
   );
 
 
   $templateCache.put('js/app/loyalty/templates/success_modal.html',
-    "\n" +
+    "<div  ng-if=\"isConfigMaintained\">\n" +
     "	<div class=\"modal-header\">\n" +
     "		<button type=\"button\" id=\"success-modal-close-button\" class=\"close\" ng-click=\"closeModal()\" data-dismiss=\"modal\">\n" +
     "			<span aria-hidden=\"true\" id=\"success-modal-close\">×</span><span class=\"sr-only\" id=\"success-modal-close-text\">{{'CLOSE' | translate }}</span>\n" +
@@ -4603,7 +5097,8 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "		<div class=\"clearfix\">\n" +
     "			<button type=\"button\" id=\"success-close-modal\" class=\"btn btn-primary pull-right\" ng-click=\"closeModal()\">{{'CLOSE' | translate }}</button>\n" +
     "		</div>\n" +
-    "	</div> "
+    "	</div> \n" +
+    "</div>"
   );
 
 
@@ -4611,9 +5106,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "<div ng-controller=\"LoyaltyUserCtrl\">\n" +
     "\n" +
-    "	\n" +
-    "	\n" +
-    "	<div ng-if=\"thisUser.isUser\">\n" +
+    "	<div ng-if=\"thisUser.isUser\" ng-if=\"isConfigMaintained\">\n" +
     "\n" +
     "		\n" +
     "		<div class=\"segment\" ng-if=\"thisUser.isMember && configData.showReward\">			\n" +
@@ -4621,25 +5114,25 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "			<div class=\"userBottomMargin\">		\n" +
     "						<span class=\"title\" id=\"rewards-enrolled-text\" translate=\"{{ 'ENROLLED' }}\" translate-values=\"{ programName: thisUser.program}\"></span> \n" +
     "			</div>\n" +
-    "			<div class=\"row form-group\" >		\n" +
-    "				<div class=\"col-sm-4 col-md-4\" ng-if=\"thisUser.loyaltyUser.referralCode && configData.enableTellAFriend\">\n" +
+    "			<div class=\"row form-group userInfoRow desktopUserInfo\" >		\n" +
+    "				<div class=\"col-sm-3 col-md-3\" ng-if=\"thisUser.loyaltyUser.referralCode \n" +
+    "				&& configData.enableTellAFriend\">\n" +
     "						<span class=\"title\" id=\"referral-code-label\">{{'REFERRALCODE' | translate}} : </span> \n" +
     "						<span class=\"info\"><strong class=\"text-info\" id=\"my-referral-code\" ng-bind=\"thisUser.loyaltyUser.referralCode\">-</strong></span>\n" +
     "						<!-- <span class=\"\"><button class=\"btn btn-link\" ng-click=\"openReferralModal()\" ><span class=\"glyphicon glyphicon-envelope tell_a_friend_icon\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"{{'TELL_A_FRIEND' | translate}}\"></span></button></span> -->\n" +
     "						<button class=\"btn btn-primary btn-sm userMargin\" id=\"invite-friend-button\" ng-click=\"openReferralModal()\">{{'INVITE_FRIEND' | translate}}</button>\n" +
     "				</div>\n" +
-    "				\n" +
-    "				<div class=\"hidden-xs col-sm-8\" ng-if=\"thisUser.isMember\">\n" +
-    "					<div class=\"row\">\n" +
-    "						<div class=\"col-sm-1\">\n" +
-    "			                <a ng-click=\"openPreferredLanguageModal()\"><span id=\"edit-user-info\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
-    "			            </div>\n" +
-    "			            <div class=\"col-sm-3 text-right\">\n" +
-    "			                <span class=\"dataLabel\">{{'PREFERRED_LANGUAGE' | translate}}</span>\n" +
-    "			                {{thisUser.loyaltyUser.preferredLanguage | translate}}\n" +
-    "			            </div>\n" +
-    "			         </div>\n" +
+    "\n" +
+    "				<div class=\"hidden-xs col-sm-offset-1 col-sm-1 editLinkContainer\" ng-if=\"thisUser.isMember\">\n" +
+    "					<a ng-click=\"openPreferredLanguageModal()\"><span id=\"edit-user-info\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
     "				</div>\n" +
+    "\n" +
+    "				<div class=\"hidden-xs col-sm-3 col-md-3\" ng-if=\"thisUser.isMember\">\n" +
+    "	                <span class=\"dataLabel\">{{'PREFERRED_LANGUAGE' | translate}}</span>\n" +
+    "	                {{thisUser.loyaltyUser.preferredLanguage | translate}}\n" +
+    "	                <span data-toggle=\"tooltip\" title=\"{{'PREFERRED_LANGUAGE_TOOLTIP' | translate}}\" class=\"glyphicon glyphicon-question-sign\"></span>\n" +
+    "	            </div>\n" +
+    "\n" +
     "\n" +
     "				<div class=\" col-sm-8 hidden-sm hidden-md hidden-lg\" ng-if=\"thisUser.isMember\">\n" +
     "					<div class=\"row\">\n" +
@@ -4648,7 +5141,9 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "			                <div class=\"mobileDataSection\">\n" +
     "			                    <span class=\"dataLabel locale\">{{'PREFERRED_LANGUAGE' | translate}}</span>\n" +
     "			                    {{thisUser.loyaltyUser.preferredLanguage | translate}}\n" +
+    "			                    <span data-toggle=\"tooltip\" title=\"{{'PREFERRED_LANGUAGE_TOOLTIP' | translate}}\" class=\"glyphicon glyphicon-question-sign\"></span>\n" +
     "			                </div>\n" +
+    "\n" +
     "			            </div>\n" +
     "			            <div class=\"col-xs-4\">\n" +
     "			                <button class=\"btn btn-secondary btn-md pull-right\" ng-click=\"openPreferredLanguageModal()\">{{'EDIT' | translate}}</button>\n" +
@@ -4659,23 +5154,22 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "			</div>\n" +
     "\n" +
-    "			\n" +
     "\n" +
-    "			\n" +
+    "			<div ng-if=\"displayRewardInfo\">\n" +
     "\n" +
-    "			<div id=\"redeem-text-info\" class='textInfo floatRight' translate=\"{{ 'REEDEEM_TEXT_INFO' }}\" translate-values=\"{ redeemPoints: totalRedeemablePoints}\"></div>\n" +
-    "			<br>	\n" +
-    "			<div class=\"progress-container\">\n" +
+    "				<div id=\"redeem-text-info\" class='textInfo floatRight' translate=\"{{ 'REEDEEM_TEXT_INFO' }}\" translate-values=\"{ redeemPoints: totalRedeemablePoints}\"></div>\n" +
+    "				<br>	\n" +
+    "				<div class=\"progress-container\">\n" +
     "\n" +
-    "				<progressbar id=\"points-progress-bar\" value=\"dynamicValue\" type=\"primary\">\n" +
-    "					\n" +
+    "					<progressbar id=\"points-progress-bar\" value=\"dynamicValue\" type=\"primary\">\n" +
+    "						\n" +
     "\n" +
-    "				</progressbar> \n" +
+    "					</progressbar> \n" +
     "\n" +
-    "				<span id=\"user-tier\" class=\"floatleft padleft10px info\" translate=\"{{ 'USER_TIER' }}\" translate-values=\"{ userTier: userPresentTier}\"></span>\n" +
-    "				<span id=\"next-tier\" ng-if=\"dispNextTierFlag\" class=\"floatRight padright10px info\" translate=\"{{ 'REEDEEM_TEXT_INFO_1' }}\" translate-values=\"{ remainingPoints: remainingPoints, upgradadableTier: updagradableTier}\"></span>\n" +
+    "					<span id=\"user-tier\" class=\"floatleft padleft10px info\" translate=\"{{ 'USER_TIER' }}\" translate-values=\"{ userTier: userPresentTier}\"></span>\n" +
+    "					<span id=\"next-tier\" ng-if=\"dispNextTierFlag\" class=\"floatRight padright10px info\" translate=\"{{ 'REEDEEM_TEXT_INFO_1' }}\" translate-values=\"{ remainingPoints: remainingPoints, upgradadableTier: updagradableTier}\"></span>	\n" +
+    "				</div>\n" +
     "\n" +
-    "				\n" +
     "			</div>\n" +
     "\n" +
     "			<div class=\"row marginTop100\">\n" +
@@ -4691,7 +5185,8 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "					</div>	\n" +
     "\n" +
     "					\n" +
-    "			    </div>\n" +
+    "			</div>\n" +
+    "\n" +
     "		</div>\n" +
     "\n" +
     "				\n" +
@@ -4715,58 +5210,61 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/loyalty/templates/write_product_review.html',
-    "<div class=\"modal-header\">\n" +
-    "    <button id=\"write-review-close-button\" type=\"button\" class=\"close\" ng-click=\"closeModal()\" data-dismiss=\"modal\">\n" +
-    "        <span aria-hidden=\"true\" id=\"write-review-close\">×</span><span class=\"sr-only\" id=\"write-review-close-text\">{{'CLOSE' | translate}}</span>\n" +
-    "    </button>\n" +
-    "    <h4 class=\"modal-title\" id=\"write-review-product-name\" translate=\"{{ 'RATE_REVIEW' }}\" translate-values=\"{ product: product.product.name}\"></h4>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body review-modal\">\n" +
-    "    <form>\n" +
-    "        <div class=\"form-group row\">\n" +
-    "            <div class=\"col-sm-12\">\n" +
-    "                <div class=\"row\">\n" +
-    "                    <div class=\"col-sm-12\">\n" +
+    "<div  ng-if=\"isConfigMaintained\">\n" +
     "\n" +
-    "                        <label class=\"control-label pull-left\" id=\"write-review-ratingText\">{{'RATING' | translate}}</label>\n" +
-    "                        <strong ng-if=\"thisUser.isMember && loyaltyConfig.showReward\"><span ng-show=\"thisUser.loyaltyUser.memberId\" class=\"userMargin pull-right \" id=\"write-review-ratingPointText\" ng-class=\"{ 'earnPointText' : review.rating===0,'earnedPointText' : review.rating > 0 }\" translate=\"{{ 'ADVOCACY_POINTS' }}\" translate-values=\"{ point: ratingPoint}\"></span></strong>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "                <div class=\"form-group row\">\n" +
-    "                    <div class=\"col-sm-12\">\n" +
-    "                        <rating class=\"product-rating\" ng-model=\"review.rating\" max=\"5\" id=\"write-review-ratings\"></rating>\n" +
-    "                        <strong ng-show=\"review.rating > 0\"><span class=\"userMargin\" id=\"write-review-ratingTextInfo-1\">{{ratingText[review.rating]|translate}}</span></strong>\n" +
-    "                        <strong ng-show=\"errorRating\" class=\"text-danger\" ng-hide=\"review.rating > 0 || !errorRating\"><span class=\"userMargin\" id=\"write-review-ratingTextInfo-2\">{{ratingText[review.rating]|translate}}</span></strong>\n" +
-    "\n" +
-    "                    </div>\n" +
-    "                    \n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"form-group row\">\n" +
-    "            <div class=\"col-sm-12\">\n" +
-    "                <label class=\"control-label pull-left\" id=\"write-review-labelText\">{{'WRITE_A_REVIEW' | translate}}</label>\n" +
-    "                <strong ng-if=\"thisUser.isMember && loyaltyConfig.showReward\"><span ng-show=\"thisUser.loyaltyUser.memberId\" class=\"userMargin pull-right\" id=\"write-review-reviewPointText\" translate=\"{{ 'ADVOCACY_POINTS' }}\" translate-values=\"{ point: reviewPoint}\" ng-class=\"{ 'earnPointText' : review.reviewComment==='','earnedPointText' : review.reviewComment!==''}\" ></span></strong>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"form-group row\">\n" +
-    "            <div class=\"col-sm-12\">\n" +
-    "                <input type=\"text\" id=\"write-review-reviewTitle\" ng-model=\"review.reviewTitle\" placeholder=\"{{'REVIEW_TITLE' | translate }}\" class=\"form-control\" />\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"form-group row\">\n" +
-    "            <div class=\"col-sm-12\">\n" +
-    "                <textarea ng-model=\"review.reviewComment\" id=\"write-review-reviewComment\" placeholder=\"{{'REVIEW_DESC' | translate }}\" class=\"form-control\"></textarea>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </form>\n" +
-    "</div>\n" +
-    "<div class=\"modal-footer\">\n" +
-    "    <div class=\"clearfix\">\n" +
-    "        <button type=\"button\" class=\"btn btn-default pull-left\" id=\"write-review-noThanksButton\" ng-click=\"closeModal()\">{{'NO_THANKS' | translate}}</button>\n" +
-    "        <button type=\"submit\" class=\"btn btn-primary pull-right\" id=\"write-review-submitButton\" ng-click=\"postReviewRating(review)\" ng-disabled=\"disabledSave\">{{'SUBMIT' | translate}}</button>\n" +
+    "    <div class=\"modal-header\">\n" +
+    "        <button id=\"write-review-close-button\" type=\"button\" class=\"close\" ng-click=\"closeModal()\" data-dismiss=\"modal\">\n" +
+    "            <span aria-hidden=\"true\" id=\"write-review-close\">×</span><span class=\"sr-only\" id=\"write-review-close-text\">{{'CLOSE' | translate}}</span>\n" +
+    "        </button>\n" +
+    "        <h4 class=\"modal-title\" id=\"write-review-product-name\" translate=\"{{ 'RATE_REVIEW' }}\" translate-values=\"{ product: product.product.name}\"></h4>\n" +
     "    </div>\n" +
-    "</div>\n"
+    "    <div class=\"modal-body review-modal\">\n" +
+    "        <form>\n" +
+    "            <div class=\"form-group row\">\n" +
+    "                <div class=\"col-sm-12\">\n" +
+    "                    <div class=\"row\">\n" +
+    "                        <div class=\"col-sm-12\">\n" +
+    "\n" +
+    "                            <label class=\"control-label pull-left\" id=\"write-review-ratingText\">{{'RATING' | translate}}</label>\n" +
+    "                            <strong ng-if=\"thisUser.isMember && loyaltyConfig.showReward && showRatingPoint\"><span ng-show=\"thisUser.loyaltyUser.memberId\" class=\"userMargin pull-right \" id=\"write-review-ratingPointText\" ng-class=\"{ 'earnPointText' : review.rating===0,'earnedPointText' : review.rating > 0 }\" translate=\"{{ 'ADVOCACY_POINTS' }}\" translate-values=\"{ point: ratingPoint}\"></span></strong>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group row\">\n" +
+    "                        <div class=\"col-sm-12\">\n" +
+    "                            <rating class=\"product-rating\" ng-model=\"review.rating\" max=\"5\" id=\"write-review-ratings\"></rating>\n" +
+    "                            <strong ng-show=\"review.rating > 0\"><span class=\"userMargin\" id=\"write-review-ratingTextInfo-1\">{{ratingText[review.rating]|translate}}</span></strong>\n" +
+    "                            <strong ng-show=\"errorRating\" class=\"text-danger\" ng-hide=\"review.rating > 0 || !errorRating\"><span class=\"userMargin\" id=\"write-review-ratingTextInfo-2\">{{ratingText[review.rating]|translate}}</span></strong>\n" +
+    "\n" +
+    "                        </div>\n" +
+    "                        \n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group row\">\n" +
+    "                <div class=\"col-sm-12\">\n" +
+    "                    <label class=\"control-label pull-left\" id=\"write-review-labelText\">{{'WRITE_A_REVIEW' | translate}}</label>\n" +
+    "                    <strong ng-if=\"thisUser.isMember && loyaltyConfig.showReward && showReviewPoint\"><span ng-show=\"thisUser.loyaltyUser.memberId\" class=\"userMargin pull-right\" id=\"write-review-reviewPointText\" translate=\"{{ 'ADVOCACY_POINTS' }}\" translate-values=\"{ point: reviewPoint}\" ng-class=\"{ 'earnPointText' : review.reviewComment==='','earnedPointText' : review.reviewComment!==''}\" ></span></strong>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group row\">\n" +
+    "                <div class=\"col-sm-12\">\n" +
+    "                    <input type=\"text\" id=\"write-review-reviewTitle\" ng-model=\"review.reviewTitle\" placeholder=\"{{'REVIEW_TITLE' | translate }}\" class=\"form-control\" />\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group row\">\n" +
+    "                <div class=\"col-sm-12\">\n" +
+    "                    <textarea ng-model=\"review.reviewComment\" id=\"write-review-reviewComment\" placeholder=\"{{'REVIEW_DESC' | translate }}\" class=\"form-control\"></textarea>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </form>\n" +
+    "    </div>\n" +
+    "    <div class=\"modal-footer\">\n" +
+    "        <div class=\"clearfix\">\n" +
+    "            <button type=\"button\" class=\"btn btn-default pull-left\" id=\"write-review-noThanksButton\" ng-click=\"closeModal()\">{{'NO_THANKS' | translate}}</button>\n" +
+    "            <button type=\"submit\" class=\"btn btn-primary pull-right\" id=\"write-review-submitButton\" ng-click=\"postReviewRating(review)\" ng-disabled=\"disabledSave\">{{'SUBMIT' | translate}}</button>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>"
   );
 
 
@@ -4817,50 +5315,56 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/products/templates/product-detail.html',
+    "\n" +
+    "<!-- bread crumbs -->\n" +
     "<ybreadcrumb yitem=\"breadcrumbData\" size=\"'small'\"></ybreadcrumb>\n" +
-    "<div class=\"productDetailsContainer\">\n" +
-    "    <section class=\"white \" ng-cloak>\n" +
+    "\n" +
+    "<div class=\"productDetailsContainer\" ng-cloak>\n" +
+    "    <section class=\"white\">\n" +
     "        <div class=\"row\">\n" +
+    "\n" +
+    "            <!-- product gallery -->\n" +
     "            <div class=\"col-md-6\">\n" +
-    "                <div class=\"gallery product-gallery\">\n" +
+    "                <div class=\"product-gallery\">\n" +
     "                    <div class=\"row\">\n" +
-    "                        <div class=\"col-md-10\">\n" +
-    "                            <div class=\"image\">\n" +
-    "                                <div ng-repeat=\"image in product.product.media\">\n" +
-    "                                    <img class=\"lazyOwl\" data-src=\"{{image.url}}\" data-zoom=\"{{image.url}}\" alt=\"\">\n" +
-    "                                </div>\n" +
-    "                            </div>\n" +
-    "                        </div>\n" +
-    "                        <div class=\"col-md-2\">\n" +
-    "                            <div class=\" thumbnails\" ng-if=\"product.product.media && product.product.media.length > 1\">\n" +
-    "                                <a ng-repeat=\"image in product.product.media\" class=\"item\" href=\"#\">\n" +
-    "                                    <img class=\"lazyOwl\" data-src=\"{{image.url}}\" alt=\"\">\n" +
-    "                                </a>\n" +
-    "                            </div>\n" +
-    "                        </div>\n" +
+    "                        <product-img-carousel images=\"product.product.media\"></product-img-carousel>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
+    "\n" +
+    "            <!-- product details -->\n" +
     "            <div class=\"col-md-6\">\n" +
     "                <div class=\"product-details text-center\">\n" +
-    "                    <h1 class=\"pageTitle\">\n" +
-    "                        {{product.product.name}}\n" +
-    "                    </h1>\n" +
+    "                    \n" +
+    "                    <!-- product name -->\n" +
+    "                    <h1 class=\"pageTitle\">{{product.product.name}}</h1>\n" +
+    "\n" +
+    "                    <!-- product sale price -->\n" +
     "                    <div ng-if=\"product.prices[0].salePrice\" class=\"price\">\n" +
     "                        <span class=\"price originalPrice\"><strike>{{ product.prices[0].originalAmount | currency: currencySymbol }}</strike></span>\n" +
     "                        <span class=\"price salesPrice\">{{product.prices[0].effectiveAmount | currency: currencySymbol}}</span>\n" +
     "                        <span class=\"priceUnit salesPrice\" ng-if=\"product.prices[0].measurementUnit\">{{product.prices[0].measurementUnit.quantity}} {{product.prices[0].measurementUnit.unitCode}}</span>\n" +
     "                    </div>\n" +
+    "\n" +
+    "                    <!-- product price -->\n" +
     "                    <div ng-if=\"!product.prices[0].salePrice\" class=\"price\">\n" +
     "                        <span class=\"price\">{{product.prices[0].effectiveAmount | currency: currencySymbol}}</span>\n" +
     "                        <span class=\"priceUnit\" ng-if=\"product.prices[0].measurementUnit\">{{product.prices[0].measurementUnit.quantity}} {{product.prices[0].measurementUnit.unitCode}}</span>\n" +
     "                    </div>\n" +
+    "                    \n" +
+    "                    <!-- product detials -->\n" +
+    "                    <div class=\"product-detail-text\" ng-if=\"hasAnyOfAttributesSet(product.product)\">\n" +
+    "                        <product-attribute-groups product=\"product.product\"></product-attribute-groups>\n" +
+    "                    </div>\n" +
     "    \n" +
+    "                    <!-- product tax -->\n" +
     "                    <div class=\"taxMessage\" ng-if=\"!!taxConfiguration && taxConfiguration.label\">\n" +
     "                        {{taxConfiguration.label}}\n" +
     "                    </div>\n" +
     "                      <div class=\"review-rating\" ng-include src=\"'js/app/loyalty/templates/product_rating.html'\"></div>\n" +
     "                    <form action=\"\" class=\"cartPanel\">\n" +
+    "\n" +
+    "                        <!-- product quantity -->\n" +
     "                        <div class=\"row\" >\n" +
     "                            <div class=\"col-md-4 col-md-offset-4\">\n" +
     "                                <div class=\"form-group input-group qty\">\n" +
@@ -4872,6 +5376,8 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                        </div>  \n" +
     "    \n" +
     "                        <div class=\"row\">\n" +
+    "\n" +
+    "                            <!-- error notification -->\n" +
     "                            <div ng-if=\"error\" class=\"col-md-12 col-lg-12\">\n" +
     "                                <div class=\"error\" >\n" +
     "                                    <small class=\"help-inline has-error\">\n" +
@@ -4879,11 +5385,15 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                                    </small>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
+    "\n" +
+    "                            <!-- add to cart -->\n" +
     "                            <div  class=\"col-md-12 col-lg-12 buyButton\">\n" +
     "                                <button id=\"buy-button\" ng-show=\"{{product.product.mixins.inventory.inStock}}\" class=\"btn btn-primary \" ng-click=\"addToCartFromDetailPage()\" ng-disabled=\"!buyButtonEnabled\">{{'ADD_TO_CART' | translate}}</button>\n" +
-    "                                <button id=\"out-of-stock-btn\" ng-show=\"{{!product.product.mixins.inventory.inStock}}\" class=\"btn btn-primary \">{{'OUT_OF_STOCK' | translate}}</button>\n" +
+    "                                <button id=\"out-of-stock-btn\" ng-show=\"{{!product.product.mixins.inventory.inStock}}\" class=\"btn btn-default\" disabled>{{'OUT_OF_STOCK' | translate}}</button>\n" +
     "                            </div>\n" +
-    "                            <div class=\"col-xs-12\" ng-if=\"!noShippingRates\">\n" +
+    "                            \n" +
+    "                            <!-- shipping rates -->\n" +
+    "                            <div class=\"col-xs-12 shipping-rate\" ng-if=\"!noShippingRates\">\n" +
     "                                <a href=\"\"><span ng-click=\"showShippingRates()\">Shipping Rates</span></a>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -4893,22 +5403,21 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                    \n" +
     "                </div> \n" +
     "            </div>\n" +
+    "\n" +
     "        </div>\n" +
     "    </section>\n" +
     "\n" +
     "    <section class=\"gray\">\n" +
     "        <div class=\"row\">\n" +
-    "            <div ng-class=\"{'col-md-6' : hasAnyOfAttributesSet(product.product)}\">\n" +
-    "                <div class=\"headline\">{{'PRODUCT_DESCRIPTION' | translate}}</div>\n" +
+    "\n" +
+    "            <!-- product description -->\n" +
+    "            <div class=\"headline text-center\">{{'PRODUCT_DESCRIPTION' | translate}}</div>\n" +
+    "            <div class=\"col-md-8 col-md-offset-2\">\n" +
     "                <div class=\"description\">\n" +
     "                    {{product.product.description}}\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "\n" +
-    "            <div class=\"col-md-6\" ng-if=\"hasAnyOfAttributesSet(product.product)\">\n" +
-    "                <div class=\"headline\">{{'PRODUCT_DETAILS' | translate}}</div>\n" +
-    "                <product-attribute-groups product=\"product.product\"></product-attribute-groups>\n" +
-    "            </div>\n" +
+    "            \n" +
     "        </div>\n" +
     "    </section>\n" +
     "</div>\n" +
@@ -4924,82 +5433,153 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('js/app/products/templates/product-img-carousel.html',
+    "<div class=\"row image-carousel\">\n" +
+    "    <div class=\"col-md-10 main-image-container\">\n" +
+    "        <div class=\"product-images\">   \n" +
+    "            <img id=\"{{$index}}\" class=\"product-image\" ng-repeat=\"image in images\" ng-src=\"{{image.url}}\" alt=\"\" fullscreen>        \n" +
+    "        </div>\n" +
+    "        <div class=\"zoom\">\n" +
+    "            <span class=\"glyphicon hyicon hyicon-plus hidden-xs hidden-sm\" ng-click=\"enlargeImage()\"></span>\n" +
+    "        </div>\n" +
+    "        <div class=\"hidden-lg hidden-md mobileThumbs\">\n" +
+    "            <div ng-repeat=\"thumb in images\" ng-class=\"{'active': currentIndex === $index}\" ng-click=\"moveCarousel($index)\">\n" +
+    "                <span></span>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-md-2 hidden-xs hidden-sm\">\n" +
+    "        <div class=\"thumbnails\">\n" +
+    "            <a ng-repeat=\"thumb in images\">\n" +
+    "                <img class=\"\" ng-class=\"{'active': currentIndex === $index}\" ng-src=\"{{thumb.url}}\" alt=\"\" ng-click=\"moveCarousel($index)\">\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>"
+  );
+
+
   $templateCache.put('js/app/products/templates/product-list.html',
     "<!-- directive: force-scroll -->\n" +
     "<div ng-cloak>\n" +
-    "    <div class=\"hero-unit\" ng-hide=\"category.image == null || category.image == ''\">\n" +
-    "        <blockquote ng-style=\"{ 'background-image': 'url(\\'{{category.image}}\\' )','background-position':'0 0'}\">\n" +
+    "\n" +
+    "    <!-- hero spot -->\n" +
+    "    <div class=\"hero-unit\" ng-if=\"mainCategoryImage\">\n" +
+    "        <blockquote ng-style=\"{ 'background-image': 'url(\\'{{mainCategoryImage.url}}\\' )','background-position':'0 0'}\">\n" +
     "            <p>{{store.name}}</p>\n" +
     "        </blockquote>\n" +
     "    </div>\n" +
-    "    <ybreadcrumb yitem=\"category\" size=\"large\"></ybreadcrumb>\n" +
-    "    <section class=\"white\">\n" +
-    "        <div class=\"refine-section\">\n" +
     "\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"col-xs-12 text-center\">\n" +
-    "                    <h1 class=\"pageTitle\"><span ng-if=\"category.name\">{{ category.name }}</span><span ng-if=\"!category.name\">{{ 'ALL_PRODUCTS' | translate }}</span></h1>\n" +
-    "                </div>\n" +
-    "                <div class=\"col-sm-offset-6 col-md-offset-6 col-sm-6 col-md-6\">\n" +
-    "                    <div class=\"viewingContainer\">\n" +
-    "                        <div class=\"name\">{{'VIEWING' | translate}}:</div>\n" +
-    "                        <div class=\"page-indicator\" translate=\"PRODUCTS_FROM_TO\" translate-compile\n" +
-    "                                translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
+    "    <!-- refinement section -->\n" +
+    "    <div class=\"refine-section\">\n" +
     "        <div class=\"row\">\n" +
-    "             <div class=\"clearfix visible-sm\"></div>\n" +
-    "            <div class=\"col-sm-7 col-md-6 col-lg-3\">\n" +
-    "                <div class=\"sortContainer\">\n" +
-    "                    <div class=\"name\">{{'SORT_BY' | translate}}:</div>\n" +
-    "                    <div class=\"form-group\">\n" +
-    "                        <label for=\"\" class=\"sr-only\">{{'SORT_BY' | translate}}:</label>\n" +
+    "            <div class=\"content-container\">\n" +
     "\n" +
-    "                        <div>\n" +
-    "                            <span class='css-select-moz'>\n" +
-    "                                <select ng-model=\"sort\" ng-change=\"setSortedPage()\" class=\"form-control\">\n" +
-    "                                    <option value=\"name\">A-Z</option>\n" +
-    "                                    <option value=\"name:desc\">Z-A</option>\n" +
-    "                                    <option value=\"metadata.createdAt:desc\">{{'NEWEST' | translate}}</option>\n" +
-    "                                </select>\n" +
-    "                            </span>\n" +
+    "                <div class=\"clearfix visible-sm\"></div>\n" +
+    "\n" +
+    "                <!-- sort control -->\n" +
+    "                <div class=\"col-xs-7 col-sm-6 col-md-4 col-lg-3\">\n" +
+    "                    <div class=\"sortContainer product-list-sort\">\n" +
+    "                        <div class=\"name pull-left\">{{'SORT_BY' | translate}}:</div>\n" +
+    "                        <div class=\"form-group pull-left\">\n" +
+    "                            <label for=\"\" class=\"sr-only\">{{'SORT_BY' | translate}}:</label>\n" +
+    "\n" +
+    "                            <div class=\"custom-select-container\">\n" +
+    "                                <ui-select ng-model=\"sort.selected\" on-select=\"setSortedPage($item.id)\">\n" +
+    "                                    <ui-select-match>\n" +
+    "                                        {{$select.selected.name}}\n" +
+    "                                    </ui-select-match>\n" +
+    "                                    <ui-select-choices repeat=\"item.id as item in (sortParams | filter: $select.search)\">\n" +
+    "                                        <span ng-bind=\"item.name\"></span>\n" +
+    "                                    </ui-select-choices>\n" +
+    "                                </ui-select>\n" +
+    "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "\n" +
+    "                <!-- pagination control -->\n" +
+    "                <div class=\"col-xs-5 col-sm-6 col-md-6 col-lg-3 pull-right\">\n" +
+    "                    <div class=\"viewingContainer\">\n" +
+    "                        <span class=\"name\">{{'VIEWING' | translate}}</span>\n" +
+    "                        <span class=\"page-indicator\"\n" +
+    "                             translate=\"PRODUCTS_FROM_TO\"\n" +
+    "                             translate-compile\n" +
+    "                             translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></span>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <!-- bread crumbs -->\n" +
+    "    <ybreadcrumb yitem=\"category\" size=\"large\"></ybreadcrumb>\n" +
+    "\n" +
+    "    <section class=\"white\">\n" +
+    "\n" +
+    "        <!-- page title -->\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"col-xs-12 text-center\">\n" +
+    "                <h1 class=\"pageTitle productListTitle\"><span ng-if=\"category.name\">{{ category.name }}</span><span ng-if=\"!category.name\">{{ 'ALL_PRODUCTS' | translate }}</span></h1>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div id=\"refineAffix\" class=\" refine-section responsive-fixed\">\n" +
+    "        <!-- sticky refinements bar -->\n" +
+    "        <div id=\"refineAffix\" class=\"refine-section responsive-fixed\">\n" +
     "            <div class=\"row\">\n" +
+    "                <div class=\"content-container\">\n" +
+    "                    <div class=\"clearfix visible-sm\"></div>\n" +
     "\n" +
-    "                <div class=\"col-xs-12\">\n" +
-    "                    <div class=\"viewingContainer\">\n" +
-    "                        <div class=\"name\">{{'VIEWING' | translate}}:</div>\n" +
-    "                        <div class=\"page-indicator\" translate=\"PRODUCTS_FROM_TO\" translate-compile\n" +
-    "                             translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></div>\n" +
+    "                    <!-- sort control -->\n" +
+    "                    <div class=\"col-xs-7 col-sm-6 col-md-4 col-lg-2\">\n" +
+    "                        <div class=\"sortContainer product-list-sort\">\n" +
+    "                            <div class=\"name pull-left\">{{'SORT_BY' | translate}}:</div>\n" +
+    "                            <div class=\"form-group pull-left\">\n" +
+    "                                <label for=\"\" class=\"sr-only\">{{'SORT_BY' | translate}}:</label>\n" +
     "\n" +
+    "                                <div>\n" +
+    "                                    <span class=\"custom-select-container\">\n" +
+    "                                        <ui-select ng-model=\"sort.selected\" on-select=\"setSortedPage($item.id)\">\n" +
+    "                                            <ui-select-match>\n" +
+    "                                                {{$select.selected.name}}\n" +
+    "                                            </ui-select-match>\n" +
+    "                                            <ui-select-choices repeat=\"item.id as item in (sortParams | filter: $select.search)\">\n" +
+    "                                                <span ng-bind=\"item.name\"></span>\n" +
+    "                                            </ui-select-choices>\n" +
+    "                                        </ui-select>\n" +
+    "                                    </span>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
     "                    </div>\n" +
+    "\n" +
+    "                    <!-- pagination control -->\n" +
+    "                    <div class=\"col-xs-5 col-sm-6 col-md-6 col-lg-3 pull-right\">\n" +
+    "                        <div class=\"viewingContainer\">\n" +
+    "                            <div class=\"name\">{{'VIEWING' | translate}}</div>\n" +
+    "                            <div class=\"page-indicator\" translate=\"PRODUCTS_FROM_TO\" translate-compile\n" +
+    "                                 translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
     "        <!-- Note:  infinite-scroll directive must not be combined with ng-repeat:  http://binarymuse.github.io/ngInfiniteScroll/faq.html  -->\n" +
     "\n" +
-    "    <div class=\"row product-grid\" infinite-scroll=\"addMore()\" infinite-scroll-distance=\"0\"\n" +
+    "        <div class=\"row product-grid\" infinite-scroll=\"addMore()\" infinite-scroll-distance=\"0\"\n" +
     "         infinite-scroll-immediate-check=\"false\"\n" +
     "         infinite-scroll-data=\"pagination\" ng-cloak\n" +
     "         infinite-scroll-visible-items>\n" +
     "        <div class=\"item col-xs-12 col-sm-6 col-md-4 col-lg-3\" ng-repeat=\"product in products\"\n" +
     "             on-finish-render-ng-repeat on-finish-render-ng-repeat-event=\"initialViewportCheck\">\n" +
     "\n" +
-    "            <a id=\"p_{{product.product.id}}\" ng-click=\"openProductDetails(product.product.id)\" ui-sref=\"base.product.detail( {productId: product.product.id, lastCatId: lastCatId} )\">\n" +
+    "            <a id=\"p_{{product.product.id}}\" ng-click=\"openProductDetails(product.product.id)\" ui-sref=\"base.product.detail({ 'lastCatId': lastCatId, 'productId': product.product.id })\">\n" +
     "\n" +
     "                <div class=\"thumb\">\n" +
     "                    <img ng-src=\"{{ product && product.product.mainImageURL || PLACEHOLDER_IMAGE}}\" alt=\"\">\n" +
-    "\n" +
     "                </div>\n" +
     "                <div class=\"productInfoContainer text-center\">\n" +
     "                    <div class=\"name\">{{ product.product.name }}</div>\n" +
@@ -5015,31 +5595,25 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                </div>\n" +
     "            </a>\n" +
     "        </div>\n" +
+    "        </div>\n" +
     "\n" +
+    "        <!-- back to top button -->\n" +
     "        <button type=\"button\" id=\"to-top-btn\" ng-click=\"backToTop()\" class=\"btn btn-link back-to-top-button pull-left menu\">\n" +
     "            <span class=\"hyicon hyicon-chevron-bold-up\" />\n" +
     "        </button>\n" +
+    "\n" +
     "    </section>\n" +
     "</div>\n" +
     "\n" +
     "<script src=\"js/vendor-static/img-touch-canvas.js\"></script>\n" +
     "<script src=\"js/vendor-static/jquery.fullscreen-min.js\"></script>\n" +
-    "<script src=\"js/vendor-static/main.js\"></script>\n" +
-    "\n" +
-    "\n"
+    "<script src=\"js/vendor-static/main.js\"></script>\n"
   );
 
 
   $templateCache.put('js/app/search/templates/search-list.html',
     "<!-- directive: force-scroll -->\n" +
-    "<section class=\"white\"  ng-cloak>\n" +
-    "    <div class=\"hero-unit\" ng-hide=\"category.image == null || category.image == ''\">\n" +
-    "        <blockquote style=\"background-image: url('{{category.image}}' );background-position:0 0;\">\n" +
-    "            <p>{{store.name}}</p>\n" +
-    "        </blockquote>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <ybreadcrumb yitem=\"category\" size=\"'large'\"></ybreadcrumb>\n" +
+    "<div ng-cloak>\n" +
     "\n" +
     "    <div ng-if=\"total === 0\">\n" +
     "        <div class=\"refine-section\" ng-cloak>\n" +
@@ -5059,85 +5633,133 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "    <div ng-if=\"total > 0\">\n" +
     "\n" +
-    "        <div class=\"refine-section\" ng-cloak>\n" +
-    "\n" +
+    "        <!-- refinement section -->\n" +
+    "        <div class=\"refine-section\">\n" +
     "            <div class=\"row\">\n" +
+    "                <div class=\"content-container\">\n" +
+    "                    <div class=\"clearfix visible-sm\"></div>\n" +
     "\n" +
-    "                <div ng-if=\"!category.name\" class=\"col-xs-12 col-sm-6  title\">{{total}} {{ 'RESULTS' | translate }}</div>\n" +
-    "                <div class=\"col-sm-6 col-md-6\">\n" +
-    "                    <div class=\"viewingContainer\">\n" +
-    "                        <div class=\"name\">{{'VIEWING' | translate}}:</div>\n" +
-    "                        <div class=\"page-indicator\" translate=\"PRODUCTS_FROM_TO\" translate-compile\n" +
-    "                             translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></div>\n" +
+    "                    <!-- sort control -->\n" +
+    "                    <div class=\"col-xs-7 col-sm-6 col-md-4 col-lg-3\">\n" +
+    "                        <div class=\"sortContainer search-list-sort\">\n" +
+    "                            <div class=\"name pull-left\">{{'SORT_BY' | translate}}:</div>\n" +
+    "                            <div class=\"form-group pull-left\">\n" +
+    "                                <label for=\"\" class=\"sr-only\">{{'SORT_BY' | translate}}:</label>\n" +
+    "\n" +
+    "                                <div class=\"custom-select-container\">\n" +
+    "                                    <ui-select ng-model=\"sort.selected\" on-select=\"setSortedPage($item.id)\">\n" +
+    "                                        <ui-select-match>\n" +
+    "                                            {{$select.selected.name}}\n" +
+    "                                        </ui-select-match>\n" +
+    "                                        <ui-select-choices repeat=\"item.id as item in (sortParams | filter: $select.search)\">\n" +
+    "                                            <span ng-bind=\"item.name\"></span>\n" +
+    "                                        </ui-select-choices>\n" +
+    "                                    </ui-select>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "\n" +
+    "                    <!-- pagination control -->\n" +
+    "                    <div class=\"col-xs-5 col-sm-6 col-md-6 col-lg-3 pull-right\">\n" +
+    "                        <div class=\"viewingContainer\">\n" +
+    "                            <span class=\"name\">{{'VIEWING' | translate}}</span>\n" +
+    "                            <span class=\"page-indicator\"\n" +
+    "                                  translate=\"PRODUCTS_FROM_TO\"\n" +
+    "                                  translate-compile\n" +
+    "                                  translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></span>\n" +
+    "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"clearfix visible-sm\"></div>\n" +
-    "                <div class=\"col-sm-7 col-md-6 col-lg-3\">\n" +
-    "                    <div class=\"sortContainer\">\n" +
-    "                        <div class=\"name\">{{'SORT_BY' | translate}}:</div>\n" +
-    "                        <div class=\"form-group\">\n" +
-    "                            <label for=\"\" class=\"sr-only\">{{'SORT_BY' | translate}}:</label>\n" +
+    "        </div>\n" +
     "\n" +
-    "                            <div>\n" +
-    "                                <span class='css-select-moz'>\n" +
-    "                                    <select ng-model=\"sort\" ng-change=\"setSortedPage()\" class=\"form-control\">\n" +
-    "                                        <option value=\"mostRelevant\">{{'MOST_RELEVANT' | translate}}</option>\n" +
-    "                                    </select>\n" +
-    "                                </span>\n" +
+    "        <!-- bread crumbs -->\n" +
+    "        <ybreadcrumb yitem=\"category\" size=\"'large'\"></ybreadcrumb>\n" +
+    "\n" +
+    "        <section class=\"white\">\n" +
+    "\n" +
+    "            <!-- page title -->\n" +
+    "            <div class=\"row\">\n" +
+    "                <div class=\"col-xs-12 text-center\">\n" +
+    "                    <h1 class=\"pageTitle productListTitle\"><span translate=\"FOUND_FOR\" translate-values=\"{total: total, searchString: searchString}\"></span></h1>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "\n" +
+    "            <!-- sticky refinements bar -->\n" +
+    "            <div id=\"refineAffix\" class=\"refine-section responsive-fixed\">\n" +
+    "                <div class=\"row\">\n" +
+    "                    <div class=\"content-container\">\n" +
+    "                        <div class=\"clearfix visible-sm\"></div>\n" +
+    "\n" +
+    "                        <!-- sort control -->\n" +
+    "                        <div class=\"col-xs-7 col-sm-6 col-md-4 col-lg-3\">\n" +
+    "                            <div class=\"sortContainer search-list-sort\">\n" +
+    "                                <div class=\"name pull-left\">{{'SORT_BY' | translate}}:</div>\n" +
+    "                                <div class=\"form-group pull-left\">\n" +
+    "                                    <label for=\"\" class=\"sr-only\">{{'SORT_BY' | translate}}:</label>\n" +
+    "\n" +
+    "                                    <div class=\"custom-select-container\">\n" +
+    "                                        <ui-select ng-model=\"sort.selected\" on-select=\"setSortedPage($item.id)\">\n" +
+    "                                            <ui-select-match>\n" +
+    "                                                {{$select.selected.name}}\n" +
+    "                                            </ui-select-match>\n" +
+    "                                            <ui-select-choices repeat=\"item.id as item in (sortParams | filter: $select.search)\">\n" +
+    "                                                <span ng-bind=\"item.name\"></span>\n" +
+    "                                            </ui-select-choices>\n" +
+    "                                        </ui-select>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "\n" +
+    "                        <!-- pagination control -->\n" +
+    "                        <div class=\"col-xs-5 col-sm-6 col-md-6 col-lg-3 pull-right\">\n" +
+    "                            <div class=\"viewingContainer\">\n" +
+    "                                <span class=\"name\">{{'VIEWING' | translate}}</span>\n" +
+    "                                <span class=\"page-indicator\"\n" +
+    "                                      translate=\"PRODUCTS_FROM_TO\"\n" +
+    "                                      translate-compile\n" +
+    "                                      translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></span>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "        </div>\n" +
     "\n" +
-    "        <div id=\"refineAffix\" class=\" refine-section responsive-fixed\" ng-cloak>\n" +
-    "            <div class=\"row\">\n" +
+    "            <div class=\"row product-grid\" infinite-scroll=\"addMore()\" infinite-scroll-distance=\"0\"\n" +
+    "                 infinite-scroll-immediate-check=\"false\"\n" +
+    "                 infinite-scroll-data=\"pagination\" ng-cloak\n" +
+    "                 infinite-scroll-visible-items>\n" +
+    "                <div class=\"item col-xs-12 col-sm-6 col-md-4 col-lg-3\" ng-repeat=\"product in products\"\n" +
+    "                     on-finish-render-ng-repeat on-finish-render-ng-repeat-event=\"initialViewportCheck\">\n" +
+    "                    <a id=\"p_{{product.product.id}}\" ng-click=\"openProductDetails(product.product.id)\" ui-sref=\"base.product.detail( {productId: product.product.id, lastCatId: lastCatId} )\">\n" +
     "\n" +
-    "                <div class=\"col-xs-12\">\n" +
-    "                    <div class=\"viewingContainer\">\n" +
-    "                        <div class=\"name\">{{'VIEWING' | translate}}:</div>\n" +
-    "                        <div class=\"page-indicator\" translate=\"PRODUCTS_FROM_TO\" translate-compile\n" +
-    "                             translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></div>\n" +
+    "                        <div class=\"thumb\">\n" +
+    "                            <img ng-src=\"{{ product && product.product.mainImageURL || PLACEHOLDER_IMAGE}}\" alt=\"\">\n" +
     "\n" +
-    "                    </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"productInfoContainer text-center\">\n" +
+    "                            <div class=\"name\">{{ product.product.name }}</div>\n" +
+    "                            <div ng-if=\"!prices[product.product.id].measurementUnit\" class=\"price\">{{ prices[product.product.id].effectiveAmount | currency: currencySymbol}}</div>\n" +
+    "                            <div ng-if=\"prices[product.product.id].measurementUnit\" class=\"price\">\n" +
+    "                                <span class=\"price\">{{prices[product.product.id].effectiveAmount | currency: currencySymbol}}</span>\n" +
+    "                                <span class=\"priceUnit\">{{prices[product.product.id].measurementUnit.quantity}} {{prices[product.product.id].measurementUnit.unitCode}}</span>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </a>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"row product-grid\" infinite-scroll=\"addMore()\" infinite-scroll-distance=\"0\"\n" +
-    "             infinite-scroll-immediate-check=\"false\"\n" +
-    "             infinite-scroll-data=\"pagination\" ng-cloak\n" +
-    "             infinite-scroll-visible-items>\n" +
-    "            <div class=\"item col-xs-12 col-sm-6 col-md-4 col-lg-3\" ng-repeat=\"product in products\"\n" +
-    "                 on-finish-render-ng-repeat on-finish-render-ng-repeat-event=\"initialViewportCheck\">\n" +
-    "                <a id=\"p_{{product.product.id}}\" ng-click=\"openProductDetails(product.product.id)\" ui-sref=\"base.product.detail( {productId: product.product.id, lastCatId: lastCatId} )\">\n" +
     "\n" +
-    "                    <div class=\"thumb\">\n" +
-    "                        <img ng-src=\"{{ product && product.product.mainImageURL || PLACEHOLDER_IMAGE}}\" alt=\"\">\n" +
-    "\n" +
-    "                    </div>\n" +
-    "                    <div class=\"productInfoContainer text-center\">\n" +
-    "                        <div class=\"name\">{{ product.product.name }}</div>\n" +
-    "                        <div ng-if=\"!prices[product.product.id].measurementUnit\" class=\"price\">{{ prices[product.product.id].effectiveAmount | currency: currencySymbol}}</div>\n" +
-    "                        <div ng-if=\"prices[product.product.id].measurementUnit\" class=\"price\">\n" +
-    "                            <span class=\"price\">{{prices[product.product.id].effectiveAmount | currency: currencySymbol}}</span>\n" +
-    "                            <span class=\"priceUnit\">{{prices[product.product.id].measurementUnit.quantity}} {{prices[product.product.id].measurementUnit.unitCode}}</span>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <button type=\"button\" id=\"to-top-btn\" ng-click=\"backToTop()\" class=\"btn btn-link back-to-top-button pull-left menu\">\n" +
-    "        <span class=\"hyicon hyicon-chevron-bold-up\" />\n" +
-    "    </button>\n" +
+    "            <button type=\"button\" id=\"to-top-btn\" ng-click=\"backToTop()\" class=\"btn btn-link back-to-top-button pull-left menu\">\n" +
+    "                <span class=\"hyicon hyicon-chevron-bold-up\" />\n" +
+    "            </button>\n" +
+    "        </section>\n" +
     "\n" +
     "\n" +
     "    </div>\n" +
     "\n" +
-    "</section>\n" +
+    "</div>\n" +
     "\n" +
     "\n" +
     "<script src=\"js/vendor-static/img-touch-canvas.js\"></script>\n" +
@@ -5283,7 +5905,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    <div ng-if=\"user.isAuthenticated\" >\n" +
     "        <div class=\"signinContainer\">\n" +
     "            <div class=\"col-xs-3 text-right\">\n" +
-    "                <a><img src=\"./img/user-icon_small_active.png\" class=\"user-avatar\" ng-click=\"myAccount()\"></a>\n" +
+    "                <a><img ng-src=\"{{user.image}}\" class=\"user-avatar socialAvatar\" ng-click=\"myAccount()\"></a>\n" +
     "            </div>\n" +
     "            <div class=\"col-xs-9 my-account-link\">\n" +
     "                <a href=\"\" class=\"my-profile\" ng-click=\"myAccount()\" title=\"{{'MY_ACCOUNT' | translate}}\">\n" +
@@ -5291,7 +5913,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                </a>\n" +
     "            </div>\n" +
     "            <div class=\"col-xs-offset-3 col-xs-9 logout-link text-left\">\n" +
-    "                <a ng-click=\"logout()\" id=\"logout-btn\" class=\"signout\">{{'SIGN_OUT' | translate}}</a>\n" +
+    "                <a ng-click=\"logout()\" class=\"signout\">{{'SIGN_OUT' | translate}}</a>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        \n" +
@@ -5299,11 +5921,8 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    </div>\n" +
     "\n" +
     "    <div ng-if=\"!user.isAuthenticated\">\n" +
-    "        <div class=\"signinContainer\">\n" +
-    "            <div class=\"col-xs-3 text-right\">\n" +
-    "                <img src=\"./img/user-icon_small_active.png\" class=\"user-avatar loggedin\">\n" +
-    "            </div>\n" +
-    "            <div class=\"col-xs-9 my-account-link\">\n" +
+    "        <div class=\"signinContainer signinContainer-sidebar\">\n" +
+    "            <div class=\"my-account-link\">\n" +
     "                <a class=\"btn btn-link navbar-btn signin\" ng-click=\"login({windowClass:'mobileLoginModal'})\">\n" +
     "                    {{'SIGN_IN' | translate}}\n" +
     "                </a>\n" +
@@ -5331,24 +5950,35 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('js/app/shared/templates/top-navigation.html',
+    "<!-- mobile navigation only -->\n" +
     "<div class=\"mobileNav hidden-lg hidden-md visible-sm visible-xs\">\n" +
     "    <nav class=\"top-navigation row\" ng-cloak>\n" +
-    "        <div class=\"col-xs-4 \">\n" +
+    "        \n" +
+    "        \n" +
+    "        <!-- hamburger menu -->\n" +
+    "        <div class=\"col-xs-3\">\n" +
     "            <button type=\"button\" class=\"btn btn-link navbar-btn menu\" ng-click=\"toggleOffCanvas()\">\n" +
     "                <span class=\"hyicon hyicon-menu\"></span>\n" +
     "            </button>\n" +
     "        </div>\n" +
-    "        <div class=\"col-xs-4 text-center\">\n" +
+    "\n" +
+    "        <!-- logo -->\n" +
+    "        <div class=\"col-xs-5 text-center\">\n" +
     "            <a class=\"logo\" ui-sref=\"base.home\"><img ng-src=\"{{GlobalData.store.logo || 'img/logo.png'}}\" alt=\"\"></a>\n" +
     "        </div>\n" +
-    "\n" +
+    "        \n" +
+    "        <!-- header right -->\n" +
     "        <div class=\"col-xs-4 text-right\">\n" +
     "            <div class=\"row\">\n" +
+    "\n" +
+    "                <!-- site selector -->\n" +
     "                <div class=\"col-xs-6\">\n" +
     "                    <div class=\"pull-right\">\n" +
     "                        <site-selector id=\"siteSelectorSmall\"></site-selector>\n" +
     "                    </div>\n" +
     "                </div>\n" +
+    "\n" +
+    "                <!-- cart button -->\n" +
     "                <div class=\"col-xs-6 text-center\">\n" +
     "                    <button type=\"button\" ng-if=\"isShowCartButton()\" id=\"mobile-cart-btn\" class=\"btn btn-link navbar-btn cart-button\"\n" +
     "                            ng-click=\"toggleCart()\">\n" +
@@ -5357,65 +5987,82 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                        </span>\n" +
     "                    </button>\n" +
     "                </div>\n" +
+    "\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </nav>\n" +
     "</div>\n" +
     "\n" +
     "\n" +
-    "\n" +
+    "<!-- dekstop navigation only -->\n" +
     "<div class=\"desktopNav hidden-xs hidden-sm visible-md visible-lg\">\n" +
     "    <div class=\"row info\">\n" +
-    "        <div class=\"content-container\">\n" +
-    "            <div class=\"col-xs-2 logo\">\n" +
-    "                <a ui-sref=\"base.home\" class=\"logo\">\n" +
-    "                    <img ng-src=\"{{GlobalData.store.logo || 'img/logo.png'}}\" height=\"46\" alt=\"\" />\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"col-xs-7 search\">\n" +
-    "                <ysearch></ysearch>\n" +
-    "            </div>\n" +
-    "            <div class=\"col-xs-3 cart\">\n" +
-    "                <div class=\"row\">\n" +
-    "                    <div class=\"col-xs-6 col-md-7\">\n" +
-    "                        <div class=\"text-center\">\n" +
-    "                            <a id=\"login-btn\" ng-if=\"!user.isAuthenticated\" class=\" signin\" ng-click=\"login({windowClass:'mobileLoginModal'})\">\n" +
-    "                                <img src=\"./img/user-icon_small_active.png\" class=\"user-avatar\">\n" +
-    "                                {{'SIGN_IN' | translate}}\n" +
-    "                            </a>\n" +
-    "                        </div>\n" +
-    "                        <div ng-if=\"user.isAuthenticated\">\n" +
-    "                            <div class=\"signin-container \">\n" +
-    "                                <div class=\"text-center dropdown\">\n" +
-    "                                    <a class=\"my-profile dropdown-toggle\" title=\"{{'MY_ACCOUNT' | translate}}\">\n" +
-    "                                        <img id=\"my-account-dropdown\" src=\"./img/user-icon_small_active.png\" class=\"user-avatar\">\n" +
-    "                                    </a>\n" +
-    "                                    <ul class=\"dropdown-menu\">\n" +
-    "                                        <li id=\"my-account\" role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\" ng-click=\"myAccount()\">{{'MY_ACCOUNT' | translate}}</a></li>\n" +
-    "                                        <li class=\"divider\"></li>\n" +
-    "                                        <li id=\"logout-btn\" role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\" ng-click=\"logout()\">{{'SIGN_OUT' | translate}}</a></li>\n" +
-    "                                    </ul>\n" +
-    "                                </div>\n" +
+    "\n" +
+    "        <!-- logo -->\n" +
+    "        <div class=\"col-xs-2 logo navbar-padding navbar-padding-left\">\n" +
+    "            <a ui-sref=\"base.home\" class=\"logo\">\n" +
+    "                <img ng-src=\"{{GlobalData.store.logo || 'img/logo.png'}}\" height=\"46\" alt=\"\" />\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    \n" +
+    "        <!-- search bar -->\n" +
+    "        <div class=\"col-lg-7 col-md-6 col-sm-6 col-xs-6 search navbar-padding navbar-padding-left\" style=\"padding-right: 0px\">\n" +
+    "            <ysearch></ysearch>\n" +
+    "        </div>\n" +
+    "        \n" +
+    "        <!-- header right -->\n" +
+    "        <div class=\"col-lg-3 col-md-4 col-sm-3 col-xs-4 cart navbar-padding navbar-padding-right\">\n" +
+    "            <div class=\"row\">\n" +
+    "\n" +
+    "                <!-- signin button -->\n" +
+    "                <div class=\"col-xs-6 col-md-6\">\n" +
+    "                    <div class=\"text-center\">\n" +
+    "                        <a id=\"login-btn\" ng-if=\"!user.isAuthenticated\" class=\"signin\" ng-click=\"login({windowClass:'mobileLoginModal'})\" href=\"#\">\n" +
+    "                            {{'SIGN_IN' | translate}}\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
+    "                    <div ng-if=\"user.isAuthenticated\">\n" +
+    "                        <div class=\"signin-container \">\n" +
+    "                            <div class=\"text-center dropdown\">\n" +
+    "                                <a class=\"my-profile dropdown-toggle\" title=\"{{'MY_ACCOUNT' | translate}}\" id=\"my-account\">\n" +
+    "                                    <img id=\"my-account-dropdown\" ng-src=\"{{user.image}}\" class=\"user-avatar socialAvatar\">\n" +
+    "                                </a>\n" +
+    "                                <ul class=\"dropdown-menu\">\n" +
+    "                                    <li role=\"presentation\">\n" +
+    "                                        <a role=\"menuitem\" id=\"my-account-link\" tabindex=\"-1\" href=\"#\" ng-click=\"myAccount()\">{{'MY_ACCOUNT' | translate}}</a>\n" +
+    "                                    </li>\n" +
+    "                                    <li class=\"divider\"></li>\n" +
+    "                                    <li  role=\"presentation\" >\n" +
+    "                                        <a  role=\"menuitem\" id=\"logout-btn\" tabindex=\"-1\" href=\"#\" ng-click=\"logout()\">{{'SIGN_OUT' | translate}}</a>\n" +
+    "                                    </li>\n" +
+    "                                </ul>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
-    "                    <div class=\"col-xs-3 col-md-3 text-center\">\n" +
-    "                        <site-selector id=\"siteSelectorLarge\"></site-selector>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"col-xs-3 col-md-2 text-center checkout-btn-container\">\n" +
-    "                        <button ng-if=\"isShowCartButton()\" type=\"button\" class=\"btn btn-link navbar-btn\" id=\"full-cart-btn\" ng-click=\"toggleCart()\" ng-cloak>\n" +
-    "                            <span class=\"shopping-bag\">\n" +
-    "                                <span class=\"quantity\">{{ cart.totalUnitsCount || 0 }}</span>\n" +
-    "                            </span>\n" +
-    "                        </button>\n" +
-    "\n" +
-    "                    </div>\n" +
-    "\n" +
     "                </div>\n" +
-    "                <div class=\"cart-and-account-container\">\n" +
+    "\n" +
+    "                <!-- site selector -->\n" +
+    "                <div class=\"col-xs-3 col-md-3 text-center site-selector-container\">\n" +
+    "                    <site-selector id=\"siteSelectorLarge\"></site-selector>\n" +
     "                </div>\n" +
+    "\n" +
+    "                <!-- cart icon -->\n" +
+    "                <div class=\"col-xs-3 col-md-3 text-center checkout-btn-container\">\n" +
+    "                    <button ng-if=\"isShowCartButton()\" type=\"button\" class=\"btn btn-link navbar-btn\" id=\"full-cart-btn\" ng-click=\"toggleCart()\" ng-cloak>\n" +
+    "                        <span class=\"shopping-bag\">\n" +
+    "                            <span class=\"quantity\">{{ cart.totalUnitsCount || 0 }}</span>\n" +
+    "                        </span>\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "\n" +
     "            </div>\n" +
+    "\n" +
+    "            <!-- what is this div for???  -->\n" +
+    "            <div class=\"cart-and-account-container\"></div>\n" +
+    "\n" +
+    "            <!-- clear div -->\n" +
     "            <div class=\"clr\"></div>\n" +
+    "\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"row nav js-mainNav\">\n" +
@@ -5470,7 +6117,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                <div class=\"y-search-result-attributes\">\n" +
     "                    <div class=\"y-search-result-name text-left\"\n" +
     "                          ng-bind-html=\"result._highlightResult.name[0].value\"></div>\n" +
-    "                    <div class=\"y-search-result-category text-left\">{{'IN' | translate}} {{result.categories.join(', ')}}</div>\n" +
+    "                    <div ng-if=\"result.categories && result.categories.length > 0\" class=\"y-search-result-category text-left\">{{'IN' | translate}} {{result.categories.join(', ')}}</div>\n" +
     "                    <div class=\"y-search-result-price text-left\">{{result.prices[currency] | currency: currencySymbol }}</div>\n" +
     "                </div>\n" +
     "            </a>\n" +
