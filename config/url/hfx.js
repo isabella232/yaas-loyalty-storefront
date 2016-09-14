@@ -65,6 +65,7 @@
                         },
 
                         hybrisProfile: {
+                            consentReference: '/hybris/profile-consent/b2',
                             analytics: '/hybris/hfx-yprofile-analytics/v1'
                         },
 

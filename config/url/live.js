@@ -62,7 +62,12 @@
                             googleWallet : '/hybris/loy-google-wallet/v1/',
                             appleWallet:'/hybris/loy-apple-wallet/v1/STORECARD/',
                             appleWalletEndPoint : '/generateWalletUrl'
-                        }
+                        },
+
+                        hybrisProfile: {
+                            consentReference: '/hybris/profile-consent/b2',
+                            analytics: '/hybris/loy-yprofile-analytics/v1'
+                        },
 
                     }               
                 
