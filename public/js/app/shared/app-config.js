@@ -10,10 +10,9 @@
  * license agreement you entered into with hybris.
  */
 'use strict';
- 
+
 angular.module('ds.appconfig', [])
- 
- 
+
     /**
      *   Dynamic Build Configurations - for non-persistent, .gitignored application settings.
      *   to commit any changes to dynamic configurations - first remove it from .gitignore,
@@ -24,7 +23,7 @@ angular.module('ds.appconfig', [])
 
         dynamicDomain: function(){
             // Dynamic Domain is generated and replaced by build script, see gruntfile.
-            return /*StartDynamicDomain*/ 'api.stage.yaas.io' /*EndDynamicDomain*/;
+            return /*StartDynamicDomain*/ 'api.us.yaas.io' /*EndDynamicDomain*/;
         },
 
         storeTenant: function(){
@@ -36,19 +35,19 @@ angular.module('ds.appconfig', [])
                 tenantId = window.location.pathname.substring( 1, pathLength-1 );
             } else {
                 // Dynamic ProjectId is configured and replaced by build script, see gruntfile.
-                tenantId = /*StartProjectId*/ 'saploydev' /*EndProjectId*/;
+                tenantId = /*StartProjectId*/ 'tenant' /*EndProjectId*/;
             }
             return tenantId;
         },
 
         clientId: function() {
             // Dynamic ClientId is configured and replaced by build script, see gruntfile.
-            return /*StartClientId*/ 'U84Iy0WLC8I3H8zb5GmmRcCPvYhkYwDc' /*EndClientId*/;
+            return /*StartClientId*/ 'clientId' /*EndClientId*/;
         },
 
         redirectURI: function() {
             // Dynamic RedirectURI is configured and replaced by build script, see gruntfile.
-            return /*StartRedirectURI*/ 'https://loyaltystoredev.stage.yaas.io' /*EndRedirectURI*/;
+            return /*StartRedirectURI*/ 'redirectURI' /*EndRedirectURI*/;
         }
 
 

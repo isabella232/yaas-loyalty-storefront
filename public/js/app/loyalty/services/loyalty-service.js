@@ -1,9 +1,9 @@
 
     angular.module('ds.loyalty')
 
-        .factory('LoyaltySvc', ['settings', 'Utilities', 'LoyaltyREST', '$injector', '$rootScope',
+        .factory('LoyaltySvc', ['settings', 'Utilities', 'LoyaltyREST', '$injector', '$rootScope','CartSvc',
 
-            function (settings, Utilities, LoyaltyREST, $injector, $rootScope) {
+            function (settings, Utilities, LoyaltyREST, $injector, $rootScope, CartSvc) {
 
                 var $q = $injector.get('$q');
                 var AuthSvc = $injector.get('AuthSvc');
@@ -15,6 +15,22 @@
                 var orderAmounts = {
 
                 };
+
+
+
+                function getIdFromItemYrn(itemYrn){
+                  if(_.contains(itemYrn, 'product:product')){
+                    return itemYrn.split(';')[1];
+                  } else if(_.contains(itemYrn, 'product:product-variant')){
+                    return itemYrn.split(';')[2];
+                  }
+                }
+
+                function getProductIdsFromCart(items){
+                  return _.map(items, function(item){
+                    return item.itemYrn ? getIdFromItemYrn(item.itemYrn) : '';
+                  });
+                }
 
                 var LoyaltyService = {
 
@@ -28,31 +44,34 @@
 
                         var ctr = 0;
 
-                        angular.forEach(cart.items, function(item){
+                        cart.items = cart.items || [];
 
-                            self.getProductDetails(item.product.id).then(function (product) {
+                        var products = getProductIdsFromCart( cart.items ) || [];
+
+
+                        angular.forEach(cart.items, function(item, index) {
+
+                            self.getProductDetails( products[index] ).then(function (product) {
 
                                 ctr += 1;
 
-                                if( angular.isArray(product.categories) && product.categories.length > 0 ){
+                                var categories = [];
 
-                                    angular.forEach(product.categories, function(category){ 
-                                        category.categoryId =  category.id;
-                                        delete category.image;
-                                        delete category.metadata;
-                                        delete category.published;
-                                        delete category.id;
-                                    });                                
+                                if( angular.isArray(product.categories) && product.categories.length > 0 ) {
+                                    categories = product.categories.map( function ( category ) {
+                                        return {
+                                            categoryId: category.id
+                                        };
+                                    });
                                 }
 
-
                                 var productAttributesObj = {
-                                    productId : item.product.id,
+                                    productId : product.product.id,
                                     productName : product.product.name,
                                     price : item.price.effectiveAmount,
                                     quantity  : item.quantity,
-                                    imageURL : item.product.images[0].url,
-                                    productCategory : product.categories,
+                                    imageURL : product.product.media[0].url,
+                                    productCategory : categories,
                                     customAttributes:[]
                                 };
 

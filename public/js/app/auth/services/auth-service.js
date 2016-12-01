@@ -33,7 +33,7 @@ angular.module('ds.auth')
                     $rootScope.$emit('user:socialLogIn', {loggedIn: true});
                     /* jshint ignore:start */
                     try {
-                        FB.api('/me', function (response) {
+                        FB.api('/me', {}, function (response) {
                             SessionSvc.afterSocialLogin({
                                 email: response.email,
                                 firstName: response.first_name,
@@ -68,7 +68,7 @@ angular.module('ds.auth')
                         if (response.status === 'connected') {
                             onFbLogIn(response.authResponse.accessToken);
                         } else {
-                            FB.login();
+                            FB.login(function () {}, { scope: 'email' });
                         }
                     }, true);
 
@@ -183,14 +183,23 @@ angular.module('ds.auth')
                  * @param user JSON object (with email, password properties), or null for anonymous user.
                  */
                 signin: function (user) {
-                    return loginAndSetToken(user).then(function () {
+                    var def = $q.defer();
+                    loginAndSetToken(user).then(function () {
                         settings.hybrisUser = user.email;
-                        SessionSvc.afterLogIn();
-                        
                         //loyalty emit
                         $rootScope.$broadcast('user:signedin');
-
+                        SessionSvc.afterLogIn().then(
+                            function () {
+                                def.resolve();
+                            },
+                            function () {
+                                def.reject();
+                            }
+                        );
+                    }, function (error) {
+                        def.reject(error);
                     });
+                    return def.promise;
                 },
 
                 signup: function (user, context) {
@@ -204,10 +213,16 @@ angular.module('ds.auth')
                           }
                           $rootScope.$broadcast('user:signedup', userData);
 
-                           loginAndSetToken(user).then(function () {
+                            loginAndSetToken(user).then(function () {
                                 settings.hybrisUser = user.email;
-                                def.resolve({});
-                                SessionSvc.afterLoginFromSignUp(context);
+                                SessionSvc.afterLoginFromSignUp(context).then(
+                                    function () {
+                                        def.resolve({});
+                                    },
+                                    function () {
+                                        def.reject();
+                                    }
+                                );
                             }, function (error) {
                                 def.reject(error);
                             });
@@ -272,11 +287,17 @@ angular.module('ds.auth')
 
                 /** Performs login logic following login through social media login.*/
                 socialLogin: function (providerId, token) {
-                    return AuthREST.Customers.one('login', providerId).customPOST({accessToken: token}).then(function (response) {
+                    var deferred = $q.defer();
+                    AuthREST.Customers.one('login', providerId).customPOST({accessToken: token}).then(function (response) {
                         // passing static username to trigger 'is authenticated' validation of token
                         TokenSvc.setToken(response.accessToken, 'social');
-                        SessionSvc.afterLogIn();
+                        SessionSvc.afterLogIn().then(function () {
+                            deferred.resolve();
+                        });
+                    }, function () {
+                        deferred.reject();
                     });
+                    return deferred.promise;
                 }
 
             };

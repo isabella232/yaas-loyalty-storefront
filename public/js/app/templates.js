@@ -25,35 +25,45 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "\n" +
     "        <!-- desktop display -->\n" +
-    "        <div class=\"row userInfoRow hidden-xs desktopUserInfo\" ng-if=\"account\">\n" +
+    "        <div class=\"row userInfoRow hidden-xs hidden-sm desktopUserInfo\" ng-if=\"account\">\n" +
     "\n" +
-    "            <div class=\"col-sm-1 editLinkContainer\">\n" +
-    "                <a ng-click=\"editUserName(account)\"><span id=\"edit-user-info\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "            <div class=\"col-sm-10\">        \n" +
+    "                <div class=\"col-sm-4\">\n" +
+    "                    <div class=\"col-sm-2 editLinkContainer\">\n" +
+    "                        <a ng-click=\"editUserName(account)\"><span id=\"edit-user-info\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "                    </div>\n" +
+    "                    <div id=\"account-name\" class=\"col-sm-10\">\n" +
+    "                        <span class=\"dataLabel\">{{'NAME' | translate}}</span>\n" +
+    "                        {{account.title|translate}} {{account.firstName}} {{account.middleName}} {{account.lastName}}\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-4\">\n" +
+    "                    <div class=\"col-sm-2 editLinkContainer\">\n" +
+    "                        <a ng-click=\"editUserEmail(account)\" ng-hide=\"isItSocialAccount\"><span id=\"update-email\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "                    </div>\n" +
+    "                    <div id=\"account-contact-email\" class=\"col-sm-10\">\n" +
+    "                        <span class=\"dataLabel\">{{'EMAIL' | translate}}</span>\n" +
+    "                        {{account.contactEmail}}\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-4\" ng-hide=\"isItSocialAccount\">\n" +
+    "                    <div class=\"col-sm-2 editLinkContainer\">\n" +
+    "                        <a ng-click=\"updatePassword()\"><span id=\"update-password\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"col-sm-10\">\n" +
+    "                        <span class=\"dataLabel\">{{'PASSWORD' | translate}}</span>\n" +
+    "                        &#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
     "            </div>\n" +
-    "            <div class=\"col-sm-3 col-md-3\">\n" +
-    "                <span class=\"dataLabel\">{{'NAME' | translate}}</span>\n" +
-    "                {{account.title|translate}} {{account.firstName}} {{account.middleName}} {{account.lastName}}\n" +
-    "            </div>\n" +
-    "            <div class=\"col-sm-1 editLinkContainer\">\n" +
-    "                <a ng-click=\"editUserEmail(account)\"><span id=\"update-email\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
-    "            </div>\n" +
-    "            <div class=\"col-sm-3\">\n" +
-    "                <span class=\"dataLabel\">{{'EMAIL' | translate}}</span>\n" +
-    "                {{account.contactEmail}}\n" +
-    "            </div>\n" +
-    "\n" +
-    "            <div class=\"col-sm-1 editLinkContainer\">\n" +
-    "                <a ng-click=\"updatePassword()\"><span id=\"update-password\" class=\"glyphicon glyphicon-pencil\"></span></a>\n" +
-    "            </div>\n" +
-    "            <div class=\"col-sm-3\">\n" +
-    "                <span class=\"dataLabel\">{{'PASSWORD' | translate}}</span>\n" +
-    "                &#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;\n" +
+    "            <div class=\"col-sm-2\">\n" +
+    "                <button ng-click=\"deleteAccount()\" class=\"btn-link delete-btn text-capitalize\">{{'DELETE_ACCOUNT' | translate}}</button>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <!-- /desktop -->\n" +
     "\n" +
     "        <!-- mobile display -->\n" +
-    "        <div class=\"row userInfoRow mobile hidden-sm hidden-md hidden-lg\" ng-if=\"account\">\n" +
+    "        <div class=\"row userInfoRow mobile hidden-md hidden-lg\" ng-if=\"account\">\n" +
     "\n" +
     "            <div class=\"col-xs-8\">\n" +
     "                <div class=\"mobileDataSection\">\n" +
@@ -70,27 +80,30 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                    {{account.contactEmail}}\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "            <div class=\"col-xs-4\">\n" +
+    "            <div class=\"col-xs-4\" ng-hide=\"isItSocialAccount\">\n" +
     "                <button class=\"btn btn-secondary btn-md pull-right\" ng-click=\"editUserEmail(account)\">{{'EDIT' | translate}}</button>\n" +
     "            </div>\n" +
-    "            <div class=\"col-xs-8\">\n" +
-    "                <div class=\"mobileDataSection\">\n" +
-    "                    <span class=\"dataLabel\">{{'PASSWORD' | translate}}</span>\n" +
-    "                    &#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;\n" +
+    "            <div ng-hide=\"isItSocialAccount\">\n" +
+    "                <div class=\"col-xs-8\">\n" +
+    "                    <div class=\"mobileDataSection\">\n" +
+    "                        <span class=\"dataLabel\">{{'PASSWORD' | translate}}</span>\n" +
+    "                        &#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-xs-4\">\n" +
+    "                    <button class=\"btn btn-secondary btn-md pull-right\" ng-click=\"updatePassword()\">{{'EDIT' | translate}}</button>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "            <div class=\"col-xs-4\">\n" +
-    "                <button class=\"btn btn-secondary btn-md pull-right\" ng-click=\"updatePassword()\">{{'EDIT' | translate}}</button>\n" +
+    "            <div class=\"col-xs-12\">\n" +
+    "                <button ng-click=\"deleteAccount()\" class=\"btn-link delete-btn text-capitalize\">{{'DELETE_ACCOUNT' | translate}}</button>\n" +
     "            </div>\n" +
-    "\n" +
+    "        \n" +
     "        </div>\n" +
+    "        <!-- /mobile display -->\n" +
     "\n" +
     "        <div class=\"row\" ng-if=\"account\">\n" +
     "            <div class=\"col-sm-12\" ng-include src=\"'js/app/loyalty/templates/user_reward_program.html'\"></div>\n" +
     "        </div>\n" +
-    "\n" +
-    "\n" +
-    "        <!-- /mobile display -->\n" +
     "\n" +
     "        <div>\n" +
     "            <p ng-if=\"!account\">{{'FAIL_CUSTOMER_DETAILS' | translate}}</p>\n" +
@@ -116,9 +129,6 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "<div class=\"account\">\n" +
     "\n" +
     "    <customer-details account=\"account\"></customer-details>\n" +
-    "\n" +
-    "\n" +
-    "\r" +
     "\n" +
     "  <section class=\"lightgray\" ng-cloak>\n" +
     "    <div class=\"container-fluid\">\n" +
@@ -170,7 +180,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                            <p>{{m_order.totalPrice | currency: m_order.currencySymbol}}</p>\n" +
     "                        </div>\n" +
     "                        <div class=\"col-sm-4 col-xs-4\">\n" +
-    "                          <p><strong>{{m_order.status}}</strong></p>\n" +
+    "                          <p><strong>{{m_order.status | translate}}</strong></p>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
@@ -190,12 +200,12 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            </tr>\n" +
     "          </thead>\n" +
     "          <tbody>\n" +
-    "              <tr ng-repeat=\"xrder in orders | limitTo: showOrdersFilter \">\n" +
-    "                  <td>{{xrder.created | date: 'medium'}}</td>\n" +
-    "                  <td><a ui-sref=\"base.orderDetail({orderId: xrder.id})\">{{xrder.id}}</a></td>\n" +
-    "                  <td>{{xrder.entries|sumByKey:'amount'|showNoOfItems}}</td>\n" +
-    "                  <td>{{xrder.totalPrice | currency: xrder.currencySymbol}}</td>\n" +
-    "                  <td><strong>{{xrder.status}}</strong></td>\n" +
+    "              <tr ng-repeat=\"orderRow in orders | limitTo: showOrdersFilter \">\n" +
+    "                  <td>{{orderRow.created | date: 'medium'}}</td>\n" +
+    "                  <td><a ui-sref=\"base.orderDetail({orderId: orderRow.id})\">{{orderRow.id}}</a></td>\n" +
+    "                  <td>{{orderRow.entries|sumByKey:'amount'|showNoOfItems}}</td>\n" +
+    "                  <td>{{orderRow.totalPrice | currency: orderRow.currencySymbol}}</td>\n" +
+    "                  <td><strong>{{orderRow.status | translate}}</strong></td>\n" +
     "              </tr>\n" +
     "          </tbody>\n" +
     "        </table>\n" +
@@ -210,8 +220,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "      </div>\n" +
     "\n" +
     "      \n" +
-    "    </div>\r" +
-    "\n" +
+    "    </div>\n" +
     "    <div class=\"mediumgray\" style=\"padding-left:10px\" match-background>\n" +
     "       <div ng-include src=\"'js/app/loyalty/templates/reward_history.html'\"></div>\n" +
     "    </div>\n" +
@@ -256,7 +265,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "  <h4 class=\"modal-title\" id=\"myModalLabel\">{{'ADDRESS_BOOK' | translate}}</h4>\n" +
     "</div>\n" +
     "<div class=\"modal-body\" stop-event=\"touchend\">\n" +
-    "  <div class=\"row\">\n" +
+    "  <div class=\"row addresses\">\n" +
     "    <div ng-include=\"'./js/app/account/templates/addresses.html'\"></div>\n" +
     "  </div>\n" +
     "  <div class=\"text-center row\" ng-show=\"showAllAddressButton\">\n" +
@@ -365,6 +374,22 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('js/app/account/templates/delete-account.html',
+    "<!-- Modal -->\n" +
+    "<div>\n" +
+    "    <div class=\"modal-header\">\n" +
+    "        <a class=\"close\" ng-click=\"close()\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></a>\n" +
+    "        <h4 ng-if=\"success\" class=\"modal-title\" id=\"myModalLabel\">{{'ACCOUNT_DELETED' | translate}}</h4>\n" +
+    "        <h4 ng-if=\"!success\" class=\"modal-title\" id=\"myModalLabel\">{{'ACCOUNT_NOT_DELETED' | translate}}</h4>\n" +
+    "    </div>\n" +
+    "    <div class=\"modal-body\">\n" +
+    "        <p ng-if=\"success\">{{'ACCOUNT_DELETED_MSG' | translate}}</p>\n" +
+    "        <p ng-if=\"!success\" class=\"error\">{{'PLEASE_CORRECT_MESSAGE_ERRORS' | translate}}</p>\n" +
+    "    </div>\n" +
+    "</div>"
+  );
+
+
   $templateCache.put('js/app/account/templates/dialogs/address-remove-dialog.html',
     "<div class=\"modal-header\" ng-cloak>\n" +
     "    <button type=\"button\" class=\"close\" ng-click=\"close()\" data-dismiss=\"modal\">\n" +
@@ -384,6 +409,70 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    <button type=\"button\" ng-click=\"close()\" id=\"cancel-delete-address-btn\" class=\"btn btn-secondary btn-lg\">{{'CANCEL' | translate}}</button>\n" +
     "    <button type=\"button\" ng-click=\"delete()\" id=\"confirm-delete-address-btn\" class=\"btn btn-primary btn-lg\">{{'DELETE' | translate}}</button>\n" +
     "</div>"
+  );
+
+
+  $templateCache.put('js/app/account/templates/dialogs/order-cancel-dialog.html',
+    "<div class=\"modal-header\" ng-cloak>\n" +
+    "    <button type=\"button\" class=\"close\" ng-click=\"closeCancelOrderDialog()\" data-dismiss=\"modal\">\n" +
+    "        <span aria-hidden=\"true\">&times;</span>\n" +
+    "        <span class=\"sr-only\">{{'CLOSE' | translate}}</span>\n" +
+    "    </button>\n" +
+    "    <h4 class=\"modal-title\" id=\"myModalLabel\">{{'CONFIRM_ORDER_CANCEL_TITLE' | translate}}</h4>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\" stop-event=\"touchend\">\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-xs-12\">\n" +
+    "            {{'CONFIRM_CANCEL_ORDER'|translate}}\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"orderCancelError\" class=\"row error\">\n" +
+    "        {{orderCancelError}}\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <button type=\"button\" ng-click=\"closeCancelOrderDialog()\" id=\"cancel-order-cancel-btn\" class=\"btn btn-secondary btn-lg\">{{'NO' | translate}}</button>\n" +
+    "    <button type=\"button\" ng-click=\"cancelOrder()\" id=\"confirm-order-cancel-btn\" class=\"btn btn-primary btn-lg\">{{'YES' | translate}}</button>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('js/app/account/templates/modals/delete-account-confirm-request.html',
+    "<!-- Modal -->\n" +
+    "<div>\n" +
+    "    <div class=\"modal-header\">\n" +
+    "        <a class=\"close\" ng-click=\"close()\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></a>\n" +
+    "        <h4 class=\"modal-title\" id=\"myModalLabel\">{{'CHECK_EMAIL' | translate}}</h4>\n" +
+    "    </div>\n" +
+    "    <div class=\"modal-body\">\n" +
+    "        <p>{{'DELETE_ACCOUNT_CHECK_EMAIL_MSG' | translate}}</p>\n" +
+    "    </div>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('js/app/account/templates/modals/delete-account-dialog.html',
+    "<!-- Modal -->\n" +
+    "<form name=\"deleteAccountForm\" novalidate>\n" +
+    "    <div class=\"modal-header\">\n" +
+    "        <a class=\"close\" ng-click=\"close()\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></a>\n" +
+    "        <h4 class=\"modal-title\" id=\"myModalLabel\">{{'DELETE_ACCOUNT' | translate}}</h4>\n" +
+    "    </div>\n" +
+    "    <div class=\"modal-body\">\n" +
+    "        <p>{{'DELETE_ACCOUNT_MSG' | translate}}</p>\n" +
+    "        <div class=\"text-danger list-unstyled\" ng-show=\"showError\">\n" +
+    "            <small class=\"help-inline has-error\">{{'PLEASE_CORRECT_MESSAGE_ERRORS' | translate}}</small>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"modal-footer\">\n" +
+    "        <button ng-click=\"close()\" class=\"btn btn-link\">\n" +
+    "            {{'CANCEL'|translate}}\n" +
+    "        </button>\n" +
+    "        <button ng-click=\"deleteAccount()\" ng-disabled=\"submitDisabled\" class=\"btn btn-primary\">\n" +
+    "            {{'DELETE'|translate}}\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "</form>"
   );
 
 
@@ -579,8 +668,13 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "    </section>\n" +
     "    <section class=\"mediumgray orderStatusContainer\" ng-cloak>\n" +
-    "        <div class=\"section-headline\">\n" +
-    "            <h2>{{'ORDER_STATUS' | translate}} <span class=\"order-status\">- {{order.status | translate}}</span></h2>\n" +
+    "        <div class=\"section-headline row\">\n" +
+    "            <div class=\"col-md-10 col-sm-9\">\n" +
+    "                <h2>{{'ORDER_STATUS' | translate}} <span class=\"order-status\">- {{order.status | translate}}</span></h2>    \n" +
+    "            </div>\n" +
+    "            <div class=\"col-md-2 col-sm-3\">\n" +
+    "                <button id=\"cancelOrder\" ng-if=\"showCancelBtn(order)\" ng-click=\"cancelOrder()\" class=\"btn btn-primary cancel-order\">{{'ORDER_CANCEL' | translate}}</button>\n" +
+    "            </div>\n" +
     "        </div>\n" +
     "        <div ng-repeat=\"shipment in order.shipments\">\n" +
     "            <div translate=\"SHIPPED_BY_ON\" translate-compile\n" +
@@ -619,7 +713,10 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </td>\n" +
-    "                        <td class=\"col-lg-2 col-md-2 col-sm-3 col-xs-3\">{{entry.unitPrice | currency: currencySymbol}}</td>\n" +
+    "                        <td class=\"col-lg-2 col-md-2 col-sm-3 col-xs-3\">\n" +
+    "                            <span>{{entry.unitPrice | currency: currencySymbol}}</span>\n" +
+    "                            <span class=\"priceUnit\" ng-if=\"entry.measurementUnit\">{{entry.measurementUnit.value}} {{entry.measurementUnit.unit}}</span>\n" +
+    "                        </td>\n" +
     "                        <td class=\"col-lg-1 col-md-1 col-sm-2 col-xs-3\">{{entry.amount}}</td>\n" +
     "                        <td class=\"col-lg-2 col-md-2 col-sm-2 col-xs-2 priceColumn\">{{entry.totalPrice | currency: currencySymbol}}</td>\n" +
     "                    </tr>\n" +
@@ -638,7 +735,10 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                    <div class=\"col-xs-8 col-md-8  detail-col\">\n" +
     "\n" +
     "                        <div class=\"name\"><a ui-sref=\"base.product.detail( {productId: entry.product.id} )\">{{entry.product.name}}</a></div>\n" +
-    "                        <div class=\"price item-attr\">{{'ITEM_PRICE' | translate}}: <span> {{entry.unitPrice | currency: currencySymbol}}</span></div>\n" +
+    "                        <div class=\"price item-attr\">{{'ITEM_PRICE' | translate}}: \n" +
+    "                            <span> {{entry.unitPrice | currency: currencySymbol}}</span>\n" +
+    "                            <span class=\"priceUnit\" ng-if=\"entry.measurementUnit\">{{entry.measurementUnit.value}} {{entry.measurementUnit.unit}}</span>\n" +
+    "                        </div>\n" +
     "                        <div class=\"variants row item-attr\">\n" +
     "                            <div class=\"variant col-md-6 \">{{'QTY' | translate}}: <span>{{entry.amount}}</span></div>\n" +
     "                        </div>\n" +
@@ -2725,7 +2825,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    <!-- Nav tabs -->\n" +
     "    <ul class=\"nav nav-tabs signInTabs text-center\" role=\"tablist\">\n" +
     "      <li class=\"active signInButton\"><a href=\"#signin\" role=\"tab\" data-toggle=\"tab\">{{'SIGN_IN' | translate}}</a></li>\n" +
-    "      <li><a href=\"#signup\" role=\"tab\" data-toggle=\"tab\">{{'CREATE_ACCOUNT' | translate}}</a></li>\n" +
+    "      <li><a id=\"create-account\" href=\"#signup\" role=\"tab\" data-toggle=\"tab\">{{'CREATE_ACCOUNT' | translate}}</a></li>\n" +
     "    </ul>\n" +
     "\n" +
     "    <!-- clear row -->\n" +
@@ -2790,7 +2890,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "      </div>\n" +
     "\n" +
     "      <!-- button -->\n" +
-    "      <a href=\"\" ng-click=\"continueAsGuest()\" class=\"btn btn-primary btn-lg btn-block\">{{'CONTINUE_AS_GUEST' | translate}}</a>\n" +
+    "      <a id=\"guest-continue\" href=\"\" ng-click=\"continueAsGuest()\" class=\"btn btn-primary btn-lg btn-block\">{{'CONTINUE_AS_GUEST' | translate}}</a>\n" +
     "\n" +
     "    </div>\n" +
     "\n" +
@@ -2807,49 +2907,6 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "	</div>\n" +
     "\n" +
     "</section>\n"
-  );
-
-
-  $templateCache.put('js/app/auth/templates/create-account.html',
-    "<div ng-if=\"!isAuthenticated\">\n" +
-    "\n" +
-    "    {{'ONE_MORE_STEP' | translate}} <br>\n" +
-    "    {{'ONE_MORE_STEP_MESSAGE' | translate}} <br>\n" +
-    "\n" +
-    "        <div ng-if=\"fbAppId || googleClientId\" class=\"socialMediaSigninContainer row\">\n" +
-    "            <div ng-if=\"fbAppId\" class=\"fbLogin col-sm-6 col-xs-12\" ng-click=\"fbLogin()\">\n" +
-    "                <div class=\"fbLoginButton\">\n" +
-    "                    <div class=\"fbsignInLabel\">{{'SIGN_IN_WITH_FACEBOOK' | translate}}</div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div ng-if=\"googleClientId\"  class=\"googlePlusLogin col-sm-6 col-xs-12\">\n" +
-    "                <div class=\"googleSignIn\">\n" +
-    "                    <div class=\"googleSignInLabel\">{{'LOG_IN_WITH_GOOGLE_PLUS' | translate}}</div>\n" +
-    "                    <google-plus-signin clientid=\"{{googleClientId}}\" approvalprompt=\"force\"></google-plus-signin>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "      <div class=\"tab-pane\" id=\"signup\" >\n" +
-    "        <form name=\"signupForm\" ng-submit=\"signup(user.signup.password, confirmationDetails.emailAddress, signupForm)\">\n" +
-    "            <div class=\"form-group input-group\">\n" +
-    "                <span class=\"input-group-addon\"><label class=\"control-label\" for=\"emailInput\">{{'EMAIL' | translate}}</label></span>\n" +
-    "                <input builder-input=\"email\" type=\"email\" class=\"form-control\" id=\"emailInput\" name=\"email\"\n" +
-    "                       ng-model=\"confirmationDetails.emailAddress\" required ng-focus=\"clearErrors()\">\n" +
-    "            </div>\n" +
-    "            <div class=\"form-group input-group\">\n" +
-    "                <span class=\"input-group-addon\"><label class=\"control-label\" for=\"newPasswordInput\">{{'PASSWORD' | translate}}</label></span>\n" +
-    "                <input builder-input=\"password\" type=\"password\" class=\"form-control\" id=\"newPasswordInput\" placeholder=\"{{'PASSWORD_MINCHAR'| translate}}\" name=\"password\"\n" +
-    "                       ng-model=\"user.signup.password\" required ng-focus=\"clearErrors()\">\n" +
-    "            </div>\n" +
-    "            <ul ng-if=\"errors && errors.signup.length\" class=\"text-danger list-unstyled\">\n" +
-    "                <li ng-repeat=\"error in errors.signup\">{{error.message | translate}}</li>\n" +
-    "            </ul>\n" +
-    "          <button type=\"submit\" id=\"create-acct-btn\" class=\"btn btn-primary btn-lg btn-block\">{{'CREATE_ACCOUNT' | translate}}</button>\n" +
-    "        </form>\n" +
-    "      </div>\n" +
-    "\n" +
-    "</div>"
   );
 
 
@@ -3100,7 +3157,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <!-- discount -->\n" +
     "        <tr ng-if=\"cart.discounts.length\" >\n" +
     "            <td>{{'DISCOUNT' | translate}}</td>\n" +
-    "            <td class=\"text-right\">\n" +
+    "            <td class=\"discount text-right\">\n" +
     "                <span class=\"error\">-{{cart.totalDiscount.amount | currency: currencySymbol}}</span>\n" +
     "            </td>\n" +
     "        </tr>\n" +
@@ -3119,7 +3176,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <!-- tax estimator -->\n" +
     "        <tr ng-show=\"!!taxType && taxType !== 'FLATRATE'\" >\n" +
     "            <td class=\"estimate-tax-link\" colspan=\"2\">\n" +
-    "                <a href=\"\" ng-click=\"showTaxEstimation=!showTaxEstimation\">\n" +
+    "                <a id=\"tax-estimation-link\" href=\"\" ng-click=\"showTaxEstimation=!showTaxEstimation\">\n" +
     "                    {{'ESTIMATE_TAX'|translate}}\n" +
     "                    <span ng-show=\"!showTaxEstimation\" class=\"glyphicon glyphicon-chevron-down\" aria-hidden=\"true\"></span>\n" +
     "                    <span ng-show=\"showTaxEstimation\" class=\"glyphicon glyphicon-chevron-up\" aria-hidden=\"true\"></span>\n" +
@@ -3170,7 +3227,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "        <tr ng-show=\"calculateTax.taxCalculationApplied && taxType !== 'FLATRATE'\" >\n" +
     "            <td>{{'TAX' | translate}}</td>\n" +
-    "            <td class=\"text-right\">\n" +
+    "            <td id=\"total-tax\" class=\"text-right\">\n" +
     "                {{cart.totalTax.amount | currency: currencySymbol}}\n" +
     "            </td>\n" +
     "        </tr>\n" +
@@ -3249,7 +3306,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <section>\n" +
     "\n" +
     "            <!-- Cart Item -->\n" +
-    "            <div \n" +
+    "            <div\n" +
     "            ng-repeat=\"item in cart.items\"\n" +
     "            ng-controller=\"CartNoteMixinCtrl\">\n" +
     "\n" +
@@ -3271,11 +3328,16 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                            <div class=\"col-xs-10\">\n" +
     "\n" +
     "                                <!-- product name -->\n" +
-    "                                <div class=\"name\">{{item.product.name}}</div>\n" +
+    "                                <div class=\"product-item-name name\">{{item.product.name}}</div>\n" +
+    "\n" +
+    "                                <ul ng-if=\"item.variants\" class=\"list-unstyled\">\n" +
+    "                                    <li ng-repeat=\"variant in item.variants track by $index\">{{variant}}</li>\n" +
+    "                                </ul>\n" +
     "\n" +
     "                                <!-- product price -->\n" +
     "                                <div class=\"price item-attr\">\n" +
-    "                                    {{'ITEM_PRICE' | translate}}: <span> {{item.price.effectiveAmount | currency: currencySymbol}}</span>\n" +
+    "                                    {{'ITEM_PRICE' | translate}}: <span>{{item.price.effectiveAmount | currency: currencySymbol}}</span>\n" +
+    "                                    <span class=\"priceUnit\" ng-if=\"item.price.measurementUnit\">{{item.price.measurementUnit.quantity}} {{item.price.measurementUnit.unit}}</span>\n" +
     "                                </div>\n" +
     "\n" +
     "                                <!-- product quantity -->\n" +
@@ -3291,24 +3353,24 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                                <!-- total price -->\n" +
     "                                <div class=\"price-total item-attr\">{{'TOTAL_PRICE' | translate}}: <span>{{ item.itemPrice.amount || 0 | currency: currencySymbol}}</span></div>\n" +
-    "                                \n" +
+    "\n" +
     "                                <!-- note display -->\n" +
-    "                                <div id=\"noteMixin_area\" class=\"noteMixin\"> \n" +
-    "                                    \n" +
+    "                                <div id=\"noteMixin_area\" class=\"noteMixin\">\n" +
+    "\n" +
     "                                    <!-- display the note -->\n" +
     "                                    <div class=\"note-display\">\n" +
     "                                        {{item.mixins.note.comment}}\n" +
     "                                    </div>\n" +
-    "                                    \n" +
+    "\n" +
     "                                    <!-- note edit button -->\n" +
     "                                    <a id=\"addEditNote\" ng-show=\"note.noteCollapsed\" ng-click=\"note.expandNote(item.mixins.note.comment)\" class=\"modify-note text-uppercase\" href=\"#\">{{item.mixins.note.comment ? (\"EDIT_NOTE\" | translate) : (\"ADD_NOTE\" | translate)}}</a>\n" +
-    "                                    \n" +
+    "\n" +
     "                                    <!-- note delete button -->\n" +
     "                                    <span ng-if=\"item.mixins.note.comment\" ng-show=\"note.noteCollapsed\">\n" +
     "                                        &nbsp; | &nbsp;\n" +
     "                                        <a href=\"#\"  ng-click=\"note.removeNote(item)\" title=\"Delete Note\" class=\"modify-note text-uppercase\">{{'DELETE_NOTE' | translate}}</a>\n" +
     "                                    </span>\n" +
-    "                                    \n" +
+    "\n" +
     "                                </div>\n" +
     "\n" +
     "                            </div>\n" +
@@ -3317,7 +3379,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                            <div class=\"col-xs-2 text-right\">\n" +
     "                                <button id=\"remove-product\" ng-click=\"removeProductFromCart(item.id)\" class=\"btn btn-link removeCartItem\"><span class=\"hyicon hyicon-remove\"></span></button>\n" +
     "                            </div>\n" +
-    "                            \n" +
+    "\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "\n" +
@@ -3333,9 +3395,9 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                                <textarea id=\"cartItemNote\" ng-model=\"note.content\" class=\"form-control\" rows=\"3\"></textarea>\n" +
     "\n" +
     "                                <p class=\"error\" ng-show=\"note.saveFailed\">{{'UNABLE_TO_SAVE_NOTE' | translate}}</p>\n" +
-    "                                \n" +
+    "\n" +
     "                                <button ng-if=\"!note.noteCollapsed\" type=\"button\" ng-click=\"note.collapseNote()\" class=\"btn btn-link btn-lg pull-left text-uppercase\" href=\"#\">{{'CANCEL' | translate}}</button>\n" +
-    "                                \n" +
+    "\n" +
     "                                <button id=\"saveCartItemNote\" class=\"btn btn-primary btn-lg pull-right text-uppercase\" type=\"submit\">{{'SAVE' | translate}}</button>\n" +
     "                            </form>\n" +
     "                        </div>\n" +
@@ -3348,8 +3410,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        </section>\n" +
     "    </div>\n" +
     "    <!-- /Cart Item -->\n" +
-    "</div>\n" +
-    "\n"
+    "</div>\n"
   );
 
 
@@ -3359,10 +3420,10 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    <h2>{{'ORDER_DETAILS' | translate}}\n" +
     "        <!--<span id=\"checkout-cart-btn\"  class=\"glyphicon glyphicon-pencil\"  ng-click=\"showEditCart()\"  ng-if=\"cart.items.length\"></span>-->\n" +
     "    </h2>\n" +
-    "    \n" +
+    "\n" +
     "    <!-- cart items -->\n" +
     "    <section class=\"cartItems\" ng-cloak>\n" +
-    "        \n" +
+    "\n" +
     "        <table class=\"table table-striped cart-items-table\">\n" +
     "\n" +
     "            <!-- desktop view -->\n" +
@@ -3372,7 +3433,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                        <div ng-cloak>\n" +
     "                            <span ng-if=\"cart.totalUnitsCount > 1\">{{'TOTAL' | translate}} ({{cart.totalUnitsCount}} {{'ITEMS' | translate}}) </span>\n" +
     "                            <span ng-if=\"cart.totalUnitsCount <= 1\">{{'TOTAL' | translate}} ({{cart.totalUnitsCount}} {{'ITEM' | translate}}) </span>\n" +
-    "                            <span>{{cart.totalPrice.amount | currency: currencySymbol}}</span>\n" +
+    "                            <span class=\"cart-totalPrice\">{{cart.totalPrice.amount | currency: currencySymbol}}</span>\n" +
     "                        </div>\n" +
     "                    </th>\n" +
     "                    <th class=\"text-right item-price-col\">{{'ITEM_PRICE' | translate}}:</th>\n" +
@@ -3387,9 +3448,15 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                            <img ng-src=\"{{ item && item.product.images[0].url || ''}}\" class=\"product-img\" />\n" +
     "                        </a>\n" +
     "                    </td>\n" +
-    "                    <td>{{item.product.name}}</td>\n" +
-    "                    <td class=\"text-right\">{{item.price.effectiveAmount | currency: currencySymbol}}</td>\n" +
-    "                    <td class=\"text-center\">{{ item.quantity }}</td>\n" +
+    "                    <td>\n" +
+    "                      <ul class=\"list-unstyled\">\n" +
+    "                        <li>{{item.product.name}}</li>\n" +
+    "                        <li ng-repeat=\"variant in item.variants track by $index\">{{variant}}</li>                        \n" +
+    "                      </ul>\n" +
+    "                    </td>\n" +
+    "\n" +
+    "                    <td class=\"text-right item-effectiveAmount\">{{item.price.effectiveAmount | currency: currencySymbol}}  <span class=\"priceUnit\" ng-if=\"item.price.measurementUnit\">{{item.price.measurementUnit.quantity}} {{item.price.measurementUnit.unit}}</span></td>\n" +
+    "                    <td class=\"text-center item-quantity\">{{ item.quantity }}</td>\n" +
     "                    <td class=\"text-right\"><strong>{{ (item.itemPrice.amount) | currency: currencySymbol}}</strong></td>\n" +
     "                    <td></td>\n" +
     "                </tr>\n" +
@@ -3405,7 +3472,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                    </td>\n" +
     "                    <td class=\"text-left mobile-cart-item-details\">\n" +
     "                        {{item.product.name}} <br>\n" +
-    "                        {{'ITEM_PRICE' | translate}}: {{item.price.effectiveAmount | currency: currencySymbol}} <br>\n" +
+    "                        {{'ITEM_PRICE' | translate}}: {{item.price.effectiveAmount | currency: currencySymbol}} <span class=\"priceUnit\" ng-if=\"item.price.measurementUnit\">{{item.price.measurementUnit.quantity}} {{item.price.measurementUnit.unit}}</span> <br>\n" +
     "                        {{'QTY' | translate}}:{{ item.quantity }} <br>\n" +
     "                        <strong>{{'TOTAL_PRICE' | translate}}: {{ (item.itemPrice.amount) | currency: currencySymbol}}</strong>\n" +
     "                    </td>\n" +
@@ -3428,7 +3495,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                    <tr ng-if=\"cart.totalDiscount.amount > 0\">\n" +
     "                        <td class=\"text-left\">{{'DISCOUNT' | translate}}</td>\n" +
     "                        <td class=\"text-right\">\n" +
-    "                            <span class=\"error\">-{{cart.totalDiscount.amount | currency: currencySymbol}}</span>\n" +
+    "                            <span class=\"cart-totalDiscount error\">-{{cart.totalDiscount.amount | currency: currencySymbol}}</span>\n" +
     "                        </td>\n" +
     "                    </tr>\n" +
     "                    <tr>\n" +
@@ -3451,10 +3518,8 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                </tbody>\n" +
     "                <tfoot class=\"order-total-details\">\n" +
     "                    <tr>\n" +
-    "                        <td class=\"text-left\">{{'ORDER_TOTAL' | translate}}</td>\r" +
-    "\n" +
-    "                        <!-- <td class=\"text-right\">{{((cart.subTotalPrice.amount-coupon.amounts.discountAmount>0)?cart.subTotalPrice.amount-coupon.amounts.discountAmount : 0) + shippingCost | currency: currencySymbol}}</td> -->\r" +
-    "\n" +
+    "                        <td class=\"text-left\">{{'ORDER_TOTAL' | translate}}</td>\n" +
+    "                        <!-- <td class=\"text-right\">{{((cart.subTotalPrice.amount-coupon.amounts.discountAmount>0)?cart.subTotalPrice.amount-coupon.amounts.discountAmount : 0) + shippingCost | currency: currencySymbol}}</td> -->\n" +
     "                        <!-- <td class=\"text-right\">{{cart.totalPrice.amount | currency: currencySymbol}}</td> -->\n" +
     "                        <!-- <td class=\"text-right\" id=\"checkout-loyalty-newAmount\">\n" +
     "                        {{loyaltyAmounts.newAmount-coupon.amounts.discountAmount | currency: currencySymbol}}\n" +
@@ -3462,11 +3527,10 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                        <td class=\"text-right\">{{cart.totalPrice.amount | currency: currencySymbol}}</td>\n" +
     "                    <tr>\n" +
     "                </tfoot>\n" +
-    "            </table>\r" +
-    "\n" +
+    "            </table>\n" +
     "            <div ng-include src=\"'js/app/loyalty/templates/checkout_cart.html'\"></div>\n" +
     "        </div>\n" +
-    "        \n" +
+    "\n" +
     "    </section>\n" +
     "    <div ui-view=\"editCart\"></div>\n" +
     "</div>\n"
@@ -3671,7 +3735,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        \n" +
     "        <localized-addresses type=\"shipping\"></localized-addresses>\n" +
     "        <div class=\"col-lg-12\">\n" +
-    "            <button class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\"\n" +
+    "            <button id=\"continue-to-billing\" class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\"\n" +
     "            ng-click=\"shipToDone(shipToForm.$valid, shipToForm.$name, shipToForm.country.$viewValue.id)\">{{'CONTINUE' | translate}} <span\n" +
     "            class=\"hyicon hyicon-chevron-thin-right\"></span></button>\n" +
     "        </div>\n" +
@@ -3698,7 +3762,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                <label>\n" +
     "                    <input type=\"checkbox\" id=\"shipTo\" ng-model=\"shipToSameAsBillTo\" ng-change=\"toggleBillToSameAsShipTo()\">\n" +
     "                    <span class=\"option\">{{'SAME_AS_SHIPPING_ADDRESS' | translate}}</span>\n" +
-    "                    <span class=\"adress\" ng-show=\"shipToSameAsBillTo\">{{ order.shipTo.address1 }}</span>\n" +
+    "                    <span id=\"order-shipTo-address1\" class=\"adress\" ng-show=\"shipToSameAsBillTo\">{{ order.shipTo.address1 }}</span>\n" +
     "                </label>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -3710,8 +3774,10 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                <span class=\"form-block-headline\">{{'DELIVERY_METHOD' | translate}}</span>\n" +
     "            </div>\n" +
     "            <div class=\"form-group input-group\">\n" +
-    "                <label class=\"input-group-addon control-label\" for=\"shipMethod\">{{'METHOD' | translate}}</label>\n" +
-    "                <ui-select ng-model=\"$parent.shippingCost\" on-select=\"closeCartOnCheckout()\" ng-disabled=\"!shippingCosts.length\">\n" +
+    "                <label class=\"input-group-addon control-label\" for=\"shipMethod\">{{'METHOD' | translate}}</label>\r" +
+    "\n" +
+    "                <!-- loyalty call in on select function -->\n" +
+    "                <ui-select ng-model=\"$parent.shippingCost\" on-select=\"closeCartOnCheckout(); updateShippingCost($parent.shippingCost)\" ng-disabled=\"!shippingCosts.length\">\n" +
     "                    <ui-select-match>\n" +
     "                        {{$select.selected.name}} - {{'COST' | translate}}: {{$select.selected.fee.amount | currency : currencySymbol}}\n" +
     "                    </ui-select-match>\n" +
@@ -3722,7 +3788,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            </div>\n" +
     "        </div>\n" +
     "    <div class=\"col-lg-12\">\n" +
-    "        <button class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\" ng-click=\"billToDone(billToForm.$valid, billToForm.$name)\">{{'CONTINUE' | translate}} <span\n" +
+    "        <button id=\"continue-to-payment-method\" class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\" ng-click=\"billToDone(billToForm.$valid, billToForm.$name)\">{{'CONTINUE' | translate}} <span\n" +
     "        class=\"hyicon hyicon-chevron-thin-right\"></span></button>\n" +
     "    </div>\n" +
     "</div>\n" +
@@ -3756,7 +3822,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <div ng-include=\"'js/app/coupons/templates/coupon-apply.html'\" ng-controller=\"CouponCtrl\"></div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <!-- <div class=\"col-lg-12\">\n" +
+    "<!--    <div class=\"col-lg-12\">\n" +
     "        <span class=\"form-block-headline\">{{'PAYMENT' | translate}}</span>\n" +
     "    </div> -->\n" +
     "    \n" +
@@ -3841,7 +3907,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"col-xs-12\">\n" +
-    "        <button class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\" ng-click=\"paymentDone(paymentForm.$valid, paymentForm.$name)\" type=\"submit\">{{'CONTINUE' | translate}} <span\n" +
+    "        <button id=\"mobile-place-order-btn\" class=\"btn btn-primary btn-lg btn-block visible-sm visible-xs\" ng-click=\"paymentDone(paymentForm.$valid, paymentForm.$name)\" type=\"submit\">{{'CONTINUE' | translate}} <span\n" +
     "        class=\"hyicon hyicon-chevron-thin-right\"></span></button>\n" +
     "    </div>\n" +
     "</div>\n" +
@@ -3926,11 +3992,11 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                \n" +
     "                <h2 ng-if=\"!isAuthenticated\" class=\"orderNumber\">{{'ORDER' | translate}}# {{ orderInfo.orderId }}</h2>\n" +
     "\n" +
-    "                <div translate=\"A_COPY_OF_YOUR_ORDER_DETAILS_HAS_BEEN_SENT_TO\" translate-compile translate-values=\"{emailAddress: '{{confirmationDetails.emailAddress}}'}\" class=\"orderEmailedTo\"></div>\n" +
+    "                <div id=\"confirmation-success-message\" translate=\"A_COPY_OF_YOUR_ORDER_DETAILS_HAS_BEEN_SENT_TO\" translate-compile translate-values=\"{emailAddress: '{{confirmationDetails.emailAddress}}'}\" class=\"orderEmailedTo\"></div>\n" +
     "\n" +
     "                <div>\n" +
     "                    <p>{{'THE_SHIPMENT_IS_SCHEDULED_TO_ARRIVE_AT_THE_FOLLOWING_LOCATION' | translate}}:</p>\n" +
-    "                    <address>\n" +
+    "                    <address id=\"shipment-destination\">\n" +
     "                        <span ng-cloak>{{confirmationDetails.shippingAddressName}}<br></span>\n" +
     "                        <span ng-if=\"confirmationDetails.shippingAddressCompanyName\" ng-cloak>{{confirmationDetails.shippingAddressCompanyName}}<br></span>\n" +
     "                        <span ng-cloak>{{confirmationDetails.shippingAddressStreetLine1}}</span>\n" +
@@ -4021,9 +4087,8 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                            <!-- g+ login -->\n" +
     "                            <div class=\"col-md-6 col-sm-6\">\n" +
     "                                <div ng-if=\"googleClientId\"  class=\"googlePlusLogin \">\n" +
-    "                                    <div class=\"googleSignIn\">\n" +
-    "                                        <div class=\"googleSignInLabel\">{{'LOG_IN_WITH_GOOGLE_PLUS' | translate}}</div>\n" +
-    "                                        <google-plus-signin clientid=\"{{googleClientId}}\" approvalprompt=\"force\"></google-plus-signin>\n" +
+    "                                    <div class=\"googleSignIn\" ng-click=\"googleLogin()\">\n" +
+    "                                        <div class=\"googleSignInLabel\">{{'LOG_IN_WITH_GOOGLE' | translate}}</div>\n" +
     "                                    </div>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
@@ -4063,7 +4128,10 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                        </a></td>\n" +
     "                        <td>{{entry.product.name}}</td>\n" +
     "                        <td>{{entry.product.sku}}</td>\n" +
-    "                        <td class=\"text-right\">{{entry.unitPrice | currency: currencySymbol}}</td>\n" +
+    "                        <td class=\"text-right\">\n" +
+    "                            <span>{{entry.unitPrice | currency: currencySymbol}}</span>\n" +
+    "                            <span class=\"priceUnit\" ng-if=\"entry.measurementUnit\">{{entry.measurementUnit.value}} {{entry.measurementUnit.unit}}</span>\n" +
+    "                        </td>\n" +
     "                        <td class=\"text-center\">{{entry.amount}}</td>\n" +
     "                        <td class=\"text-right\"><strong>{{entry.totalPrice |currency: currencySymbol}}</strong></td>\n" +
     "                        <td class=\"margin-cell\"></td>\n" +
@@ -4086,7 +4154,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                                <tr ng-if=\"confirmationDetails.discountAmount != 0\">\n" +
     "                                    <td class=\"text-left\">{{'DISCOUNT' | translate}}</td>\n" +
     "                                    <td class=\"text-right\">\n" +
-    "                                        <span class=\"error\">-{{confirmationDetails.discountAmount | currency: currencySymbol}}</span>\n" +
+    "                                        <span id=\"discount-amount\" class=\"error\">-{{confirmationDetails.discountAmount | currency: currencySymbol}}</span>\n" +
     "                                    </td>\n" +
     "                                </tr>\n" +
     "                                <tr ng-repeat=\"taxLine in confirmationDetails.tax.lines\" ng-show=\"confirmationDetails.tax.lines.length && !confirmationDetails.tax.total.inclusive\">\n" +
@@ -4100,7 +4168,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                                <tfoot>\n" +
     "                                <tr class=\"order-total\">\n" +
     "                                    <td class=\"text-left\">{{'ORDER_TOTAL' | translate}}</td>\n" +
-    "                                    <td class=\"text-right\">{{ confirmationDetails.totalPrice | currency: currencySymbol}}</td>\n" +
+    "                                    <td id=\"confirmation-totalPrice\" class=\"text-right\">{{ confirmationDetails.totalPrice | currency: currencySymbol}}</td>\n" +
     "                                <tr>\n" +
     "                                                        \n" +
     "                                </tfoot>\n" +
@@ -4117,11 +4185,14 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                            </a>\n" +
     "                        </td>\n" +
     "                        <td colspan=\"7\" class=\"text-left product-details-mobile\">\n" +
-    "                            {{entry.product.name}} <br>\n" +
-    "                            {{'SKU' | translate}}: {{entry.product.sku}} <br>\n" +
-    "                            {{'ITEM_PRICE' | translate}}: {{entry.unitPrice | currency: currencySymbol}} <br>\n" +
-    "                            {{'QTY' | translate}}: {{entry.amount}} <br>\n" +
-    "                            <strong>{{'TOTAL_PRICE' | translate}}: {{entry.totalPrice |currency: currencySymbol}}</strong>\n" +
+    "                            <div>{{entry.product.name}}</div>\n" +
+    "                            <div>{{'SKU' | translate}}: {{entry.product.sku}}</div>\n" +
+    "                            <div>\n" +
+    "                                <span>{{'ITEM_PRICE' | translate}}: {{entry.unitPrice | currency: currencySymbol}}</span>\n" +
+    "                                <span class=\"priceUnit\" ng-if=\"entry.measurementUnit\">{{entry.measurementUnit.value}} {{entry.measurementUnit.unit}}</span>\n" +
+    "                            </div>\n" +
+    "                            <div>{{'QTY' | translate}}: {{entry.amount}}</div>\n" +
+    "                            <div><strong>{{'TOTAL_PRICE' | translate}}: {{entry.totalPrice |currency: currencySymbol}}</strong></div>\n" +
     "                        </td>\n" +
     "                    </tr>\n" +
     "                    <tr class=\"summary-row visible-sm visible-xs\">\n" +
@@ -4163,8 +4234,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                        </td>\n" +
     "                    </tr>\n" +
     "\n" +
-    "                </table>\r" +
-    "\n" +
+    "                </table>\n" +
     "                <div ng-include src=\"'js/app/loyalty/templates/confirmation.html'\"></div>\n" +
     "                <div ng-include src=\"'js/app/loyalty/templates/checkout_signup_loyalty.html'\">\n" +
     "            </div>\n" +
@@ -4213,22 +4283,24 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "				{{couponErrorMessage}}\n" +
     "			</div>\n" +
     "\n" +
-    "			<div class=\"input-group\" ng-class=\"{ 'has-error': couponErrorMessage }\">\n" +
+    "			<form name=\"applyCouponForm\" class=\"input-group\" ng-class=\"{ 'has-error': couponErrorMessage }\">\n" +
     "				\n" +
     "				<!-- coupon input -->\n" +
-    "				<input id=\"coupon-code\" type=\"text\" class=\"form-control couponInput\" ng-model='couponCode' placeholder=\"ADD COUPON CODE\"  >\n" +
+    "				<input id=\"coupon-code\" builder-input=\"couponCode\" type=\"text\" name=\"couponCodeElement\" class=\"form-control couponInput\" \n" +
+    "                       ng-model=\"couponCode\" ng-minlength=\"3\" ng-maxlength=\"24\" \n" +
+    "                       placeholder=\"{{'ADD_COUPON_CODE'|translate}}\" />\n" +
     "\n" +
     "				<!-- coupon apply btn -->\n" +
     "				<span class=\"input-group-btn\">\n" +
-    "					<button id=\"apply-coupon\" class=\"btn btn-default\" ng-click=\"applyCoupon(couponCode); couponCode = null\">\n" +
+    "					<button id=\"apply-coupon\" class=\"btn btn-default\" \n" +
+    "                            ng-click=\"applyCoupon(couponCode, applyCouponForm.couponCodeElement.$invalid)\">\n" +
     "						{{'COUPON_APPLY' | translate}}\n" +
     "					</button>\n" +
     "				</span>\n" +
-    "		\n" +
-    "			</div>\n" +
+    "\n" +
+    "			</form>\n" +
     "			\n" +
     "		</div>\n" +
-    "\n" +
     "\n" +
     "	</div>\n" +
     "\n" +
@@ -4709,7 +4781,12 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "			<rating class=\"product-rating\" id=\"rating-average\" ng-model=\"avgRating\" max=\"5\" readonly=\"true\"></rating>\n" +
     "		</span> -->\n" +
     "        <span class=\"product-rating\" id=\"rating-average\">\n" +
-    "            <i ng-repeat=\"rateStar in [1, 2, 3, 4, 5] track by $index\" class=\"glyphicon\" data-width=\"{{avgRatingView}}\" ng-class=\"{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }\"></i>\n" +
+    "            \n" +
+    "\n" +
+    "             <i ng-if=\"!ratingShowFlag\" ng-repeat=\"rateStar in [1, 2, 3, 4, 5] track by $index\" class=\"glyphicon\" data-width=\"{{avgRatingView}}\" ng-class=\"{ 'glyphicon-star': $index <= avgRating,  'glyphicon-star-empty': $index > avgRating, 'avg': $index === avgRating }\"></i>\n" +
+    "\n" +
+    "            <i ng-if=\"ratingShowFlag\" ng-repeat=\"rateStar in [1, 2, 3, 4, 5] track by $index\" class=\"glyphicon\" data-width=\"{{avgRatingView}}\" ng-class=\"{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }\"></i>\n" +
+    "\n" +
     "        </span>\n" +
     "        <span>\n" +
     "			<span><a ng-click=\"getProductReviews()\" id=\"reviews-link\" translate=\"{{ 'USER_REVIEW' }}\" translate-values=\"{ totalRatingReviews: totalRatingReviews}\"></a>\n" +
@@ -4740,9 +4817,13 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                <div class=\"form-group rating-review-row\">\n" +
     "                    <div class=\"marginBottom5\"><Label id=\"product-average-rating\">{{'AVERAGE_USER_RATING' | translate}} </Label></div>\n" +
     "                    <div class=\"marginBottom5\">\n" +
+    "\n" +
     "                        <strong><span class=\"ratingAvg\" id=\"average-rating-model\" ng-bind=\"avgRatingModel\"></span></strong>\n" +
     "                         <span class=\"product-rating\" id=\"rating-average\">\n" +
-    "                            <i ng-repeat=\"rateStar in [1, 2, 3, 4, 5] track by $index\" class=\"glyphicon\" data-width=\"{{avgRatingView}}\" ng-class=\"{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }\"></i>\n" +
+    "\n" +
+    "                            <i ng-if=\"!ratingShowFlag\" ng-repeat=\"rateStar in [1, 2, 3, 4, 5] track by $index\" class=\"glyphicon\" data-width=\"{{avgRatingView}}\" ng-class=\"{ 'glyphicon-star': $index <= avgRating,  'glyphicon-star-empty': $index > avgRating, 'avg': $index === avgRating }\"></i>\n" +
+    "\n" +
+    "                            <i ng-if=\"ratingShowFlag\" ng-repeat=\"rateStar in [1, 2, 3, 4, 5] track by $index\" class=\"glyphicon\" data-width=\"{{avgRatingView}}\" ng-class=\"{ 'glyphicon-star': $index < avgRating,  'glyphicon-star-empty': $index >= avgRating, 'avg': ( $index + 1 ) === avgRating }\"></i>\n" +
     "                        </span>\n" +
     "                    </div>\n" +
     "                    <div class=\"form-group\">\n" +
@@ -5268,54 +5349,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('js/app/products/templates/product-attribute-group.html',
-    "<product-attribute ng-repeat=\"(key, prop) in properties\"\n" +
-    "                   ng-if=\"group.attributes[key]\"\n" +
-    "                   definition=\"prop.oneOf[0]\"\n" +
-    "                   value=\"group.attributes[key]\"></product-attribute>"
-  );
-
-
-  $templateCache.put('js/app/products/templates/product-attribute-groups.html',
-    "<product-attribute-group ng-repeat=\"attributeGroup in attributeGroups\"\n" +
-    "                         group=\"attributeGroup\"></product-attribute-group>"
-  );
-
-
-  $templateCache.put('js/app/products/templates/product-attribute.html',
-    "<div class=\"row\">\n" +
-    "    <div class=\"col-xs-6\">\n" +
-    "        <strong>{{definition.title}}</strong>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"col-xs-6\">\n" +
-    "        <span ng-switch=\"definition.type\">\n" +
-    "            <span ng-switch-when=\"string\">\n" +
-    "                <span ng-switch=\"definition.format\">\n" +
-    "                    <span ng-switch-when=\"date\">{{value | date:dateFormatting.date}}</span>\n" +
-    "\n" +
-    "                    <span ng-switch-when=\"time\">{{value | date:dateFormatting.time}}</span>\n" +
-    "\n" +
-    "                    <span ng-switch-when=\"date-time\">{{value | date:dateFormatting.dateTime}}</span>\n" +
-    "\n" +
-    "                    <span ng-switch-default>{{value}}</span>\n" +
-    "                </span>\n" +
-    "            </span>\n" +
-    "\n" +
-    "            <span ng-switch-when=\"boolean\">\n" +
-    "                <span ng-if=\"value\" class=\"glyphicon glyphicon-ok\"></span>\n" +
-    "                <span ng-if=\"!value\" class=\"glyphicon glyphicon-remove\"></span>\n" +
-    "            </span>\n" +
-    "\n" +
-    "            <span ng-switch-default>{{value}}</span>\n" +
-    "        </span>\n" +
-    "    </div>\n" +
-    "</div>"
-  );
-
-
   $templateCache.put('js/app/products/templates/product-detail.html',
-    "\n" +
     "<!-- bread crumbs -->\n" +
     "<ybreadcrumb yitem=\"breadcrumbData\" size=\"'small'\"></ybreadcrumb>\n" +
     "\n" +
@@ -5327,7 +5361,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            <div class=\"col-md-6\">\n" +
     "                <div class=\"product-gallery\">\n" +
     "                    <div class=\"row\">\n" +
-    "                        <product-img-carousel images=\"product.product.media\"></product-img-carousel>\n" +
+    "                        <product-img-carousel images=\"product.media\"></product-img-carousel>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -5335,89 +5369,140 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "            <!-- product details -->\n" +
     "            <div class=\"col-md-6\">\n" +
     "                <div class=\"product-details text-center\">\n" +
-    "                    \n" +
+    "\n" +
     "                    <!-- product name -->\n" +
-    "                    <h1 class=\"pageTitle\">{{product.product.name}}</h1>\n" +
+    "                    <h1 class=\"pageTitle\">{{product.name}}</h1>\n" +
     "\n" +
-    "                    <!-- product sale price -->\n" +
-    "                    <div ng-if=\"product.prices[0].salePrice\" class=\"price\">\n" +
-    "                        <span class=\"price originalPrice\"><strike>{{ product.prices[0].originalAmount | currency: currencySymbol }}</strike></span>\n" +
-    "                        <span class=\"price salesPrice\">{{product.prices[0].effectiveAmount | currency: currencySymbol}}</span>\n" +
-    "                        <span class=\"priceUnit salesPrice\" ng-if=\"product.prices[0].measurementUnit\">{{product.prices[0].measurementUnit.quantity}} {{product.prices[0].measurementUnit.unitCode}}</span>\n" +
+    "                    <div ng-if=\"product.isBuyable && product.prices[0]\">\n" +
+    "                        <!-- product sale price -->\n" +
+    "                        <div ng-if=\"product.prices[0].salePrice\" class=\"price\">\n" +
+    "                            <span id=\"original-price\" class=\"price originalPrice\"><strike>{{ product.prices[0].originalAmount | currency: currencySymbol }}</strike></span>\n" +
+    "                            <span id=\"sales-price\" class=\"price salesPrice\">{{product.prices[0].effectiveAmount | currency: currencySymbol}}</span>\n" +
+    "                            <span class=\"priceUnit salesPrice\" ng-if=\"product.prices[0].measurementUnit\">{{product.prices[0].measurementUnit.quantity}} {{product.prices[0].measurementUnit.unitCode}}</span>\n" +
+    "                        </div>\n" +
+    "\n" +
+    "                        <!-- product price -->\n" +
+    "                        <div ng-if=\"!product.prices[0].salePrice\" class=\"price\">\n" +
+    "                            <span id=\"effective-amount\" class=\"price\">{{product.prices[0].effectiveAmount | currency: currencySymbol}}</span>\n" +
+    "                            <span id=\"measurement-unit-quantity\" class=\"priceUnit\" ng-if=\"product.prices[0].measurementUnit\">{{product.prices[0].measurementUnit.quantity}} {{product.prices[0].measurementUnit.unitCode}}</span>\n" +
+    "                        </div>\n" +
     "                    </div>\n" +
     "\n" +
-    "                    <!-- product price -->\n" +
-    "                    <div ng-if=\"!product.prices[0].salePrice\" class=\"price\">\n" +
-    "                        <span class=\"price\">{{product.prices[0].effectiveAmount | currency: currencySymbol}}</span>\n" +
-    "                        <span class=\"priceUnit\" ng-if=\"product.prices[0].measurementUnit\">{{product.prices[0].measurementUnit.quantity}} {{product.prices[0].measurementUnit.unitCode}}</span>\n" +
-    "                    </div>\n" +
-    "                    \n" +
-    "                    <!-- product detials -->\n" +
-    "                    <div class=\"product-detail-text\" ng-if=\"hasAnyOfAttributesSet(product.product)\">\n" +
-    "                        <product-attribute-groups product=\"product.product\"></product-attribute-groups>\n" +
-    "                    </div>\n" +
-    "    \n" +
     "                    <!-- product tax -->\n" +
-    "                    <div class=\"taxMessage\" ng-if=\"!!taxConfiguration && taxConfiguration.label\">\n" +
-    "                        {{taxConfiguration.label}}\n" +
+    "                    <div id=\"tax-message\" class=\"taxMessage\" ng-if=\"!!taxConfiguration && taxConfiguration.label\">\n" +
+    "                        <div ng-if=\"taxConfiguration.label.length <= 60 || taxConfiguration.seeMoreClicked\">\n" +
+    "                            {{taxConfiguration.label}}\n" +
+    "                        </div>\n" +
+    "                        \n" +
+    "\n" +
+    "                        <div ng-if=\"taxConfiguration.label.length > 60 && !taxConfiguration.seeMoreClicked\">\n" +
+    "                            {{taxConfiguration.shortenedLabel}}... \n" +
+    "                            <a ng-click=\"taxConfiguration.seeMoreClicked = true\">{{'MORE' | translate}}</a>\n" +
+    "                        </div>\n" +
     "                    </div>\n" +
-    "                      <div class=\"review-rating\" ng-include src=\"'js/app/loyalty/templates/product_rating.html'\"></div>\n" +
-    "                    <form action=\"\" class=\"cartPanel\">\n" +
     "\n" +
-    "                        <!-- product quantity -->\n" +
-    "                        <div class=\"row\" >\n" +
-    "                            <div class=\"col-md-4 col-md-offset-4\">\n" +
-    "                                <div class=\"form-group input-group qty\">\n" +
-    "                                    <label class=\"input-group-addon control-label\" for=\"qty\" >{{'QTY' | translate}}: </label>\n" +
-    "                                    <input quantity-input type=\"number\" id=\"qty\" ng-max=\"10000000\" min=\"1\" step=\"1\" pattern=\"\\d*\" class=\"form-control quantity\"\n" +
-    "                                        ng-model=\"productDetailQty\" ng-change=\"changeQty(event)\">\n" +
-    "                                </div>\n" +
-    "                            </div>\n" +
-    "                        </div>  \n" +
-    "    \n" +
-    "                        <div class=\"row\">\n" +
+    "                    <div class=\"review-rating\" ng-include src=\"'js/app/loyalty/templates/product_rating.html'\"></div>\n" +
     "\n" +
-    "                            <!-- error notification -->\n" +
-    "                            <div ng-if=\"error\" class=\"col-md-12 col-lg-12\">\n" +
-    "                                <div class=\"error\" >\n" +
-    "                                    <small class=\"help-inline has-error\">\n" +
-    "                                        {{'ERROR_ADDING_TO_CART' | translate}}\n" +
-    "                                    </small>\n" +
+    "\n" +
+    "                    <!-- product options -->\n" +
+    "                    <product-options variants=\"variants\" on-active-variant-changed=\"onActiveVariantChanged(activeVariant)\"></product-options>\n" +
+    "\n" +
+    "                    <div ng-if=\"product.isBuyable\">\n" +
+    "                        <form action=\"\" class=\"cartPanel\" ng-show=\"product.prices[0] && product.inStock\">\n" +
+    "\n" +
+    "                            <!-- product quantity -->\n" +
+    "                            <div class=\"row product-options\">\n" +
+    "                                <div class=\"col-md-8 col-md-offset-2 custom-select-container\">\n" +
+    "                                    <div class=\"form-group input-group qty\">\n" +
+    "                                        <label class=\"input-group-addon control-label\" for=\"qty\">{{'QTY' | translate}}: </label>\n" +
+    "                                        <input quantity-input ng-max=\"10000000\" type=\"number\" id=\"qty\" min=\"1\" step=\"1\" pattern=\"\\d*\" class=\"form-control quantity\" ng-model=\"$parent.productDetailQty\"\n" +
+    "                                            ng-change=\"changeQty(event)\">\n" +
+    "                                    </div>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "\n" +
-    "                            <!-- add to cart -->\n" +
-    "                            <div  class=\"col-md-12 col-lg-12 buyButton\">\n" +
-    "                                <button id=\"buy-button\" ng-show=\"{{product.product.mixins.inventory.inStock}}\" class=\"btn btn-primary \" ng-click=\"addToCartFromDetailPage()\" ng-disabled=\"!buyButtonEnabled\">{{'ADD_TO_CART' | translate}}</button>\n" +
-    "                                <button id=\"out-of-stock-btn\" ng-show=\"{{!product.product.mixins.inventory.inStock}}\" class=\"btn btn-default\" disabled>{{'OUT_OF_STOCK' | translate}}</button>\n" +
+    "                            <div class=\"row\">\n" +
+    "\n" +
+    "                                <!-- error notification -->\n" +
+    "                                <div ng-if=\"error\" class=\"col-md-8 col-md-offset-2\">\n" +
+    "                                    <div class=\"error\">\n" +
+    "                                        <small class=\"help-inline has-error\">\n" +
+    "                                            {{'ERROR_ADDING_TO_CART' | translate}}\n" +
+    "                                        </small>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "\n" +
+    "                                <!-- add to cart -->\n" +
+    "                                <div class=\"col-md-8 col-md-offset-2\">\n" +
+    "                                    <button id=\"buy-button\" type=\"button\" class=\"btn btn-primary btn-block buyButton\" ng-click=\"addToCartFromDetailPage()\"\n" +
+    "                                        ng-disabled=\"!buyButtonEnabled\">{{'ADD_TO_CART' | translate}}</button>\n" +
+    "                                </div>\n" +
+    "\n" +
+    "                                <!-- shipping rates -->\n" +
+    "                                <div class=\"col-md-8 col-md-offset-2 shipping-rate\" ng-if=\"!noShippingRates\">\n" +
+    "                                    <a href=\"\"><span ng-click=\"showShippingRates()\">Shipping Rates</span></a>\n" +
+    "                                </div>\n" +
     "                            </div>\n" +
-    "                            \n" +
-    "                            <!-- shipping rates -->\n" +
-    "                            <div class=\"col-xs-12 shipping-rate\" ng-if=\"!noShippingRates\">\n" +
-    "                                <a href=\"\"><span ng-click=\"showShippingRates()\">Shipping Rates</span></a>\n" +
+    "                        </form>\n" +
+    "\n" +
+    "                       <div class=\"reward-points\" ng-include src=\"'js/app/loyalty/templates/reward_points_product_details.html'\"></div>\n" +
+    "\n" +
+    "                        <!-- unavialable button -->\n" +
+    "                        <div class=\"row\" ng-if=\"!product.prices[0]\">\n" +
+    "                            <div class=\"col-md-8 col-md-offset-2\">\n" +
+    "                                <button id=\"out-of-stock-btn\" class=\"btn btn-default btn-block buyButton\" disabled>{{'UNAVAILABLE' | translate}}</button>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
-    "                    </form>\n" +
     "\n" +
-    "                 <div class=\"reward-points\" ng-include src=\"'js/app/loyalty/templates/reward_points_product_details.html'\"></div>\n" +
-    "                    \n" +
-    "                </div> \n" +
+    "                        <!-- out of stock button -->\n" +
+    "                        <div class=\"row\" ng-if=\"product.prices[0] && !product.inStock\">\n" +
+    "                            <div class=\"col-md-8 col-md-offset-2\">\n" +
+    "                                <button id=\"out-of-stock-btn\" class=\"btn btn-default btn-block buyButton\" disabled>{{'OUT_OF_STOCK' | translate}}</button>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
     "            </div>\n" +
     "\n" +
     "        </div>\n" +
     "    </section>\n" +
     "\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-md-8 col-md-offset-2\">\n" +
+    "            <ul class=\"nav nav-tabs\">\n" +
+    "                <li role=\"presentation\" ng-class=\"{active: activeTab === 'description'}\">\n" +
+    "                    <a href=\"#\" ng-click=\"openTab('description'); $event.preventDefault();\">{{'DESCRIPTION_TAB' | translate}}</a>\n" +
+    "                </li>\n" +
+    "\n" +
+    "                <li role=\"presentation\" ng-class=\"{active: activeTab === 'details'}\">\n" +
+    "                    <a href=\"#\" ng-click=\"openTab('details'); $event.preventDefault();\">{{'DETAILS_TAB' | translate}}</a>\n" +
+    "                </li>\n" +
+    "            </ul>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
     "    <section class=\"gray\">\n" +
     "        <div class=\"row\">\n" +
-    "\n" +
-    "            <!-- product description -->\n" +
-    "            <div class=\"headline text-center\">{{'PRODUCT_DESCRIPTION' | translate}}</div>\n" +
     "            <div class=\"col-md-8 col-md-offset-2\">\n" +
-    "                <div class=\"description\">\n" +
-    "                    {{product.product.description}}\n" +
+    "                <div class=\"tab-content\">\n" +
+    "                    <div role=\"tabpanel\" class=\"tab-pane\" ng-class=\"{active: activeTab === 'description'}\" id=\"description\">\n" +
+    "                        <!-- product description -->\n" +
+    "                        <div class=\"headline\">{{'PRODUCT_DESCRIPTION' | translate}}</div>\n" +
+    "\n" +
+    "                        <div id=\"product-description-text\" class=\"description\">\n" +
+    "                            {{product.description}}\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "\n" +
+    "                    <div role=\"tabpanel\" class=\"tab-pane\" ng-class=\"{active: activeTab === 'details'}\" id=\"details\">\n" +
+    "                        <!-- product detials -->\n" +
+    "                        <div class=\"headline\">{{'PRODUCT_DETAILS' | translate}}</div>\n" +
+    "\n" +
+    "                        <product-extension schema-url=\"{{productMixinsDefinitions[id]}}\" mixin=\"mixin\" ng-repeat=\"(id, mixin) in productMixins track by $index\"></product-extension>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "            \n" +
     "        </div>\n" +
     "    </section>\n" +
     "</div>\n" +
@@ -5427,20 +5512,97 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "<script src=\"js/vendor-static/owl.carousel.js\"></script>\n" +
     "<script src=\"js/vendor-static/img-touch-canvas.js\"></script>\n" +
     "<script src=\"js/vendor-static/jquery.fullscreen-min.js\"></script>\n" +
-    "<script src=\"js/vendor-static/main.js\"></script>\n" +
+    "<script src=\"js/vendor-static/main.js\"></script>"
+  );
+
+
+  $templateCache.put('js/app/products/templates/product-extension-item.html',
+    "<div class=\"product-extension-item\">\n" +
+    "    <span ng-switch=\"type\">\n" +
+    "        <span ng-switch-when=\"array\">\n" +
+    "            <ng-include src=\"'js/app/products/templates/product-extension-item/_array.html'\"></ng-include>\n" +
+    "        </span>\n" +
+    "        <span ng-switch-when=\"object\">\n" +
+    "            <ng-include src=\"'js/app/products/templates/product-extension-item/_object.html'\"></ng-include>\n" +
+    "        </span>\n" +
+    "        <span ng-switch-default>\n" +
+    "            <ng-include src=\"'js/app/products/templates/product-extension-item/_default.html'\"></ng-include>\n" +
+    "        </span>\n" +
+    "    </span>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('js/app/products/templates/product-extension-item/_array.html',
+    "<div class=\"row\">\n" +
+    "	<div class=\"col-md-12 array-row\">\n" +
+    "		<span ng-if=\"displayedName\">{{displayedName}}</span>\n" +
+    "		<strong>\n" +
+    "			<span ng-repeat=\"item in value track by $index\" class=\"array-row\" ng-class=\"{'array-row-last':$last}\">\n" +
+    "	    		<product-extension-item value=\"item\" definition=\"definition.items\" islastobject=\"$last\" ></product-extension-item>\n" +
+    "			</span>\n" +
+    "		</strong>\n" +
+    "	</div>\n" +
+    "</div>\n" +
     "\n" +
     "\n"
   );
 
 
+  $templateCache.put('js/app/products/templates/product-extension-item/_default.html',
+    "<div class=\"row\">\n" +
+    "<div class=\"col-md-12 displayed-row\">\n" +
+    "    \n" +
+    "    <span ng-if=\"displayedName\" class=\"displayed-name\">{{displayedName}}</span>\n" +
+    "    <span ng-switch=\"type\">\n" +
+    "        <strong>\n" +
+    "            <span ng-switch-when=\"boolean\">\n" +
+    "                <span ng-if=\"value\">Yes</span>\n" +
+    "                <span ng-if=\"!value\">No</span>\n" +
+    "            </span>\n" +
+    "        \n" +
+    "            <span ng-switch-when=\"string\">\n" +
+    "                <span ng-switch=\"stringFormat\">\n" +
+    "                    <span ng-switch-when=\"date\">{{value | defaultDate}}</span>\n" +
+    "                    <span ng-switch-when=\"time\">{{value | defaultTime}}</span>\n" +
+    "                    <span ng-switch-when=\"date-time\">{{value | defaultDateTime}}</span>\n" +
+    "        \n" +
+    "                    <span ng-switch-default>{{value}}</span>\n" +
+    "                </span>\n" +
+    "            </span>\n" +
+    "        \n" +
+    "            <span ng-switch-default>\n" +
+    "                {{value}}\n" +
+    "            </span>\n" +
+    "        </strong>  \n" +
+    "    </span>\n" +
+    "</div>\n" +
+    "    \n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('js/app/products/templates/product-extension-item/_object.html',
+    "<div class=\"col-md-12 object-row\" ng-class=\"{'object-row-last':islastobject}\">\n" +
+    "	<span ng-if=\"displayedName\"><h4>{{displayedName}} </h4></span>\n" +
+    "	<product-extension-item ng-repeat=\"name in propertyOrder\" name=\"{{name}}\" value=\"value[name]\" definition=\"definition.properties[name]\"></product-extension-item>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('js/app/products/templates/product-extension.html',
+    "<product-extension-item name=\"{{name}}\" value=\"mixin\" definition=\"definition\" ng-if=\"definition\"></product-extension-item>"
+  );
+
+
   $templateCache.put('js/app/products/templates/product-img-carousel.html',
     "<div class=\"row image-carousel\">\n" +
-    "    <div class=\"col-md-10 main-image-container\">\n" +
+    "    <div class=\"col-md-10 main-image-container\" ng-click=\"enlargeImage()\">\n" +
     "        <div class=\"product-images\">   \n" +
     "            <img id=\"{{$index}}\" class=\"product-image\" ng-repeat=\"image in images\" ng-src=\"{{image.url}}\" alt=\"\" fullscreen>        \n" +
     "        </div>\n" +
     "        <div class=\"zoom\">\n" +
-    "            <span class=\"glyphicon hyicon hyicon-plus hidden-xs hidden-sm\" ng-click=\"enlargeImage()\"></span>\n" +
+    "            <span class=\"hidden-xs hidden-sm\"><img src=\"img/img-zoom.png\" alt=\"Zoom\"/></span>\n" +
     "        </div>\n" +
     "        <div class=\"hidden-lg hidden-md mobileThumbs\">\n" +
     "            <div ng-repeat=\"thumb in images\" ng-class=\"{'active': currentIndex === $index}\" ng-click=\"moveCarousel($index)\">\n" +
@@ -5502,7 +5664,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                <div class=\"col-xs-5 col-sm-6 col-md-6 col-lg-3 pull-right\">\n" +
     "                    <div class=\"viewingContainer\">\n" +
     "                        <span class=\"name\">{{'VIEWING' | translate}}</span>\n" +
-    "                        <span class=\"page-indicator\"\n" +
+    "                        <span id=\"product-range-indicator\" class=\"page-indicator\"\n" +
     "                             translate=\"PRODUCTS_FROM_TO\"\n" +
     "                             translate-compile\n" +
     "                             translate-values=\"{productsFrom: '{{pagination.productsFrom}}', productsTo: '{{pagination.productsTo}}', total: '{{total}}'}\"></span>\n" +
@@ -5576,21 +5738,71 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <div class=\"item col-xs-12 col-sm-6 col-md-4 col-lg-3\" ng-repeat=\"product in products\"\n" +
     "             on-finish-render-ng-repeat on-finish-render-ng-repeat-event=\"initialViewportCheck\">\n" +
     "\n" +
-    "            <a id=\"p_{{product.product.id}}\" ng-click=\"openProductDetails(product.product.id)\" ui-sref=\"base.product.detail({ 'lastCatId': lastCatId, 'productId': product.product.id })\">\n" +
-    "\n" +
-    "                <div class=\"thumb\">\n" +
-    "                    <img ng-src=\"{{ product && product.product.mainImageURL || PLACEHOLDER_IMAGE}}\" alt=\"\">\n" +
-    "                </div>\n" +
-    "                <div class=\"productInfoContainer text-center\">\n" +
-    "                    <div class=\"name\">{{ product.product.name }}</div>\n" +
-    "                    <div ng-if=\"prices[product.product.id].salePrice\" class=\"price\">\n" +
-    "                            <span class=\"price originalPrice\"><strike>{{ prices[product.product.id].originalAmount | currency: currencySymbol }}</strike></span>\n" +
-    "                            <span class=\"price salesPrice\">{{prices[product.product.id].effectiveAmount | currency: currencySymbol}}</span>\n" +
-    "                            <span class=\"priceUnit salesPrice\" ng-if=\"prices[product.product.id].measurementUnit\">{{prices[product.product.id].measurementUnit.quantity}} {{prices[product.product.id].measurementUnit.unitCode}}</span>\n" +
+    "            <a id=\"p_{{product.id}}\" ng-click=\"openProductDetails(product.id)\" ui-sref=\"base.product.detail( {productId: product.id, lastCatId: lastCatId} )\">\n" +
+    "                <div class=\"productContainer\">\n" +
+    "                    <div class=\"thumb\">\n" +
+    "                        <img ng-src=\"{{ product && product.mainImageURL || PLACEHOLDER_IMAGE}}\" alt=\"\">\n" +
     "                    </div>\n" +
-    "                    <div ng-if=\"!prices[product.product.id].salePrice\" class=\"price\">\n" +
-    "                        <span class=\"price\">{{prices[product.product.id].effectiveAmount | currency: currencySymbol}}</span>\n" +
-    "                        <span class=\"priceUnit\" ng-if=\"prices[product.product.id].measurementUnit\">{{prices[product.product.id].measurementUnit.quantity}} {{prices[product.product.id].measurementUnit.unitCode}}</span>\n" +
+    "                    <div class=\"productInfoContainer text-center\">\n" +
+    "                        <div class=\"name\">{{ product.name }}</div>\n" +
+    "                        <div ng-if=\"product.hasVariants\">\n" +
+    "                            <div ng-if=\"prices[product.id].minPrice\">\n" +
+    "                                <div ng-if=\"prices[product.id].minPrice.effectiveAmount == prices[product.id].maxPrice.effectiveAmount\">\n" +
+    "                                    <div ng-if=\"prices[product.id].minPrice.effectiveAmount < prices[product.id].minPrice.originalAmount\" class=\"price\">\n" +
+    "                                        <span class=\"originalPrice\"><strike>{{prices[product.id].minPrice.originalAmount | currency: '' }}</strike></span>\n" +
+    "                                        <span class=\"price salesPrice\">{{prices[product.id].minPrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                        <span> {{currencySymbol}}</span>\n" +
+    "                                        <span class=\"priceUnit\" ng-if=\"prices[product.id].minPrice.measurementUnit\">{{prices[product.id].minPrice.measurementUnit.quantity}} {{prices[product.id].minPrice.measurementUnit.unitCode}}</span>\n" +
+    "                                    </div>\n" +
+    "                                    <div ng-if=\"prices[product.id].minPrice.effectiveAmount == prices[product.id].minPrice.originalAmount\" class=\"price\">\n" +
+    "                                        <span>{{prices[product.id].minPrice.effectiveAmount | currency: ''}} {{currencySymbol}}</span>\n" +
+    "                                        <span class=\"priceUnit\" ng-if=\"prices[product.id].minPrice.measurementUnit\">{{prices[product.id].minPrice.measurementUnit.quantity}} {{prices[product.id].minPrice.measurementUnit.unitCode}}</span>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                                <div ng-if=\"prices[product.id].minPrice.effectiveAmount != prices[product.id].maxPrice.effectiveAmount\">\n" +
+    "                                    <div>\n" +
+    "                                        <span ng-if=\"prices[product.id].minPrice.effectiveAmount < prices[product.id].minPrice.originalAmount\" class=\"price\">\n" +
+    "                                            <span class=\"originalPrice\"><strike>{{ prices[product.id].minPrice.originalAmount | currency: '' }}</strike></span>\n" +
+    "                                            <span class=\"price salesPrice\">{{prices[product.id].minPrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                        </span>\n" +
+    "                                        <span ng-if=\"prices[product.id].minPrice.effectiveAmount == prices[product.id].minPrice.originalAmount\" class=\"price\">\n" +
+    "                                            <span>{{prices[product.id].minPrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                        </span>\n" +
+    "                                        <span class=\"price\">-</span>\n" +
+    "                                        <span ng-if=\"prices[product.id].maxPrice.effectiveAmount < prices[product.id].maxPrice.originalAmount\" class=\"price\">\n" +
+    "                                            <span class=\"originalPrice\"><strike>{{ prices[product.id].maxPrice.originalAmount | currency: '' }}</strike></span>\n" +
+    "                                            <span class=\"price salesPrice\">{{prices[product.id].maxPrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                            <span> {{currencySymbol}}</span>\n" +
+    "                                            <span class=\"priceUnit\" ng-if=\"prices[product.id].maxPrice.measurementUnit\">{{prices[product.id].maxPrice.measurementUnit.quantity}} {{prices[product.id].maxPrice.measurementUnit.unitCode}}</span>\n" +
+    "                                        </span>\n" +
+    "                                        <span ng-if=\"prices[product.id].maxPrice.effectiveAmount == prices[product.id].maxPrice.originalAmount\" class=\"price\">\n" +
+    "                                            <span class=\"price\">{{prices[product.id].maxPrice.effectiveAmount | currency: ''}} {{currencySymbol}}</span>\n" +
+    "                                            <span class=\"priceUnit\" ng-if=\"prices[product.id].maxPrice.measurementUnit\">{{prices[product.id].maxPrice.measurementUnit.quantity}} {{prices[product.id].maxPrice.measurementUnit.unitCode}}</span>\n" +
+    "                                        </span>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div ng-if=\"!prices[product.id].minPrice\">\n" +
+    "                                <span class=\"price\">{{'NO_PRICE' | translate}} {{currencySymbol}}</span>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div ng-if=\"!product.hasVariants\">\n" +
+    "                            <div ng-if=\"prices[product.id]\">\n" +
+    "                                <div ng-if=\"prices[product.id].singlePrice.effectiveAmount < prices[product.id].singlePrice.originalAmount\" class=\"price\">\n" +
+    "                                    <span class=\"originalPrice\"><strike>{{ prices[product.id].singlePrice.originalAmount | currency: '' }}</strike></span>\n" +
+    "                                    <span class=\"price salesPrice\">{{prices[product.id].singlePrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                    <span> {{currencySymbol}}</span>\n" +
+    "                                    <span class=\"priceUnit\" ng-if=\"prices[product.id].singlePrice.measurementUnit\">{{prices[product.id].singlePrice.measurementUnit.quantity}} {{prices[product.id].singlePrice.measurementUnit.unitCode}}</span>\n" +
+    "                                </div>\n" +
+    "                                <div ng-if=\"prices[product.id].singlePrice.effectiveAmount == prices[product.id].singlePrice.originalAmount\" class=\"price\">\n" +
+    "                                    <span>{{prices[product.id].singlePrice.effectiveAmount | currency: ''}} {{currencySymbol}}</span>\n" +
+    "                                    <span class=\"priceUnit\" ng-if=\"prices[product.id].singlePrice.measurementUnit\">{{prices[product.id].singlePrice.measurementUnit.quantity}} {{prices[product.id].singlePrice.measurementUnit.unitCode}}</span>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div ng-if=\"!prices[product.id]\">\n" +
+    "                                <span class=\"price\">{{'NO_PRICE' | translate}} {{currencySymbol}}</span>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </a>\n" +
@@ -5608,6 +5820,29 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "<script src=\"js/vendor-static/img-touch-canvas.js\"></script>\n" +
     "<script src=\"js/vendor-static/jquery.fullscreen-min.js\"></script>\n" +
     "<script src=\"js/vendor-static/main.js\"></script>\n"
+  );
+
+
+  $templateCache.put('js/app/products/templates/product-options/product-options.html',
+    "<div ng-repeat=\"option in options\">\n" +
+    "    <div class=\"row product-options\">\n" +
+    "        <div class=\"col-md-8 col-md-offset-2 custom-select-container\">\n" +
+    "            <div class=\"form-group input-group\">\n" +
+    "                <label class=\"input-group-addon control-label\">{{option.attributeKey}}</label>\n" +
+    "                <ui-select ng-model=\"optionsSelected[$index]\" on-select=\"resolveActiveVariantAndUpdateOptions()\">\n" +
+    "                    <ui-select-match ng-click=\"omitSelectionAndUpdateOptions($index)\" placeholder=\"{{'SELECT' | translate}}\" allow-clear=\"true\">\n" +
+    "                        {{$select.selected.value}}\n" +
+    "                    </ui-select-match>\n" +
+    "                    <ui-select-choices repeat=\"attribute in option.attributes\" ui-disable-choice=\"attribute.disabled\">\n" +
+    "                        <span>{{attribute.value}}</span>\n" +
+    "                        <span class=\"text-uppercase\" ng-if=\"attribute.disabled\">- {{'UNAVAILABLE' | translate}}</span>\n" +
+    "                    </ui-select-choices>\n" +
+    "                </ui-select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <br/>\n" +
+    "</div>\n"
   );
 
 
@@ -5733,18 +5968,72 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                 infinite-scroll-visible-items>\n" +
     "                <div class=\"item col-xs-12 col-sm-6 col-md-4 col-lg-3\" ng-repeat=\"product in products\"\n" +
     "                     on-finish-render-ng-repeat on-finish-render-ng-repeat-event=\"initialViewportCheck\">\n" +
-    "                    <a id=\"p_{{product.product.id}}\" ng-click=\"openProductDetails(product.product.id)\" ui-sref=\"base.product.detail( {productId: product.product.id, lastCatId: lastCatId} )\">\n" +
-    "\n" +
-    "                        <div class=\"thumb\">\n" +
-    "                            <img ng-src=\"{{ product && product.product.mainImageURL || PLACEHOLDER_IMAGE}}\" alt=\"\">\n" +
-    "\n" +
-    "                        </div>\n" +
-    "                        <div class=\"productInfoContainer text-center\">\n" +
-    "                            <div class=\"name\">{{ product.product.name }}</div>\n" +
-    "                            <div ng-if=\"!prices[product.product.id].measurementUnit\" class=\"price\">{{ prices[product.product.id].effectiveAmount | currency: currencySymbol}}</div>\n" +
-    "                            <div ng-if=\"prices[product.product.id].measurementUnit\" class=\"price\">\n" +
-    "                                <span class=\"price\">{{prices[product.product.id].effectiveAmount | currency: currencySymbol}}</span>\n" +
-    "                                <span class=\"priceUnit\">{{prices[product.product.id].measurementUnit.quantity}} {{prices[product.product.id].measurementUnit.unitCode}}</span>\n" +
+    "                    \n" +
+    "                    <a id=\"p_{{product.id}}\" ng-click=\"openProductDetails(product.id)\" ui-sref=\"base.product.detail( {productId: product.id, lastCatId: lastCatId} )\">\n" +
+    "                        <div class=\"productContainer\">\n" +
+    "                            <div class=\"thumb\">\n" +
+    "                                <img ng-src=\"{{ product && product.mainImageURL || PLACEHOLDER_IMAGE}}\" alt=\"\">\n" +
+    "                            </div>\n" +
+    "                            <div class=\"productInfoContainer text-center\">\n" +
+    "                                <div class=\"name\">{{ product.name }}</div>\n" +
+    "                                <div ng-if=\"product.hasVariants\">\n" +
+    "                                    <div ng-if=\"prices[product.id].minPrice\">\n" +
+    "                                        <div ng-if=\"prices[product.id].minPrice.effectiveAmount == prices[product.id].maxPrice.effectiveAmount\">\n" +
+    "                                            <div ng-if=\"prices[product.id].minPrice.effectiveAmount < prices[product.id].minPrice.originalAmount\" class=\"price\">\n" +
+    "                                                <span class=\"originalPrice\"><strike>{{prices[product.id].minPrice.originalAmount | currency: '' }}</strike></span>\n" +
+    "                                                <span class=\"price salesPrice\">{{prices[product.id].minPrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                                <span> {{currencySymbol}}</span>\n" +
+    "                                                <span class=\"priceUnit\" ng-if=\"prices[product.id].minPrice.measurementUnit\">{{prices[product.id].minPrice.measurementUnit.quantity}} {{prices[product.id].minPrice.measurementUnit.unitCode}}</span>\n" +
+    "                                            </div>\n" +
+    "                                            <div ng-if=\"prices[product.id].minPrice.effectiveAmount == prices[product.id].minPrice.originalAmount\" class=\"price\">\n" +
+    "                                                <span>{{prices[product.id].minPrice.effectiveAmount | currency: ''}} {{currencySymbol}}</span>\n" +
+    "                                                <span class=\"priceUnit\" ng-if=\"prices[product.id].minPrice.measurementUnit\">{{prices[product.id].minPrice.measurementUnit.quantity}} {{prices[product.id].minPrice.measurementUnit.unitCode}}</span>\n" +
+    "                                            </div>\n" +
+    "                                        </div>\n" +
+    "                                        <div ng-if=\"prices[product.id].minPrice.effectiveAmount != prices[product.id].maxPrice.effectiveAmount\">\n" +
+    "                                            <div>\n" +
+    "                                                <span ng-if=\"prices[product.id].minPrice.effectiveAmount < prices[product.id].minPrice.originalAmount\" class=\"price\">\n" +
+    "                                                    <span class=\"originalPrice\"><strike>{{ prices[product.id].minPrice.originalAmount | currency: '' }}</strike></span>\n" +
+    "                                                    <span class=\"price salesPrice\">{{prices[product.id].minPrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                                </span>\n" +
+    "                                                <span ng-if=\"prices[product.id].minPrice.effectiveAmount == prices[product.id].minPrice.originalAmount\" class=\"price\">\n" +
+    "                                                    <span>{{prices[product.id].minPrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                                </span>\n" +
+    "                                                <span class=\"price\">-</span>\n" +
+    "                                                <span ng-if=\"prices[product.id].maxPrice.effectiveAmount < prices[product.id].maxPrice.originalAmount\" class=\"price\">\n" +
+    "                                                    <span class=\"originalPrice\"><strike>{{ prices[product.id].maxPrice.originalAmount | currency: '' }}</strike></span>\n" +
+    "                                                    <span class=\"price salesPrice\">{{prices[product.id].maxPrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                                    <span> {{currencySymbol}}</span>\n" +
+    "                                                    <span class=\"priceUnit\" ng-if=\"prices[product.id].maxPrice.measurementUnit\">{{prices[product.id].maxPrice.measurementUnit.quantity}} {{prices[product.id].maxPrice.measurementUnit.unitCode}}</span>\n" +
+    "                                                </span>\n" +
+    "                                                <span ng-if=\"prices[product.id].maxPrice.effectiveAmount == prices[product.id].maxPrice.originalAmount\" class=\"price\">\n" +
+    "                                                    <span>{{prices[product.id].maxPrice.effectiveAmount | currency: ''}} {{currencySymbol}}</span>\n" +
+    "                                                    <span class=\"priceUnit\" ng-if=\"prices[product.id].maxPrice.measurementUnit\">{{prices[product.id].maxPrice.measurementUnit.quantity}} {{prices[product.id].maxPrice.measurementUnit.unitCode}}</span>\n" +
+    "                                                </span>\n" +
+    "                                            </div>\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                    <div ng-if=\"!prices[product.id].minPrice\">\n" +
+    "                                        <span class=\"price\">{{'NO_PRICE' | translate}} {{currencySymbol}}</span>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                                <div ng-if=\"!product.hasVariants\">\n" +
+    "                                    <div ng-if=\"prices[product.id]\">\n" +
+    "                                        <div ng-if=\"prices[product.id].singlePrice.effectiveAmount < prices[product.id].singlePrice.originalAmount\" class=\"price\">\n" +
+    "                                            <span class=\"price originalPrice\"><strike>{{ prices[product.id].singlePrice.originalAmount | currency: '' }}</strike></span>\n" +
+    "                                            <span class=\"price salesPrice\">{{prices[product.id].singlePrice.effectiveAmount | currency: ''}}</span>\n" +
+    "                                            <span> {{currencySymbol}}</span>\n" +
+    "                                            <span class=\"priceUnit\" ng-if=\"prices[product.id].singlePrice.measurementUnit\">{{prices[product.id].singlePrice.measurementUnit.quantity}} {{prices[product.id].singlePrice.measurementUnit.unitCode}}</span>\n" +
+    "                                        </div>\n" +
+    "                                        <div ng-if=\"prices[product.id].singlePrice.effectiveAmount == prices[product.id].singlePrice.originalAmount\" class=\"price\">\n" +
+    "                                            <span class=\"price\">{{prices[product.id].singlePrice.effectiveAmount | currency: ''}} {{currencySymbol}}</span>\n" +
+    "                                            <span class=\"priceUnit\" ng-if=\"prices[product.id].singlePrice.measurementUnit\">{{prices[product.id].singlePrice.measurementUnit.quantity}} {{prices[product.id].singlePrice.measurementUnit.unitCode}}</span>\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                    <div ng-if=\"!prices[product.id]\">\n" +
+    "                                        <span class=\"price\">{{'NO_PRICE' | translate}} {{currencySymbol}}</span>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </a>\n" +
@@ -5787,7 +6076,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                        </ul>\n" +
     "                    </div>\n" +
     "                    <div class=\"col-xs-6\">\n" +
-    "                        <ul class=\"list-unstyled languageMenu\">\n" +
+    "                        <ul id=\"region-list\" class=\"list-unstyled regionControlList\">\n" +
     "                            <li ng-repeat=\"lang in hoveredSite.languages\" ng-click=\"selectSiteAndLanguage(hoveredSite, lang)\"\n" +
     "                                ng-class=\"{ 'selected':(lang === selectedLanguage() && hoveredSite.code === selectedSite.code),\n" +
     "                                                   'defaultLang': (lang === hoveredSite.defaultLanguage && hoveredSite.code !== selectedSite.code)  }\">\n" +
@@ -5964,7 +6253,9 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "\n" +
     "        <!-- logo -->\n" +
     "        <div class=\"col-xs-5 text-center\">\n" +
-    "            <a class=\"logo\" ui-sref=\"base.home\"><img ng-src=\"{{GlobalData.store.logo || 'img/logo.png'}}\" alt=\"\"></a>\n" +
+    "            <a class=\"logo\" ui-sref=\"base.home\">\n" +
+    "                <img ng-src=\"{{GlobalData.store.logo || 'img/logo.png'}}\" alt=\"logo\">\n" +
+    "            </a>\n" +
     "        </div>\n" +
     "        \n" +
     "        <!-- header right -->\n" +
@@ -6001,7 +6292,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "        <!-- logo -->\n" +
     "        <div class=\"col-xs-2 logo navbar-padding navbar-padding-left\">\n" +
     "            <a ui-sref=\"base.home\" class=\"logo\">\n" +
-    "                <img ng-src=\"{{GlobalData.store.logo || 'img/logo.png'}}\" height=\"46\" alt=\"\" />\n" +
+    "                <img ng-src=\"{{GlobalData.store.logo || 'img/logo.png'}}\" alt=\"logo\" />\n" +
     "            </a>\n" +
     "        </div>\n" +
     "    \n" +
@@ -6068,7 +6359,7 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "    <div class=\"row nav js-mainNav\">\n" +
     "        <div class=\"content-container\">\n" +
     "            <div class=\"navbar yamm navbar-default\">\n" +
-    "                <ul class=\"nav navbar-nav\">\n" +
+    "                <ul id=\"product-categories\" class=\"nav navbar-nav\">\n" +
     "                    <li ng-repeat=\"top_category in categories\" class=\"dropdown yamm-fw\">\n" +
     "                        <!-- class=\"has-sub\" -->\n" +
     "                        <a ui-sref=\"base.category( {catName: top_category.slug} )\" class=\"js-megamenutoggle mainCategory categoryLevel\">\n" +
@@ -6122,8 +6413,9 @@ angular.module('ds.app').run(['$templateCache', function($templateCache) {
     "                </div>\n" +
     "            </a>\n" +
     "            <a class=\" y-search-count text-center\" ng-click=\"hideSearchResults()\"\n" +
-    "               ui-sref=\"base.search({ searchString:search.text })\">{{'SEE_ALL' | translate}} {{search.numberOfHits}}\n" +
-    "                {{'RESULTS' | translate}} <span class=\"glyphicon glyphicon-chevron-right pull-right\"></span></a>\n" +
+    "               ui-sref=\"base.search({ searchString:search.text })\">{{'SEE_ALL' | translate}} ({{search.numberOfHits}})\n" +
+    "               <span class=\"glyphicon glyphicon-chevron-right pull-right\"></span>\n" +
+    "            </a>\n" +
     "        </div>\n" +
     "        <div class=\"y-search-container y-search-unavailable\" ng-if=\"search.showSearchResults && search.searchError\">\n" +
     "            <div class=\"y-search-unavailable-text\">{{'SEARCH_UNAVAILABLE' | translate}}</div>\n" +

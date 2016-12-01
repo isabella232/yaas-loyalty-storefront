@@ -35,61 +35,96 @@
 
             dev: {
                 baseUrl: 'api.stage.yaas.io',
-                tenant: 'saploydev',
-                clientId: 'U84Iy0WLC8I3H8zb5GmmRcCPvYhkYwDc',
-                redirectURI: 'https://loyaltystoredev.stage.yaas.io'
+                tenant: 'tenant',
+                clientId: 'clientId',
+                redirectURI: 'redirectURI'
             },
 
             test: {
                 baseUrl: 'api.stage.yaas.io',
-                tenant: 'saploytest',
-                clientId: 'T2kXYhbrAOCntbgN7lwwxxi6xOfyIFAE',
-                redirectURI: 'https://loyaltyshoptest.stage.yaas.io'
+                tenant: 'tenant',
+                clientId: 'clientId',
+                redirectURI: 'redirectURI'
             },
 
             hfx: {
-                baseUrl: 'api.yaas.io',
-                tenant: 'saployaltytest',
-                clientId: 'gvv4VTDHbTAzooa6Td3vVZEnpxfdiQLV',
-                redirectURI: 'https://loyaltyshoptest.yaas.io'
+                baseUrl: 'api.us.yaas.io',
+                tenant: 'tenant',
+                clientId: 'clientId',
+                redirectURI: 'redirectURI'
             },
 
             live: {
-                baseUrl: 'api.yaas.io',
-                tenant: 'cecloyaltylive',
-                clientId: 'bgEPWS2OwUsK5lXoZ1oXfJFwY9smlBf4',
-                redirectURI: 'https://loyaltyshop.yaas.io'
+                baseUrl: 'api.us.yaas.io',
+                tenant: 'tenant',
+                clientId: 'clientId',
+                redirectURI: 'redirectURI'
+            }
+        };
+
+
+         var urlRegions = {
+            dev: {
+                us: 'api.stage.yaas.io'
+            },
+            test: {
+                us: 'api.stage.yaas.io'
+            },
+            hfx: {
+                us: 'api.us.yaas.io'
+            },
+            live: {
+                us: 'api.us.yaas.io',
+                eu: 'api.eu.yaas.io'
             }
         };
 
         var manifestConfigs = {
 
             dev: {               
-                name: 'loyaltystoredev',
-                host: 'loyaltystoredev',
-                domain: 'stage.yaas.io',
-                url: 'loyaltystoredev.stage.yaas.io'
+
+                us:{
+                    name: 'loyaltystoredev',
+                    host: 'loyaltystoredev',
+                    domain: 'stage.yaas.io',
+                    url: 'loyaltystoredev.stage.yaas.io'
+                } 
             },
 
             test: {               
-                name: 'loyaltyshoptest',
-                host: 'loyaltyshoptest',
-                domain: 'stage.yaas.io',
-                url: 'loyaltyshoptest.stage.yaas.io'
+                us:{
+                    name: 'loyaltyshoptest',
+                    host: 'loyaltyshoptest',
+                    domain: 'stage.yaas.io',
+                    url: 'loyaltyshoptest.stage.yaas.io'
+                }            
+                
             },
 
             hfx: {               
-                name: 'loyaltystorehfx',
-                host: 'loyaltystorehfx',
-                domain: 'yaas.io',
-                url: 'loyaltyshoptest.yaas.io'
+                us:{
+                    name: 'loyaltystorehfx',
+                    host: 'loyaltystorehfx',
+                    domain: 'yaas.io',
+                    url: 'loyaltyshoptest.yaas.io'
+                }             
+                
             },
 
             live: {               
-                name: 'loyaltyshop',
-                host: 'loyaltyshop',
-                domain: 'yaas.io',
-                url: 'loyaltyshop.yaas.io'
+                us:{
+                    name: 'loyaltyshop',
+                    host: 'loyaltyshop',
+                    domain: 'yaas.io',
+                    url: 'loyaltyshop.yaas.io'
+                },
+                eu:{
+                    name: 'loyaltyshop',
+                    host: 'loyaltyshop',
+                    domain: 'eu.yaas.io',
+                    url: 'loyaltyshop.eu.yaas.io' 
+                }            
+               
             }
         };
 
@@ -254,10 +289,14 @@
 
                                 paths.publicSource + '/js/app/account/account-index.js',
                                 paths.publicSource + '/js/app/account/controllers/account-ctrl.js',
+                                paths.publicSource + '/js/app/account/controllers/delete-account-ctrl.js',
                                 paths.publicSource + '/js/app/account/controllers/account-order-detail-ctrl.js',
                                 paths.publicSource + '/js/app/account/controllers/change-email-confirmation-ctrl.js',
 
                                 paths.publicSource + '/js/app/account/controllers/dialogs/address-remove-dialog-ctrl.js',
+                                paths.publicSource + '/js/app/account/controllers/dialogs/delete-account-dialog-ctrl.js',
+                                paths.publicSource + '/js/app/account/controllers/dialogs/order-cancel-dialog-ctrl.js',
+                                paths.publicSource + '/js/app/account/controllers/modals/delete-account-basic-ctrl.js',
                                 paths.publicSource + '/js/app/account/controllers/modals/edit-user-email-dialog-ctrl.js',
                                 paths.publicSource + '/js/app/account/controllers/modals/edit-user-name-dialog-ctrl.js',
 
@@ -277,15 +316,22 @@
                                 paths.publicSource + '/js/app/products/products-index.js',
                                 paths.publicSource + '/js/app/products/controllers/browse-products-ctrl.js',
                                 paths.publicSource + '/js/app/products/controllers/product-detail-ctrl.js',
-                                paths.publicSource + '/js/app/products/services/product-service.js',
-                                paths.publicSource + '/js/app/products/services/price-service.js',
+
+                                paths.publicSource + '/js/app/products/services/prices-rest.js',
+                                paths.publicSource + '/js/app/products/services/price-svc.js',
+                                paths.publicSource + '/js/app/products/services/product-extension-service.js',
                                 paths.publicSource + '/js/app/products/services/price-product-rest.js',
                                 paths.publicSource + '/js/app/products/services/category-service.js',
-                                paths.publicSource + '/js/app/products/services/product-attribute-service.js',
-                                paths.publicSource + '/js/app/products/directives/product-attribute.js',
-                                paths.publicSource + '/js/app/products/directives/product-attribute-group.js',
-                                paths.publicSource + '/js/app/products/directives/product-attribute-groups.js',
+                                paths.publicSource + '/js/app/products/services/product-service.js',
+
+                                paths.publicSource + '/js/app/products/utils/product-extension-helper.js',
+                                paths.publicSource + '/js/app/products/utils/product-factory.js',
+
+                                paths.publicSource + '/js/app/products/directives/product-extension-item.js',
+                                paths.publicSource + '/js/app/products/directives/product-extension.js',
                                 paths.publicSource + '/js/app/products/directives/product-img-carousel.js',
+                                paths.publicSource + '/js/app/products/options/product-options-helper.js',
+                                paths.publicSource + '/js/app/products/options/product-options.js',
 
 
 
@@ -378,6 +424,7 @@
                                 paths.publicSource + '/js/app/shared/controllers/site-selector-ctrl.js', 
 
                                 paths.publicSource + '/js/app/shared/filters/filters.js',
+                                paths.publicSource + '/js/app/shared/filters/date-filters.js',
                                 paths.publicSource + '/js/app/shared/filters/show-number-of-items-filter.js',
                                 paths.publicSource + '/js/app/shared/filters/sum-by-key-filter.js',
 
@@ -551,8 +598,18 @@
 
         grunt.registerTask('config', 'Load the configuration into the file', function (env) {
 
+            var region = env.split('_');
+            if ( region && region.length && region.length > 1 ) {
+                env = region[0];
+                region = region[1];
+            } else {
+                region = 'us';
+            }
+
             configs.app = appConfigs[env];
-            configs.manifest = manifestConfigs[env];
+            configs.manifest = manifestConfigs[env][region];
+
+            configs.app.baseUrl = urlRegions[env][region];
             configs.urls = grunt.file.read('./config/url/' + env + '.js');
 
             grunt.config('configs', configs);

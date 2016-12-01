@@ -23,25 +23,11 @@ angular.module('ds.account')
             AccountSvc.confirmEmailUpdate($scope.token)
                 .then(function () {
                     
-
-                    AccountSvc.account().then(function(account) {
-                            //updating the contact email for loyalty
-                            LoyaltySvc.updateAccountDetails(account).then(function () {
-
                     //Sign out user
                     AuthSvc.signOut();
 
                     //Message that email is changed successfully
                     $scope.confirmed = true;
-
-                            });
-
-                        });
-
-                   
-
-
-
                 }, function (error) {
                     console.log(error);
                     //Message that there is error, and to try again or etc?

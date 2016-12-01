@@ -18,30 +18,21 @@
 angular.module('ds.products')
     .factory('ProductSvc', ['PriceProductREST', function(PriceProductREST){
 
-        /** Executes a product query and extracts the "total" product count meta data and stores it in the
-         * GlobalData service.
-         * */
-        var getProducts = function (parms) {
+        var getProductList = function (parms) {
             return PriceProductREST.Products.all('products').getList(parms);
         };
 
-        var getProductDetailsList = function (parms) {
-            return PriceProductREST.ProductDetails.all('productdetails').getList(parms);
-        };
-
         return {
-            /**
-             * Issues a query request on the product resource.
-             * @param {parms} query parameters - optional
-             * @return The result array as returned by Angular $resource.query().
-             */
-            query: function(parms) {
-               return getProducts(parms);
+            queryProductList: function(parms) {
+               return getProductList(parms);
             },
-
-            queryProductDetailsList: function(parms) {
-               return getProductDetailsList(parms);
+            getProductVariant: function(params) {
+               return PriceProductREST.Products.withConfig(function(RestangularConfigurer){
+                 RestangularConfigurer.restangularFields.options = 'restangularOptions';
+               }).one('products', params.productId).one('variants', params.variantId).get();
+            },
+            getProduct:  function(params) {
+              return PriceProductREST.Products.one('products', params.productId).get();
             }
-
         };
 }]);

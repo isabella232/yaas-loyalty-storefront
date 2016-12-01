@@ -46,7 +46,7 @@ angular.module('ds.shared')
             setLanguageCookie: function (languageCode, expiresIn) {
                 ipCookie.remove(settings.languageCookie);
                 var languageCookie = new LanguageCookie(languageCode);
-                ipCookie(settings.languageCookie, JSON.stringify(languageCookie), {expirationUnit: 'seconds', expires: expiresIn ? epiresIn : defaultExpirySeconds, secure: false});
+                ipCookie(settings.languageCookie, JSON.stringify(languageCookie), {expirationUnit: 'seconds', expires: expiresIn ? expiresIn : defaultExpirySeconds, secure: false});
             },
 
             getLanguageCookie: function () {

@@ -143,6 +143,34 @@ angular.module('ds.router', [])
                             }
 
                         }],
+                        
+                        variants: ['$stateParams', 'initialized', '$http', 'SiteConfigSvc',
+                            function ($stateParams, initialized, $http, SiteConfigSvc) {
+                                if (initialized) {
+                                    // $http used since 'option' property in response body is not handled correctly by Restangular
+                                    return $http.get(SiteConfigSvc.apis.products.baseUrl + '/products/' + $stateParams.productId + '/variants', {
+                                        params: {
+                                            pageNumber: 1, pageSize: 9999
+                                        }
+                                    }).then(function (response) {
+                                        return response.data;
+                                    });
+                                }
+                            }],
+
+                        variantPrices: ['$stateParams', 'initialized', '$http', 'SiteConfigSvc', 'GlobalData',
+                            function ($stateParams, initialized, $http, SiteConfigSvc, GlobalData) {
+                                if (initialized) {
+                                    return $http.get(SiteConfigSvc.apis.prices.baseUrl + '/prices', {
+                                        params: {
+                                            group: $stateParams.productId,
+                                            currency: GlobalData.getCurrencyId()
+                                        }
+                                    }).then(function (response) {
+                                        return response.data;
+                                    });
+                                }
+                            }],
 
                         lastCatId: function ($stateParams) {
                             if($stateParams.lastCatId !== 'lastCatId') {
@@ -153,9 +181,9 @@ angular.module('ds.router', [])
                             }
                         },
 
-                        shippingZones: ['ShippingSvc', 'initialized', 'GlobalData', function (ShippingSvc, initialized, GlobalData) {
+                        shippingZones: ['ShippingSvc', 'initialized', function (ShippingSvc, initialized) {
                             if(initialized){
-                                return ShippingSvc.getSiteShippingZones(GlobalData.getSiteCode());
+                                return ShippingSvc.getSiteShippingZones();
                             }
                         }]
 
@@ -186,11 +214,6 @@ angular.module('ds.router', [])
                         }],
                         order: ['CheckoutSvc', function (CheckoutSvc) {
                             return CheckoutSvc.getDefaultOrder();
-                        }],
-                        shippingCountries: ['ShippingSvc', 'initialized', function (ShippingSvc, initialized) {
-                            if (initialized) {  // parent resolve - if-check to make usage explicit
-                                return ShippingSvc.getShipToCountries();
-                            }
                         }],
                         shippingZones: ['ShippingSvc', 'initialized', function (ShippingSvc, initialized) {
                             if (initialized) {
@@ -248,11 +271,7 @@ angular.module('ds.router', [])
                             return AccountSvc.account();
                         }],
                         addresses: ['AccountSvc', function(AccountSvc) {
-                            var query = {
-                                pageNumber: 1,
-                                pageSize: siteConfig.apis.account.addresses.initialPageSize
-                            };
-                            return AccountSvc.getAddresses(query).then(
+                            return AccountSvc.getAddresses().then(
                                 function (response) {
                                     return response;
                                 },
@@ -294,6 +313,14 @@ angular.module('ds.router', [])
                         'main@': {
                             templateUrl: 'js/app/account/templates/change-email-confirmation.html',
                             controller: 'ChangeEmailConfirmationCtrl'
+                        }
+                    }
+                })
+                .state('base.deleteAccount', {
+                    url: '/custDelete?token',
+                    views: {
+                        'main@': {
+                            controller: 'DeleteAccountCtrl'
                         }
                     }
                 })

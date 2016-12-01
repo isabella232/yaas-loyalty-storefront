@@ -10,6 +10,15 @@
 
     //XFLD
     //-------------------------------------------------
+    // Global
+    //-------------------------------------------------
+    //XBUT
+    "YES": "Yes",
+    //XBUT
+    "NO": "No",
+
+    //XFLD
+    //-------------------------------------------------
     // Cart
     //-------------------------------------------------
 
@@ -268,6 +277,8 @@
     "COUPON_NOT_VALID": "Coupon Not Valid",
     //XTIT
     "COUPONS": "Coupon Code",
+    //XMSG
+    "ADD_COUPON_CODE": "ADD COUPON CODE",
 
 
     //XFLD
@@ -355,6 +366,8 @@
     "PRODUCT_DETAILS": "Product Details",
     //XBUT
     "OUT_OF_STOCK": "out of stock",
+    //XBUT
+    "UNAVAILABLE": "Unavailable",
     //XFLD
     "QTY": "Qty",
     //XMSG
@@ -365,6 +378,14 @@
     "NO_LIMIT": "No Limit",
     //XMSG
     "ERROR_ADDING_TO_CART": "Add to Cart was not successful.  Please try again.",
+    
+    //XTBS
+    "DESCRIPTION_TAB": "Description",
+    //XTBS
+    "DETAILS_TAB": "Details",
+
+    //XBUT
+    "MORE": "More",
 
     //XFLD
     //-------------------------------------------------
@@ -379,6 +400,8 @@
     "PRICE_HIGH_LOW": "price high - low",
     //XLST
     "PRICE_LOW_HIGH": "price low - high",
+    //XLST
+    "NO_PRICE": "No Price",
     //XFLD
     "SORT_BY": "Sort by",
     //XFLD
@@ -442,6 +465,10 @@
     "CONFIRM_DELETE_ADDRESS_TITLE": "Delete Address",
     //XMSG
     "CONFIRM_ADDRESS_REMOVAL": "Are you sure you want to delete this address?",
+    //XTIT
+    "CONFIRM_ORDER_CANCEL_TITLE": "Cancel Order",
+    //XMSG
+    "CONFIRM_CANCEL_ORDER": "Are you sure you want to cancel your order?",
     //XFLD
     "FULL_NAME": "Full Name",
     //XFLD
@@ -467,6 +494,10 @@
     //XFLD
     "ORDER_STATUS": "Order Status",
     //XFLD
+    "ORDER_CANCEL": "Cancel Order",
+    //XFLD
+    "ORDER_CANCEL_ERROR": "Cancelation failed, please contact customer service or try again later",
+    //XFLD
     "FAIL_ORDER": "Orders not available. Try again later.",
     //XFLD
     "NO_ORDERS": "You have no orders stored",
@@ -479,6 +510,8 @@
     "SHIPPING_DETAILS": "SHIPPING DETAILS",
     //XBUT
     "SAVE": "Save",
+    //XBUT
+    "SUBMIT": "Submit",
     //XBUT
     "UPDATE_PASSWORD": "Update password",
     //XBUT
@@ -493,6 +526,18 @@
     "WRONG_CURRENT_PASSWORD": "Please provide correct current password!",
     //XMSG
     "PASSWORD_TOO_SHORT": "Password too short",
+    //XBUT
+    "DELETE_ACCOUNT": "Delete Account",
+    //XMSG
+    "DELETE_ACCOUNT_MSG": "Are you sure you want to delete your account including all your account information and order history? In addition, if you have any orders still in process, they will no longer be linked with your account.",
+    //XMSG
+    "DELETE_ACCOUNT_CHECK_EMAIL_MSG": "... and follow the link to confirm you want to delete your account. The link will be valid for 24 hours.",
+    //XTIT
+    "ACCOUNT_DELETED": "Account Deleted",
+    //XTIT
+    "ACCOUNT_NOT_DELETED": "Account Not Deleted",
+    //XMSG
+    "ACCOUNT_DELETED_MSG": "Your account has been successfully deleted",
     //XFLD
     "SHOW_ALL": "Show all",
     //XFLD
@@ -665,7 +710,7 @@
     //XSEL
     "CREATED": "Created",
     //XSEL
-    "DECLINED": "Declined",
+    "DECLINED": "Cancelled",
     //XSEL
     "SHIPPED": "Shipped",
 
@@ -703,7 +748,7 @@
     //XGRP
     "RESULTS": "Results",
     //XLNK
-    "SEE_ALL": "See All",
+    "SEE_ALL": "See All Results",
     //XMSG
     "SEARCH_UNAVAILABLE": "Search is currently unavailable.",
     //XMSG
@@ -722,13 +767,7 @@
     "CONTACT_US": "Contact Us",
     //XFLD
     "SITE_MAP": "Site Map"
-
-
-
-
-
-
-    ,
+,
 
 
 
@@ -834,10 +873,10 @@
       "SUCCESS" : "Success",
 
       //XMSG,255: Success description
-      "SUCCESS_DESC" : "Invitations to sign up for the loyalty program are sent to the following email address(es): ",
+      "SUCCESS_DESC" : "Invitations to sign up for the loyalty program are sent to the following email address(es):",
 
       //XMSG,255: Success warning message
-      "SUCCESS_WARNING" : "Invitation will not be sent to users who are already members of the loyalty program",
+      "SUCCESS_WARNING" : "Invitation will not be sent to users who are already members of the loyalty program.",
 
       //XTIT,255: title for referral section
       "REF_TIT": "Refer Friends by Email",
@@ -852,7 +891,7 @@
       "EMAIL_ADDRESS" : "Enter email address(es)",
 
       // XFLD,255: rating text0
-      "RATING_TEXT0" : "Please select a rating",
+      "RATING_TEXT0" : "Please select a rating.",
 
       //XFLD,255: Indicates a rating with score 1, Eg. I hate this product so i rate it 1
       "RATING_TEXT1" : "I hate it",
@@ -996,19 +1035,19 @@
      "WRONG_REFER_A_FRIEND_INFO_TEXT2" : "If you are referred by your friend, enter the referral code or leave it blank.",
 
     // XFLD,255: Confirmation page text
-    "CONFIRMATION_LOYALTY_TEXT" : "Please refer to the 'My Account' page to view your loyalty points",
+    "CONFIRMATION_LOYALTY_TEXT" : "Please refer to the \"My Account\" page to view your loyalty points",
 
     //XMSG, 255: Error message indicating the request sent is not in appropriate form
     "BAD_REQUEST": "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message indicating unauthorized access for some resource
-    "UNAUTHORIZED": " Sorry! Something went wrong!",
+    "UNAUTHORIZED": "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message indicating unauthorized access for some resource
-    "FORBIDDEN": " Sorry! Something went wrong!",
+    "FORBIDDEN": "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message indicating the request sent is not in appropriate form
-    "BAD_PAYLOAD": " Sorry! Something went wrong!",
+    "BAD_PAYLOAD": "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message indicating request timeout occurred
     "GATEWAY_TIMEOUT": "Sorry! Something went wrong! Please try again later.",
@@ -1020,31 +1059,31 @@
     "MEMBERSHIP_NOT_FOUND" : "Membership is not found in the system.",
 
     //XMSG, 255: Error message indicating no loyalty membership present in the system
-    "MEMBERSHIP_ALREADY_EXISTS" : "Membership already exists",
+    "MEMBERSHIP_ALREADY_EXISTS" : "Membership already exists.",
 
     //XMSG, 255: Error message indicating type of content is not suported in the system
-    "UNSUPPORTED_CONTENT" : " Sorry! Something went wrong!",
+    "UNSUPPORTED_CONTENT" : "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message indicating unknown error
-    "UNKNOWN_ERROR_OCCURED": " Sorry! Something went wrong! Please try again later.",
+    "UNKNOWN_ERROR_OCCURED": "Sorry! Something went wrong! Please try again later.",
 
     //XMSG, 255: Error message indicating internal error
-    "INTERNAL_SERVER_ERROR": " Sorry! Something went wrong!",
+    "INTERNAL_SERVER_ERROR": "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message indicating unsupported data
-    "UNSUPPORTED_METHOD": " Sorry! Something went wrong!",
+    "UNSUPPORTED_METHOD": "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message indicating unsupported response content type
-    "UNSUPPORTED_RESPONSE_CONTENT_TYPE": " Sorry! Something went wrong!",
+    "UNSUPPORTED_RESPONSE_CONTENT_TYPE": "Sorry! Something went wrong!",
     
      //XMSG, 255: Error message indicating too long uri
-    "URI_TOO_LONG": " Sorry! Something went wrong!",
+    "URI_TOO_LONG": "Sorry! Something went wrong!",
 
      //XMSG, 255: Error message indicating referral code is invalid
-    "INVALID_REF_CODE" : "You have entered an invalid referral code",
+    "INVALID_REF_CODE" : "You have entered an invalid referral code.",
 
     //XMSG, 255: Error message shown when something went wrong from system (for different error status code mapped with error message)
-    "400": " Sorry! Something went wrong!",
+    "400": "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message shown when something went wrong from system
     "401": "Session expired.",
@@ -1056,13 +1095,13 @@
     "404": "Sorry! Something went wrong! Please try again later.",
     
     //XMSG, 255: Error message shown when something went wrong from system
-    "500": " Sorry! Something went wrong! Please try again later.",
+    "500": "Sorry! Something went wrong! Please try again later.",
     
     //XMSG, 255: Error message shown when something went wrong from system
-    "502": " Sorry! Something went wrong! Please try again later.",
+    "502": "Sorry! Something went wrong! Please try again later.",
     
     //XMSG, 255: Error message shown when something went wrong from system
-    "504": " Sorry! Something went wrong!",
+    "504": "Sorry! Something went wrong!",
 
     //XMSG, 255: Error message shown when something went wrong from system
     "ERROR_MEMBER_FETCH"   :  "An error occurred while fetching member details.",

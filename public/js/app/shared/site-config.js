@@ -67,6 +67,10 @@ angular.module('ds.shared')
                     baseUrl: 'https://' + apiPath + '/hybris/customer/v1/' + tenantId
                 },
 
+                customerlogin: {
+                    baseUrl: 'https://' + apiPath + '/hybris/customerlogin/v1'
+                },
+
                 orders: {
                     baseUrl: 'https://' + apiPath + '/hybris/order/v1/' + tenantId
                 },
@@ -76,12 +80,12 @@ angular.module('ds.shared')
                 },
 
                 products: {
-                    baseUrl: 'https://' + apiPath + '/hybris/product/v1/' + tenantId,
+                    baseUrl: 'https://' + apiPath + '/hybris/product/v2/' + tenantId,
                     pageSize: 10
                 },
 
                 productDetails: {
-                    baseUrl: 'https://' + apiPath + '/hybris/productdetails/v1/' + tenantId
+                    baseUrl: 'https://' + apiPath + '/hybris/productdetails/v2/' + tenantId
                 },
 
                 shippingCosts: {

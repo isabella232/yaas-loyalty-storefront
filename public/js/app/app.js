@@ -15,10 +15,10 @@
 /**  Initializes and configures the application. */
 window.app = angular.module('ds.app', [
     'restangular',
-    'ds.i18n',
-    'ui.router',   
+    'ui.router',
     'ds.shared',
     'ds.security',
+    'ds.i18n',
     'ds.home',
     'ds.products',
     'ds.cart',
@@ -201,6 +201,7 @@ window.app = angular.module('ds.app', [
                 else {
                     cart = CartSvc.getLocalCart();
                 }
+
                 
                 if ( cart && angular.isArray( cart.items ) ) {
 

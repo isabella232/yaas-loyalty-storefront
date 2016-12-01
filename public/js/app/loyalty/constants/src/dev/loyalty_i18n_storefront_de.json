@@ -332,7 +332,7 @@
     "504": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
 
     //XMSG, 255: Error message shown when something went wrong from system
-    "ERROR_MEMBER_FETCH"   :  "Beim Abrufen von Teilnehmerdetails ist ein Fehler aufgetreten.",
+    "ERROR_MEMBER_FETCH"   :  "Beim Abrufen von Mitgliederdetails ist ein Fehler aufgetreten.",
 
     //XMSG, 255: Error message shown when something went wrong from system
     "ERROR_TIER_FETCH"  :   "Beim Abrufen von Stufendetails ist ein Fehler aufgetreten.",

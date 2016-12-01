@@ -2,9 +2,9 @@
 
 	angular.module('ds.loyalty')
 
-		.controller('RewardsPointCtrl', ['$rootScope', '$scope', '$injector',
+		.controller('RewardsPointCtrl', ['$rootScope', '$scope', '$injector','LoyaltySvc',
 
-			function ($rootScope, $scope, $injector) {
+			function ($rootScope, $scope, $injector, LoyaltySvc) {
 
 				var LoyaltySvc = $injector.get('LoyaltySvc');
                 var $stateParams = $injector.get('$stateParams');
@@ -62,57 +62,60 @@
 
                     if ($scope.thisUser.isMember) {
 
-
                         if ( productOb && quantity > 0 ) {
 
                             $scope.pointsProcessing = true;
 
                             var fireRuleModel = LoyaltySvc.getFireRuleOjbect();
 
-                            if (fireRuleModel && angular.isObject(fireRuleModel)) {
-                                var productAttributesObj = {
-                                    productId : productOb.product.id,
-                                    productName : productOb.product.name,
-                                    price : productOb.prices[0].effectiveAmount,
-                                    quantity  : quantity,
-                                    imageURL : '',
-                                    productCategory : angular.copy(productOb.categories),
-                                    customAttributes:[]
-                                };
+                            LoyaltySvc.getProductDetails(productOb.id).then(function(product){
 
-                                angular.forEach(productAttributesObj.productCategory, function(category){ 
-                                    category.categoryId =  category.id;
-                                    delete category.image;
-                                    delete category.metadata;
-                                    delete category.published;
-                                    delete category.id;
-                                    delete category.parentId;
-                                });
+                                if (fireRuleModel && angular.isObject(fireRuleModel)) {
+                                    var productAttributesObj = {
+                                        productId : product.product.id,
+                                        productName : product.product.name,
+                                        price : product.prices[0].effectiveAmount,
+                                        quantity  : quantity,
+                                        imageURL : '',
+                                        productCategory : angular.copy(product.categories),
+                                        customAttributes:[]
+                                    };
 
-                                fireRuleModel.productAttributes.push(productAttributesObj);
+                                    angular.forEach(productAttributesObj.productCategory, function(category){ 
+                                        category.categoryId =  category.id;
+                                        delete category.image;
+                                        delete category.metadata;
+                                        delete category.published;
+                                        delete category.id;
+                                        delete category.parentId;
+                                    });
 
-                                fireRuleModel.member = $rootScope.thisUser.loyaltyUser;
+                                    fireRuleModel.productAttributes.push(productAttributesObj);
 
-                                delete fireRuleModel.member.id;
-                                delete fireRuleModel.member.metadata;
-                                delete fireRuleModel.member.referralCode;
-                                delete fireRuleModel.member.customAttributes;
+                                    fireRuleModel.member = $rootScope.thisUser.loyaltyUser;
 
-                                fireRuleModel.memberActivity.memberId = $rootScope.thisUser.loyaltyUser.memberId;
+                                    delete fireRuleModel.member.id;
+                                    delete fireRuleModel.member.metadata;
+                                    delete fireRuleModel.member.referralCode;
+                                    delete fireRuleModel.member.customAttributes;
 
-                                fireRuleModel.memberActivity.transactionAmount = $scope.getTransactionAmountWithQty(productOb.prices[0].effectiveAmount, quantity);
+                                    fireRuleModel.memberActivity.memberId = $rootScope.thisUser.loyaltyUser.memberId;
 
-                                LoyaltySvc.fireDummyRule(fireRuleModel).then(
+                                    fireRuleModel.memberActivity.transactionAmount = $scope.getTransactionAmountWithQty(productOb.prices[0].effectiveAmount, quantity);
 
-                                    function(fireRuleData) {
+                                    LoyaltySvc.fireDummyRule(fireRuleModel).then(
 
-                                    $scope.earning.points = fireRuleData.redeemablePointsEarned;
-                                    $scope.earning.cash = ( $scope.earning.points * $scope.earning.ratio );
-                                    $scope.pointsProcessing = false;
-                                    }
-                                );
+                                        function(fireRuleData) {
 
-                            }
+                                        $scope.earning.points = fireRuleData.redeemablePointsEarned;
+                                        $scope.earning.cash = ( $scope.earning.points * $scope.earning.ratio );
+                                        $scope.pointsProcessing = false;
+                                        }
+                                    );
+
+                                }
+                            })
+
                         }
                     }
                 };

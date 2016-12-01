@@ -83,19 +83,18 @@
                             sendReferral :'/hybris/loy-advocacy/v1/sendReferral'
                         },
 
+
                         wallet: {
                             
                             googleWallet : '/hybris/loy-google-wallet/v1/',
                             appleWallet:'/hybris/loy-apple-wallet/v1/STORECARD/',
                             appleWalletEndPoint : '/generateWalletUrl'
-
                         },
 
                         hybrisProfile: {
                             consentReference: '/hybris/profile-consent/b2',
-                            analytics: '/hybris/dev-yprofile-analytics/v1'
+                            analytics: '/hybris/live-yprofile-analytics/v1'
                         },
-
 
                     }               
                 

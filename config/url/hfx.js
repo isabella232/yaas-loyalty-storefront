@@ -59,7 +59,7 @@
 
                         wallet: {
                             
-                            googleWallet : '/hybris/hfx-loy-wallet/v1/',
+                            googleWallet : '/hybris/hfx-loy-google-wallet/v1/',
                             appleWallet:'/hybris/hfx-loy-apple-wallet/v1/STORECARD/',
                             appleWalletEndPoint : '/generateWalletUrl'
                         },

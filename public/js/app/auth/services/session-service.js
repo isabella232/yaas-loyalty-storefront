@@ -13,8 +13,8 @@
 'use strict';
 angular.module('ds.auth')
     /** Encapsulates the logic for what needs to happen once a user is logged in or logged out.*/
-    .factory('SessionSvc', ['AccountSvc', 'CartSvc', 'GlobalData', '$state', '$stateParams', 'settings', '$rootScope',
-        function (AccountSvc, CartSvc, GlobalData, $state, $stateParams, settings, $rootScope) {
+    .factory('SessionSvc', ['AccountSvc', 'CartSvc', 'GlobalData', '$state', '$stateParams', 'settings', '$rootScope', '$q',
+        function (AccountSvc, CartSvc, GlobalData, $state, $stateParams, settings, $rootScope, $q) {
 
             function navigateAfterLogin(context){
                 if(context && context.targetState){
@@ -23,20 +23,38 @@ angular.module('ds.auth')
             }
 
             function commonPostLogin(context){
-                CartSvc.refreshCartAfterLogin(GlobalData.customerAccount.id);
+                var deferred = $q.defer();
+                CartSvc.refreshCartAfterLogin(GlobalData.customerAccount.id).then(
+                    function () {
+                        deferred.resolve();
+                    },
+                    function () {
+                        deferred.reject();
+                    }
+                );
                 navigateAfterLogin(context);
+                return deferred.promise;
             }
 
 
         return {
 
             afterLoginFromSignUp: function (context) {
+                var deferred = $q.defer();
                 AccountSvc.account().then(function () {
                     //Customer login event
                     $rootScope.$emit('customer:login', {});
                 }).then(function(){
-                   commonPostLogin(context);
+                    commonPostLogin(context).then(
+                        function () {
+                            deferred.resolve();
+                        },
+                        function () {
+                            deferred.reject();
+                        }
+                    );
                 });
+                return deferred.promise;
             },
 
             /** Performs application logic for the scenario of a successful login.
@@ -46,15 +64,23 @@ angular.module('ds.auth')
              * - targetStateParams - state params to go with the targetState
              * */
             afterLogIn: function (context) {
-
+                var deferred = $q.defer();
                 // there must be an account
                 AccountSvc.account().then(function (account) {
                     //Customer login event
                     $rootScope.$emit('customer:login', {});
                     return account;
                 }).finally(function () {
-                   commonPostLogin(context);
+                    commonPostLogin(context).then(
+                        function () {
+                            deferred.resolve();
+                        },
+                        function () {
+                            deferred.reject();
+                        }
+                    );
                 });
+                return deferred.promise;
             },
 
             afterLogOut: function(){
