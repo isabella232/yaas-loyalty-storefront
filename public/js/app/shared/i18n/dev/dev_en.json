@@ -924,7 +924,7 @@
       "DEDUCT" : "Deduct",
 
       //XSEL,255: Indicates that the activity is of type expiration points
-      "EXPIRATION" : "Expiration",
+      "EXPIRATION" : "Redeemable Points Expired",
 
       //XSEL,255: Indicates that the activity is of type Rating
       "RATING" : "Rating",
@@ -1137,6 +1137,12 @@
     "REMOVE" : "Remove",
 
     //XMSG, 255: Info messgae for Refer a friend
-    "REF_FRND_INFO" :"Press the Enter key after providing each email address."
+    "REF_FRND_INFO" :"Press the Enter key after providing each email address.",
+
+    //XSEL,255: Indicates that the activity is of type cancellation 
+    "CANCELLATION" : "Cancellation",
+
+    //XSEL,255: Indicates that the activity is of type cancellation 
+    "EXPIRATION_QUALIFYING" : "Qualifying Points Expired",
 
 }

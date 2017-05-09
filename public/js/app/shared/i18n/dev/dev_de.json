@@ -885,7 +885,7 @@
       "DEDUCT" : "Punkteabzug",
 
       //XSEL,255: Indicates that the activity is of type expiration points
-      "EXPIRATION" : "Punkteverfall",
+      "EXPIRATION" : "Verfallene einlösbare Punkte",
 
       //XSEL,255: Indicates that the activity is of type Rating
       "RATING" : "Bewertung",
@@ -1065,7 +1065,7 @@
     "504": "Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.",
 
     //XMSG, 255: Error message shown when something went wrong from system
-    "ERROR_MEMBER_FETCH"   :  "Beim Abrufen von Teilnehmerdetails ist ein Fehler aufgetreten.",
+    "ERROR_MEMBER_FETCH"   :  "Beim Abrufen von Mitgliederdetails ist ein Fehler aufgetreten.",
 
     //XMSG, 255: Error message shown when something went wrong from system
     "ERROR_TIER_FETCH"  :   "Beim Abrufen von Stufendetails ist ein Fehler aufgetreten.",
@@ -1098,6 +1098,12 @@
     "REMOVE" : "Entfernen",
 
     //XMSG, 255: Info messgae for Refer a friend
-    "REF_FRND_INFO" :"Drücken Sie nach dem Eingeben jeder E-Mail-Adresse die Eingabetaste."
+    "REF_FRND_INFO" :"Drücken Sie nach dem Eingeben jeder E-Mail-Adresse die Eingabetaste.",
+
+    //XSEL,255: Indicates that the activity is of type cancellation 
+    "CANCELLATION" : "Stornierung",
+
+    //XSEL,255: Indicates that the activity is of type cancellation 
+    "EXPIRATION_QUALIFYING" : "Verfallene qualifizierende Punkte",
 
 }

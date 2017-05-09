@@ -365,6 +365,12 @@
     "REMOVE" : "Entfernen",
 
     //XMSG, 255: Info messgae for Refer a friend
-    "REF_FRND_INFO" :"Drücken Sie nach dem Eingeben jeder E-Mail-Adresse die Eingabetaste."
+    "REF_FRND_INFO" :"Drücken Sie nach dem Eingeben jeder E-Mail-Adresse die Eingabetaste.",
+
+    //XSEL,255: Indicates that the activity is of type cancellation 
+    "CANCELLATION" : "Stornierung",
+
+    //XSEL,255: Indicates that the activity is of type cancellation 
+    "EXPIRATION_QUALIFYING" : "Verfallene qualifizierende Punkte",
 
 }

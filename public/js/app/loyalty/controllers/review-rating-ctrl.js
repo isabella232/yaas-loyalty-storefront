@@ -4,7 +4,7 @@ angular.module('ds.loyalty')
 
     function($rootScope, $scope, $injector) {
 
-        var $modal = $injector.get('$modal');
+        var $modal = $injector.get('$uibModal');
         var LoyaltySvc = $injector.get('LoyaltySvc');
 
 
@@ -383,7 +383,7 @@ angular.module('ds.loyalty')
 
         $scope.openWriteReviewModal = function() {
 
-            modalInstance = $injector.get('$modal').open({
+            modalInstance = $injector.get('$uibModal').open({
                 templateUrl: 'js/app/loyalty/templates/write_product_review.html',
                 controller: 'reviewProductCtrl',
                 scope: $scope

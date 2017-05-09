@@ -97,7 +97,7 @@
                 var cookieSvc = $injector.get('CookieSvc');
             
                 $scope.registrationServiceCalled = false;
-                var $modal = $injector.get('$modal');
+                var $modal = $injector.get('$uibModal');
                 $scope.wrongReferral = true;
                 $scope.myUser = {};
 

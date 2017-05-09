@@ -14,8 +14,8 @@
     'use strict';
 
     angular.module('ds.account')
-        .controller('EditUserNameDialogCtrl', ['$scope', 'account', 'AccountSvc', 'GlobalData', '$modalInstance','$injector','$rootScope',
-            function ($scope, account, AccountSvc, GlobalData, $modalInstance, $injector, $rootScope) {
+        .controller('EditUserNameDialogCtrl', ['$scope', 'account', 'AccountSvc', 'GlobalData', '$uibModalInstance','$injector','$rootScope',
+            function ($scope, account, AccountSvc, GlobalData, $uibModalInstance,  $injector, $rootScope) {
 
                 var LoyaltySvc = $injector.get('LoyaltySvc');
                 $scope.account = angular.copy(account);
@@ -23,7 +23,7 @@
                 $scope.titles = GlobalData.getUserTitles();
 
                 $scope.closeEditUserDialog = function () {
-                    $modalInstance.dismiss('cancel');
+                    $uibModalInstance.dismiss('cancel');
                 };
 
                 $scope.updateUserInfo = function () {
@@ -37,7 +37,7 @@
                                LoyaltySvc.updateAccountDetails(account);
 
                         });
-                        $modalInstance.close(account);
+                        $uibModalInstance.close(account);
                     });
                 };
 

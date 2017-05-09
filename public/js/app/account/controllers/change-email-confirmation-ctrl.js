@@ -16,6 +16,7 @@ angular.module('ds.account')
     .controller('ChangeEmailConfirmationCtrl', ['$scope', '$stateParams', 'AccountSvc', 'AuthSvc', '$translate','$injector',
         function ($scope, $stateParams, AccountSvc, AuthSvc, $translate,$injector) {
 
+            var $q = $injector.get( '$q' );
             var LoyaltySvc = $injector.get('LoyaltySvc');
             $scope.token = $stateParams.token;
             $scope.confirmed = false;
@@ -23,14 +24,25 @@ angular.module('ds.account')
             AccountSvc.confirmEmailUpdate($scope.token)
                 .then(function () {
                     
-                    //Sign out user
-                    AuthSvc.signOut();
-
-                    //Message that email is changed successfully
-                    $scope.confirmed = true;
                 }, function (error) {
                     console.log(error);
                     //Message that there is error, and to try again or etc?
                     $scope.error = $translate.instant('EDIT_EMAIL_SOMETHING_WENT_WRONG');
-                });
+                })
+                .then( function ( errorOb ) {
+                    return AccountSvc.account();
+                })
+
+                // loyalty code start
+                .then( function ( account ) {
+                    LoyaltySvc.updateAccountDetails( account ).then( function () {                    
+                        //Sign out user
+                        AuthSvc.signOut();
+                        //Message that email is changed successfully
+                        $scope.confirmed = true;
+                    });
+                })
+            ;
+            // loyalty code ends
+
         }]);

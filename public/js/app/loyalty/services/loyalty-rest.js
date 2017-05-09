@@ -111,6 +111,11 @@
                     checkForHybrisProfileSubscription: function (url) {
                         return RESTSvc.get(url);
                     },
+
+                    deleteMember : function(url){
+                        return RESTSvc.delete(url);
+                    },
+
                 };
 
                 return LoyaltyREST;

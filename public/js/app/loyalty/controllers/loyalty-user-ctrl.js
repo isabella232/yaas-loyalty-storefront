@@ -4,7 +4,7 @@ angular.module('ds.loyalty')
 
     function($rootScope, $scope, $injector, $http, GlobalData) {
 
-        var $modal = $injector.get('$modal');
+        var $modal = $injector.get('$uibModal');
         var $timeout = $injector.get('$timeout');
         var LoyaltySvc = $injector.get('LoyaltySvc');
         var cookieSvc = $injector.get('CookieSvc');

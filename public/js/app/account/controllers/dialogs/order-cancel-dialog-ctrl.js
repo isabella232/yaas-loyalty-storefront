@@ -13,21 +13,24 @@
     'use strict';
 
     angular.module('ds.account')
-        .controller('OrderCancelDialogCtrl', ['$scope', '$modalInstance', 'order', 'OrderDetailSvc', '$translate',
-            function ($scope, $modalInstance, order, OrderDetailSvc, $translate) {
+        .controller('OrderCancelDialogCtrl', ['$scope', '$uibModalInstance', 'order', 'OrderDetailSvc', '$translate','$rootScope',
+            function ($scope, $uibModalInstance, order, OrderDetailSvc, $translate, $rootScope) {
 
                 $scope.orderCancelError = '';
 
                 $scope.cancelOrder = function () {
                     OrderDetailSvc.cancelOrder(order.id).then(function (response) {
-                        $modalInstance.close({status: response.status});
+                        //loyalty code start
+                        $rootScope.$emit('order:cancelled', {order: order, status: response.status} );
+                        //loyalty code ends
+                        $uibModalInstance.close({status: response.status});
                     }, function () {
                         $scope.orderCancelError = $translate.instant('ORDER_CANCEL_ERROR');
                     });
                 };
 
                 $scope.closeCancelOrderDialog = function () {
-                    $modalInstance.dismiss('cancel');
+                    $uibModalInstance.dismiss('cancel');
                 };
 
             }]);

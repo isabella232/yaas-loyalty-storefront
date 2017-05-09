@@ -1,14 +1,14 @@
 
+
 <div ng-controller="LoyaltyUserCtrl">
 
 	<div ng-if="thisUser.isUser" ng-if="isConfigMaintained">
 
-		
 		<div class="segment" ng-if="thisUser.isMember && configData.showReward">			
 			
 			<div class="userBottomMargin">		
 						<span class="title" id="rewards-enrolled-text" translate="{{ 'ENROLLED' }}" translate-values="{ programName: thisUser.program}"></span> 
-			</div>
+			</div> 
 			<div class="row form-group userInfoRow desktopUserInfo" >		
 				<div class="col-sm-3 col-md-3" ng-if="thisUser.loyaltyUser.referralCode 
 				&& configData.enableTellAFriend">
@@ -56,10 +56,10 @@
 				<br>	
 				<div class="progress-container">
 
-					<progressbar id="points-progress-bar" value="dynamicValue" type="primary">
+					<uib-progressbar id="points-progress-bar" value="dynamicValue" type="primary">
 						
 
-					</progressbar> 
+					</uib-progressbar> 
 
 					<span id="user-tier" class="floatleft padleft10px info" translate="{{ 'USER_TIER' }}" translate-values="{ userTier: userPresentTier}"></span>
 					<span id="next-tier" ng-if="dispNextTierFlag" class="floatRight padright10px info" translate="{{ 'REEDEEM_TEXT_INFO_1' }}" translate-values="{ remainingPoints: remainingPoints, upgradadableTier: updagradableTier}"></span>	

@@ -19,7 +19,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <rating class="product-rating" ng-model="review.rating" max="5" id="write-review-ratings"></rating>
+                            <span uib-rating class="product-rating" ng-model="review.rating" max="5" id="write-review-ratings"></span>
                             <strong ng-show="review.rating > 0"><span class="userMargin" id="write-review-ratingTextInfo-1">{{ratingText[review.rating]|translate}}</span></strong>
                             <strong ng-show="errorRating" class="text-danger" ng-hide="review.rating > 0 || !errorRating"><span class="userMargin" id="write-review-ratingTextInfo-2">{{ratingText[review.rating]|translate}}</span></strong>
 

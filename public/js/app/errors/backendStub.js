@@ -335,14 +335,14 @@
 					**/
 
 					// various passthroughs. these allow existing services to work, while some are mocked.
-					$httpBackend.whenGET('/js/app/auth/templates/signin.html').passThrough();
-					$httpBackend.whenGET('/js/app/auth/templates/signup.html').passThrough();
-					$httpBackend.whenGET('/js/app/account/templates/addresses.html').passThrough();
+					$httpBackend.whenGET('./js/app/auth/templates/signin.html').passThrough();
+					$httpBackend.whenGET('./js/app/auth/templates/signup.html').passThrough();
+					$httpBackend.whenGET('./js/app/account/templates/addresses.html').passThrough();
 
-					$httpBackend.whenGET('/js/app/account/templates/address-form.html').passThrough();
+					$httpBackend.whenGET('./js/app/account/templates/address-form.html').passThrough();
 
-					$httpBackend.whenGET('/js/app/cart/templates/cart-costs.html').passThrough();
-					$httpBackend.whenGET('/js/app/coupons/templates/coupon-apply.html').passThrough();
+					$httpBackend.whenGET('./js/app/cart/templates/cart-costs.html').passThrough();
+					$httpBackend.whenGET('./js/app/coupons/templates/coupon-apply.html').passThrough();
 					
 
 
