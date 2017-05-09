@@ -325,11 +325,16 @@
                                 paths.publicSource + '/js/app/products/services/product-service.js',
 
                                 paths.publicSource + '/js/app/products/utils/product-extension-helper.js',
+                                paths.publicSource + '/js/app/products/utils/product-extension-item-helper.js',
                                 paths.publicSource + '/js/app/products/utils/product-factory.js',
+                                paths.publicSource + '/js/app/products/utils/product-variants-helper.js',
 
                                 paths.publicSource + '/js/app/products/directives/product-extension-item.js',
                                 paths.publicSource + '/js/app/products/directives/product-extension.js',
                                 paths.publicSource + '/js/app/products/directives/product-img-carousel.js',
+                                paths.publicSource + '/js/app/products/directives/price-label/price-label.js',
+                                paths.publicSource + '/js/app/products/filters/date-with-locale-filters.js',
+
                                 paths.publicSource + '/js/app/products/options/product-options-helper.js',
                                 paths.publicSource + '/js/app/products/options/product-options.js',
 
@@ -343,6 +348,12 @@
                                 paths.publicSource + '/js/app/cart/services/cart-rest.js',
                                 paths.publicSource + '/js/app/cart/services/cart-service.js',
                                 paths.publicSource + '/js/app/cart/services/cart-note-mixin-service.js',
+
+                                paths.publicSource + '/js/app/fees/fee-index.js', 
+                                paths.publicSource + '/js/app/fees/directives/product-fees.js',
+                                paths.publicSource + '/js/app/fees/services/fee-rest.js',
+                                paths.publicSource + '/js/app/fees/services/fee-service.js',
+
 
                                 paths.publicSource + '/js/app/orders/orders-index.js',
                                 paths.publicSource + '/js/app/orders/services/order-list-service.js',
@@ -391,6 +402,7 @@
                                 paths.publicSource + '/js/app/shared/http-proxy.js',
                                 paths.publicSource + '/js/app/shared/countries.js',
                                 paths.publicSource + '/js/app/shared/directives/quantity-input.js',
+                                paths.publicSource + '/js/app/shared/directives/refine-affix.js',
                                 paths.publicSource + '/js/app/shared/directives/menu-aim.js',
                                 paths.publicSource + '/js/app/shared/directives/match-background.js',
                                 paths.publicSource + '/js/app/shared/directives/sticky-navigation.js',
@@ -408,12 +420,18 @@
                                 paths.publicSource + '/js/app/shared/directives/site-selector/site-selector-directive.js',
                                 paths.publicSource + '/js/app/shared/directives/site-selector/site-selector-service.js',
 
+                                paths.publicSource + '/js/app/shared/directives/product-variants/variant-options-ctrl.js',
+                                paths.publicSource + '/js/app/shared/directives/product-variants/variant-options-dir.js',
+                                paths.publicSource + '/js/app/shared/directives/product-variants/variant-options-svc.js',
+
+
                                 paths.publicSource + '/js/app/shared/services/cookie-svc.js',
                                 paths.publicSource + '/js/app/shared/services/global-data.js',
                                 paths.publicSource + '/js/app/shared/services/configuration-service.js',
                                 paths.publicSource + '/js/app/shared/services/configuration-rest.js',
                                 paths.publicSource + '/js/app/shared/services/site-settings-rest.js',
                                 paths.publicSource + '/js/app/shared/services/http-queue.js',
+                                paths.publicSource + '/js/app/shared/services/yrn-svc.js',
                                 paths.publicSource + '/js/app/shared/services/event-service.js',
                                 paths.publicSource + '/js/app/shared/services/local-storage.js',
 

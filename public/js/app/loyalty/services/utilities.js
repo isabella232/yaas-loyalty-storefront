@@ -129,6 +129,10 @@
 						return this.getBaseUrl() + LoyaltyConfig.apis.hybrisProfile.analytics;
 					},
 
+					getMemberDeleteUrl : function () {
+						return this.getBaseUrl() + LoyaltyConfig.apis.core.member.members;
+					},
+
 				};
 			}
 		]);

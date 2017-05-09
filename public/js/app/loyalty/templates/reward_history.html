@@ -37,9 +37,10 @@
 											<td ng-if="activity.activityType === 'ORDER'" id="{{ 'rewards-activity-' + $index }}"> <a ui-sref="base.orderDetail({orderId: activity.refId})"> {{activity.activityType | translate}} </a> </td>
 
 											<td>
-												<strong class="point" style="padding-right: 25px;" ng-class= "{'redeemRed':activity.activityType=='REDEEM' ||activity.activityType=='DEDUCT' ||activity.activityType=='EXPIRATION', 'orderGreen':activity.activityType=='ORDER' || activity.activityType=='REGISTRATION' || activity.activityType=='AWARD' || activity.activityType=='RATING' || activity.activityType=='REVIEW' ||activity.activityType=='ACCRUAL' || activity.activityType=='REFERRAL'}">
+												<strong class="point" style="padding-right: 25px;" ng-class= "{'redeemRed':activity.activityType=='REDEEM' ||activity.activityType=='DEDUCT' ||activity.activityType=='EXPIRATION'||activity.activityType=='EXPIRATION_QUALIFYING'
+												||activity.activityType=='CANCELLATION', 'orderGreen':activity.activityType=='ORDER' || activity.activityType=='REGISTRATION' || activity.activityType=='AWARD' || activity.activityType=='RATING' || activity.activityType=='REVIEW' ||activity.activityType=='ACCRUAL' || activity.activityType=='REFERRAL'}">
 													<div class="text-right" id="{{ 'rewards-points-' + $index }}">
-													<span ng-if="activity.activityType=='REDEEM' || activity.activityType=='DEDUCT' || activity.activityType=='EXPIRATION'">-</span>
+													<span ng-if="activity.activityType=='REDEEM' || activity.activityType=='EXPIRATION_QUALIFYING'||activity.activityType=='DEDUCT' || activity.activityType=='EXPIRATION'|| activity.activityType=='CANCELLATION'">-</span>
 													{{activity.transactionPoints || 0 | number:0}}
 													</div>
 													

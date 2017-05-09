@@ -9,12 +9,12 @@
                 <div class="col-lg-12">
                     <div class="panel">
                         <div class="panel-body">
-                            <div class="col-lg-3" ng-if="!loyaltyConfig.showCashBal">
+                            <div class="col-lg-1" ng-if="!loyaltyConfig.showCashBal">
                                 <div class="form-group" ng-class="{'has-error': (paymentForm.pointsGoing.$invalid) }">
                                     <input type="number" id="checkout-points-input" class="form-control" placeholder="Points" min="0" ng-pattern="/^\d{0,9}(\.\d{1,9})?$/" max="{{userMaxPoints}}" ng-change="changePointsGoing()" ng-model="redeem.pointsGoing" ng-disabled="isSliderDisabled" name="pointsGoing" />
                                 </div>
                             </div>
-                            <div class="col-lg-9" ng-if="!loyaltyConfig.showCashBal">
+                            <div class="col-lg-11" ng-if="!loyaltyConfig.showCashBal">
                                 <p class="points-going-label ">
                                 <span id="checkout-currency-id" ng-bind="currencyId"></span>
                                 <span id="points-going" ng-bind="redeem.pointsToCurr"></span>
@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="points-slider-wrapper col-lg-10">
+                                <div class="points-slider-wrapper col-lg-10 padding-left-5">
                                     <div class="clearfix">
                                         <div class="pull-left">
                                             <p class="minimum-Points"> <span id="minimum-points">{{0}}</span></p>
@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
-                                    <button id="apply-points-button" ng-if="showApplyPoints" ng-click="applyLoyaltyPoints()" class=" btn btn-success points-slider-wrapper" ng-disabled="isSliderDisabled"> {{'APPLY' | translate}}  </button>
+                                    <button id="apply-points-button" ng-if="showApplyPoints" ng-click="applyLoyaltyPoints()" class=" btn btn-success points-slider-wrapper apply-position" ng-disabled="isSliderDisabled"> {{'APPLY' | translate}}  </button>
                                     <button id="remove-points-button" ng-if="!showApplyPoints" ng-click="removeLoyaltyPoints()" class=" btn btn-danger points-slider-wrapper"> {{'REMOVE' | translate}}  </button>
 
                                 </div>

@@ -16,15 +16,21 @@ angular.module('ds.account')
  *  Displays "Account Deleted" modal upon successful deletion of customer profile from storefront
  *  Assumes that the stateParams provide the token that is required to make the service call.
  */
-    .controller('DeleteAccountCtrl', ['$scope', '$stateParams', 'AccountSvc', 'AuthSvc', 'GlobalData', '$state', 'AuthDialogManager',
-        function ($scope, $stateParams, AccountSvc, AuthSvc, GlobalData, $state, AuthDialogManager) {
+    .controller('DeleteAccountCtrl', ['$scope', '$stateParams', 'AccountSvc', 'AuthSvc', 'GlobalData', '$state', 'AuthDialogManager','$rootScope',
+        function ($scope, $stateParams, AccountSvc, AuthSvc, GlobalData, $state, AuthDialogManager, $rootScope) {
             $scope.token = $stateParams.token || '';
             $state.go('base.category').then(function() {
                 AccountSvc.deleteAccount($scope.token).then(
                     function () {
+
+                        //loyalty code starts
+                        //$rootScope.$emit( 'customer:delete', $rootScope.thisUser );
+                        //loyalty code ends
+
                         if (GlobalData.user.isAuthenticated) {
                             AuthSvc.signOut();
                         }
+                        
                         AuthDialogManager.showDeleteAccountConfirmation(true);
                     },
                     function () {

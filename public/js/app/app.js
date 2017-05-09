@@ -47,7 +47,6 @@ window.app = angular.module('ds.app', [
     'angular-flash.service',
     'angular-flash.flash-alert-directive',
     'ds.loyalty'
-
 ])
     .constant('_', window._)
 
@@ -228,9 +227,17 @@ window.app = angular.module('ds.app', [
                                 delete fireRuleObject.member.referralCode;
                                 delete fireRuleObject.member.customAttributes;
 
+                                var totalItems = 0;
+
+                                angular.forEach( cart.items , function(item){
+                                    totalItems = totalItems + item.quantity;
+                                });
+
                             fireRuleObject.orderAttributes.total = cart.totalPrice.amount;
                             fireRuleObject.orderAttributes.subTotal = cart.subTotalPrice.amount;
                             fireRuleObject.orderAttributes.shippingAmount = cart.shipping.fee.amount;
+                            fireRuleObject.orderAttributes.totalItems = totalItems;
+
                             
                             fireRuleObject.memberActivity.memberId = $rootScope.thisUser.loyaltyUser.memberId;
                             fireRuleObject.memberActivity.transactionAmount = cart.subTotalPrice.amount || 0;
@@ -264,7 +271,15 @@ window.app = angular.module('ds.app', [
 
 
 
+            $rootScope.$on('customer:delete', function (event, eveObj) {
 
+                // LoyaltySvc.deleteMember( eveObj.loyaltyUser.memberId ).then(
+                //     function ( response ) {
+                        
+                //     }
+                // );
+
+            });
 
 
 

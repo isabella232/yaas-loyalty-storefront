@@ -14,17 +14,18 @@
     'use strict';
 
     angular.module('ds.account')
-        .controller('EditUserEmailDialogCtrl', ['$scope', 'account', 'AccountSvc', '$modalInstance', '$translate','$injector','$rootScope',
-            function ($scope, account, AccountSvc, $modalInstance, $translate,$injector,$rootScope) {
+        .controller('EditUserEmailDialogCtrl', ['$scope', 'account', 'AccountSvc', '$uibModalInstance', '$translate','$injector','$rootScope',
+            function ($scope, account, AccountSvc, $uibModalInstance, $translate,$injector,$rootScope) {
 
-                var LoyaltySvc = $injector.get('LoyaltySvc');
                 $scope.account = account;
                 $scope.error = '';
                 $scope.step = 1;
 
                 $scope.closeEditUserDialog = function () {
-                    $modalInstance.dismiss('cancel');
+                    $uibModalInstance.dismiss('cancel');
                 };
+
+                var LoyaltySvc = $injector.get('LoyaltySvc');
 
                 $scope.updateUserInfo = function () {
                     
@@ -55,7 +56,7 @@
                 };
 
                 $scope.confirm = function () {
-                    $modalInstance.close($scope.account);
+                    $uibModalInstance.close($scope.account);
                 };
 
             }]);

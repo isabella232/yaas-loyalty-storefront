@@ -93,7 +93,7 @@
 
                         hybrisProfile: {
                             consentReference: '/hybris/profile-consent/b2',
-                            analytics: '/hybris/live-yprofile-analytics/v1'
+                            analytics: '/hybris/loy-yprofile-analytics/v1'
                         },
 
                     }               

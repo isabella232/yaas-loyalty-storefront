@@ -15,7 +15,7 @@
                 $scope.user = {};
                 $scope.myUser = {};
                 $scope.disableSave = false; 
-                var $modal = $injector.get('$modal');
+                var $modal = $injector.get('$uibModal');
                 $scope.thisUser.cart = {
 
                 }

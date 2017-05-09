@@ -573,7 +573,7 @@
                                 var matchedResult = false;
 
                                 if (configobj.length > 0) {
-
+                                    
                                     configobj[0].conversionRatio.forEach(function (conversionOb) {
 
                                         if ( ! matchedResult ) {
@@ -716,7 +716,68 @@
                         var url = Utilities.getHybrisProfileAnalyticsUrl() + '/tenantsubscription';
                         return LoyaltyREST.checkForHybrisProfileSubscription(url);
                     },
+                        
+                    deleteMember : function( memberId ){
+                        var url = Utilities.getMemberDeleteUrl();
+                        url = url + '/'+ memberId;
+                        return LoyaltyREST.deleteMember(url);
+                    },
 
+                    formCancellationPayload : function(){
+
+                    },
+
+                    getProductAttributesForOrderCancel : function (order) {
+        
+                        var productAttributesArray = [];
+
+                        var self = this;
+
+                        var defered = $q.defer();
+
+                        var ctr = 0;
+
+                        angular.forEach(order.entries, function(item, index) {
+
+                            self.getProductDetails( item.id ).then(function (product) {
+                                
+                                ctr += 1;
+
+                                var categories = [];
+
+                                if( angular.isArray(product.categories) && product.categories.length > 0 ) {
+                                    categories = product.categories.map( function ( category ) {
+                                        return {
+                                            categoryId: category.id
+                                        };
+                                    });
+                                }
+
+                                var productAttributesObj = {
+                                    productId : product.product.id,
+                                    productName : product.product.name,
+                                    price : product.prices[0].effectiveAmount,
+                                    quantity  : item.amount,
+                                    imageURL : product.product.media[0].url,
+                                    productCategory : categories,
+                                    customAttributes:[] 
+                                };
+
+                                productAttributesArray.push(productAttributesObj);
+
+                                if (ctr === order.entries.length) {
+                                    defered.resolve(productAttributesArray);
+                                }
+                            });
+                        });
+                                          
+                        return defered.promise;
+                    },
+
+                    cancelOrder: function(activityModel) {
+                        var url = Utilities.getMemberActivityPostUrl();
+                        return LoyaltyREST.postMemberActivity(url, activityModel);
+                    },
 
 
                 };
